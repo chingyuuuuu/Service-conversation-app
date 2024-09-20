@@ -280,45 +280,64 @@ class CreateMerchandiseState extends State<CreateMerchandise>  {
     String name = _nameController.text;
     String type = _typeController.text;
 
-    // 检查名称和类型是否为空
     if (name.isEmpty) {
-      print("名稱未輸入");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("名稱未輸入！"),
+          duration: Duration(seconds: 2),
+        ),
+      );
       return;
     }
-
-    if (type.isEmpty) {
-      print("種類未輸入"); // 修正为“種類未輸入”
+    if(_priceController.text.isEmpty){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("價格未輸入！"),
+          duration: Duration(seconds: 2),
+        ),
+      );
       return;
     }
-
-    double? price;
-    double? cost;
+    double price;
+    double cost;
     int quantity;
-
-    // 尝试解析价格
     try {
       price = double.parse(_priceController.text);
     } catch (e) {
-      print("價格格式不正確");
-      return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("價格格式不正確！"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return; // 结束函数执行
     }
 
     // 尝试解析成本
     try {
-      cost = double.parse(_costController.text); // 修正了这里的语法错误
+      cost = double.parse(_costController.text);
     } catch (e) {
-      print("成本格式不正確");
-      return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("成本格式不正確！"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return; // 结束函数执行
     }
 
     // 尝试解析数量
     try {
       quantity = int.parse(_quantityController.text);
     } catch (e) {
-      print("庫存量格式不正確");
-      return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("庫存量格式不正確！"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return; // 结束函数执行
     }
-
     var request = http.MultipartRequest(
       'POST',
       Uri.parse('http://127.0.0.1:5000/uploadproducts'),
@@ -342,8 +361,21 @@ class CreateMerchandiseState extends State<CreateMerchandise>  {
     var response = await request.send();
     if (response.statusCode == 200) {
       print("Product saved successfully");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("儲存成功！"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      Navigator.pop(context);
     } else {
       print("Failed to save product");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("儲存失敗！"),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 
@@ -393,6 +425,7 @@ class CreateMerchandiseState extends State<CreateMerchandise>  {
             ),
             SizedBox(height: 20),
             TextField(
+              controller: _quantityController,
               decoration: InputDecoration(
                 labelText: '庫存量',
               ),
@@ -411,13 +444,18 @@ class CreateMerchandiseState extends State<CreateMerchandise>  {
                   ],
                 ),
               ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                   saveProduct();
-                   Navigator.pop(context);
-              },
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                     saveProduct();
+               },
               child: Text('儲存'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF36FDE6),
+                foregroundColor: Colors.black,
+                minimumSize: Size(150, 50),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              ),
             ),
           ],
         ),
@@ -426,27 +464,6 @@ class CreateMerchandiseState extends State<CreateMerchandise>  {
   }
 }
 
-class SelectPhotoPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text("選擇相片"),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context); // 返回上一頁
-          },
-        ),
-      ),
-      body: Center(
-        child: Text("相片選擇頁面內容"),
-      ),
-    );
-  }
-}
 class SettingsPage extends StatefulWidget{
   final VoidCallback onSave;//回調函數
   SettingsPage({required this.onSave});//接受回調函數
