@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -156,7 +157,7 @@ class MenuPage extends StatelessWidget {//菜單
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CreateMerchandisePage()),
+                  MaterialPageRoute(builder: (context) => CreateMerchandise()),
                 );
               },
               child: Container(
@@ -251,7 +252,101 @@ class OrderPage extends StatelessWidget {//訂單紀錄
   }
 }
 
-class CreateMerchandisePage extends StatelessWidget {
+class CreateMerchandise extends StatefulWidget {
+  @override
+  CreateMerchandiseState createState() => CreateMerchandiseState();
+}
+
+class CreateMerchandiseState extends State<CreateMerchandise>  {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _typeController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _costController = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
+
+  File? _selectedImage; // 用于存储选择的图片文件
+  final ImagePicker _picker = ImagePicker(); // 初始化 image picker
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _selectedImage = File(pickedFile.path); // 存储图片路径
+      });
+    }
+  }
+
+  void saveProduct() async { // 儲存商品資訊
+    String name = _nameController.text;
+    String type = _typeController.text;
+
+    // 检查名称和类型是否为空
+    if (name.isEmpty) {
+      print("名稱未輸入");
+      return;
+    }
+
+    if (type.isEmpty) {
+      print("種類未輸入"); // 修正为“種類未輸入”
+      return;
+    }
+
+    double? price;
+    double? cost;
+    int quantity;
+
+    // 尝试解析价格
+    try {
+      price = double.parse(_priceController.text);
+    } catch (e) {
+      print("價格格式不正確");
+      return;
+    }
+
+    // 尝试解析成本
+    try {
+      cost = double.parse(_costController.text); // 修正了这里的语法错误
+    } catch (e) {
+      print("成本格式不正確");
+      return;
+    }
+
+    // 尝试解析数量
+    try {
+      quantity = int.parse(_quantityController.text);
+    } catch (e) {
+      print("庫存量格式不正確");
+      return;
+    }
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('http://127.0.0.1:5000/uploadproducts'),
+    );
+
+    // 加入請求的資訊
+    request.fields['name'] = name;
+    request.fields['type'] = type;
+    request.fields['price'] = price.toString();
+    request.fields['cost'] = cost.toString();
+    request.fields['quantity'] = quantity.toString();
+
+    // 如果有選擇圖片，則加入圖片路徑
+    if (_selectedImage != null) {
+      request.files.add(await http.MultipartFile.fromPath(
+        'image',
+        _selectedImage!.path,
+      ));
+    }
+
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      print("Product saved successfully");
+    } else {
+      print("Failed to save product");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -271,51 +366,56 @@ class CreateMerchandisePage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(
+          controller: _nameController,
+          decoration: InputDecoration(
                 labelText: '名稱',
               ),
             ),
             TextField(
+              controller: _typeController,
               decoration: InputDecoration(
                 labelText: '種類',
               ),
             ),
             TextField(
+              controller: _priceController,
               decoration: InputDecoration(
                 labelText: '價格',
               ),
+              keyboardType: TextInputType.number,
             ),
             TextField(
+              controller: _costController,
               decoration: InputDecoration(
                 labelText: '成本',
               ),
+              keyboardType: TextInputType.number,
             ),
             SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(
                 labelText: '庫存量',
               ),
+              keyboardType: TextInputType.number,
             ),
             SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SelectPhotoPage()),
-                );
-              },
-              child: Row(
-                children: [
-                  Icon(Icons.photo),
-                  SizedBox(width: 10),
-                  Text("圖片"),
-                ],
+              GestureDetector(
+                onTap: () {
+                  _pickImage(); // 选择图片
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.photo),
+                    SizedBox(width: 10),
+                    Text(_selectedImage != null ? '已選擇圖片' : '圖片'), // 显示是否选择了图片
+                  ],
+                ),
               ),
-            ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // 儲存商品邏輯
+                   saveProduct();
+                   Navigator.pop(context);
               },
               child: Text('儲存'),
             ),
