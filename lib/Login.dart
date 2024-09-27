@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'Forget1.dart';
 import 'Choose.dart';
 import 'Register.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:dio/dio.dart';//用於發送網路請求
 import 'package:shared_preferences/shared_preferences.dart';
