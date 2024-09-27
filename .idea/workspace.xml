@@ -4,26 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="hello">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_flask_app/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_flask_app/app/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_flask_app/app/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_flask_app/app/extensions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_flask_app/app/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_flask_app/app/routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_flask_app/flask-swagger-ui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_flask_app/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_flask_app/run.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my_flask_app/static/swagger.yaml" afterDir="false" />
+    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="update-2">
+      <change afterPath="$PROJECT_DIR$/lib/createmerchandise.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/settingpage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Login.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dining.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/menu.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
@@ -42,6 +29,7 @@
       <list>
         <option value="HTML File" />
         <option value="Python Script" />
+        <option value="Dart File" />
       </list>
     </option>
   </component>
@@ -73,8 +61,10 @@
     "Python.run.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ToolWindowRunning Devices.ShowToolbar": "false",
+    "com.android.tools.idea.streaming.zoom.toolbar.visible": "false",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "Merging master",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
@@ -175,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726676127187</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="update-2">
+      <option name="closed" value="true" />
+      <created>1727412333000</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1727412333000</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,6 +190,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
     <MESSAGE value="hello" />
-    <option name="LAST_COMMIT_MESSAGE" value="hello" />
+    <MESSAGE value="update-2" />
+    <option name="LAST_COMMIT_MESSAGE" value="update-2" />
   </component>
 </project>

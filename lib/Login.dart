@@ -4,50 +4,70 @@ import 'Choose.dart';
 import 'Register.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:dio/dio.dart';//用於發送網路請求
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Login extends StatelessWidget {
+
+
+
+class  Login extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _login(BuildContext context) async {
-    print('Login button pressed');
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/login'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({//請求的數據
-        'account': email,
-        'password': password,
-      }),
-    );
+    var dio = Dio();
 
-    if (response.statusCode == 200) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Choose()),
-      );
-    } else {
-      final responseData = json.decode(response.body);
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('登入失敗'),
-          content: Text(responseData['message']),
-          actions: <Widget>[
-            TextButton(
-              child: Text('確定'),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            ),
-          ],
+    try {
+      final response = await dio.post(
+        'http://127.0.0.1:5000/login',
+        options: Options(
+          headers: {'Content-type': 'application/json'},
         ),
+        data: json.encode({'account': email, 'password': password}),
       );
+
+      if (response.statusCode == 200) {
+        //獲取uesr_id
+         String userId = response.data['user_id'];
+
+        //暫存user_id
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_id', userId);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Choose()),
+        );
+      } else {
+        final responseData = json.decode(response.data);
+        _showErrorDialog(context, responseData['message']);
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      _showErrorDialog(context, '帳號密碼未輸入');
     }
   }
 
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('登入失敗'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text('確定'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
   void _register(BuildContext context) {
     Navigator.push(
       context,

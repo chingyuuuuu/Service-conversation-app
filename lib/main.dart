@@ -7,9 +7,10 @@ import 'Choose.dart';
 import 'Register.dart';
 import 'Forget2.dart';
 import 'api_service.dart';
-import 'forget3.dart';
 import 'dining.dart';
 import 'menu.dart';
+import 'createmerchandise.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -33,7 +34,9 @@ class MyApp extends StatelessWidget {
         '/forget2':(context)=>Forget2(),
         '/forget3':(cnotext)=>Forget3(),
         '/dining':(context)=>dining(),
+        '/createmerchandise':(context)=>CreateMerchandise(),
         '/menu':(context)=>menu(),
+
       },
     );
   }
