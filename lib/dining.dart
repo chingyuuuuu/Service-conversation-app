@@ -4,7 +4,7 @@ import 'package:jkmapp/Login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'settingpage.dart';
 import 'createmerchandise.dart';
-
+import 'dart:io';
 
 
 
@@ -63,13 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {//和statefulwidget適配對�
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(//側邊欄位
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         child: ListView(
           padding: EdgeInsets.zero,//確保內容緊貼邊框
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: Colors.white,
               ),
               child: Row(
                 children: [
@@ -129,14 +129,38 @@ class _HomeScreenState extends State<HomeScreen> {//和statefulwidget適配對�
   }
 }
 
-class MenuPage extends StatelessWidget {//菜單
+class MenuPage extends StatefulWidget{
+   @override
+  MenuPageState createState()=>MenuPageState();
+}
+
+
+class MenuPageState extends State<MenuPage> {//菜單
+  String? _addedProductName;
+  File? _addedProductImage;
+  //處理返回的商品資訊
+  Future<void>_navigateToCreateMerchandise() async{
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context)=>CreateMerchandise())
+    );
+    if(result!=null&&result is Map<String,dynamic>){
+      setState(() {
+        _addedProductName =result['name'];
+        //將圖片path轉換成file
+        if(result['image']!=null){
+          _addedProductImage = File(result['image']);
+        }
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(//基礎的布局結構
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("菜單"),
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0x179E9E9E),
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
@@ -151,36 +175,35 @@ class MenuPage extends StatelessWidget {//菜單
           mainAxisAlignment: MainAxisAlignment.start,//確保頂部對齊
           crossAxisAlignment: CrossAxisAlignment.start,//確保左側對齊
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CreateMerchandise()),
-                );
-              },
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                ),
-                child: Center(
-                  child: Text(
-                    '+',
-                    style: TextStyle(fontSize: 50),
+            SizedBox(height: 20),
+            if(_addedProductImage !=null)
+              Column(
+                crossAxisAlignment:CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(right:10),
+                    child: Image.file(_addedProductImage!),
                   ),
+                  Text(
+                    _addedProductName ?? '',
+                    style: TextStyle(fontSize:16),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  GestureDetector(
+                   onTap: _navigateToCreateMerchandise,
+                   child: Text(
+                      '加入你的商品',
+                      textAlign:TextAlign.center,
+                      style: TextStyle(fontSize:20,color:Colors.black),
+                   ),
                 ),
-              ),
+              ],
             ),
-            SizedBox(height: 10),
-            Text(
-              '加入你的商品',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-          ],
-        ),
-      ),
+       ),
     );
   }
 }
