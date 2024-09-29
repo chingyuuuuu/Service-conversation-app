@@ -83,10 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {//和statefulwidget適配對�
               leading: Icon(Icons.shopping_bag),
               title: Text('訂單'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OrderPage()),
-                );
               },
             ),
             ListTile(
@@ -135,28 +131,43 @@ class MenuPage extends StatefulWidget{
 }
 
 
-class MenuPageState extends State<MenuPage> {//菜單
-  String? _addedProductName;
-  File? _addedProductImage;
-  //處理返回的商品資訊
-  Future<void>_navigateToCreateMerchandise() async{
+class MenuPageState extends State<MenuPage> {
+  List<Map<String, dynamic>>_addedProducts = [];//儲存多個商品訊息
+
+  Future<void> _navigateToCreateMerchandise() async {
     final result = await Navigator.push(
         context,
-        MaterialPageRoute(builder: (context)=>CreateMerchandise())
+        MaterialPageRoute(builder: (context) => CreateMerchandise())
     );
-    if(result!=null&&result is Map<String,dynamic>){
+    if (result != null && result is Map<String, dynamic>) {
       setState(() {
-        _addedProductName =result['name'];
-        //將圖片path轉換成file
-        if(result['image']!=null){
-          _addedProductImage = File(result['image']);
-        }
+        //將商品資訊放入列表中
+        _addedProducts.add({
+          'name': result['name'],
+          'image': result['image'] != null ? File(result['image']) : null,
+        });
       });
     }
   }
+
+  void _navigateToProductDetail(Map<String, dynamic> product, int index) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProductDetailPage(product: product, index: index),
+      ),
+    );
+
+    if (result != null && result == 'delete') {
+      setState(() {
+        _addedProducts.removeAt(index);  // 刪除商品
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(//基礎的布局結構
+    return Scaffold( //基礎的布局結構
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("菜單"),
@@ -164,107 +175,121 @@ class MenuPageState extends State<MenuPage> {//菜單
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
-            Scaffold.of(context).openDrawer();//打開側邊欄
+            Scaffold.of(context).openDrawer(); //打開側邊欄
           },
         ),
       ),
-      body: Container(//創建商品
-        alignment: Alignment.topLeft,
-        padding: const  EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,//確保頂部對齊
-          crossAxisAlignment: CrossAxisAlignment.start,//確保左側對齊
-          children: <Widget>[
-            SizedBox(height: 20),
-            if(_addedProductImage !=null)
-              Column(
-                crossAxisAlignment:CrossAxisAlignment.center,
-                children: [
-                  Container(
+      body: _addedProducts.isEmpty
+          ? Center(child: Text("尚未加入商品"))
+          : GridView.builder(//用來生成網格
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // 每行顯示兩個商品
+          crossAxisSpacing: 10.0, // 方框之間的水平間距
+          mainAxisSpacing: 10.0, // 方框之間的垂直間距
+          childAspectRatio: 0.8, // 控制圖片與文字的比例
+        ),
+        itemCount: _addedProducts.length,//生成圖片顯示元素
+        itemBuilder: (context, index) {
+          final product = _addedProducts[index];
+          return GestureDetector(
+            onTap:(){
+                 _navigateToProductDetail(product,index);
+          },
+          child: Column(
+            children: [
+              // 顯示圖片（如果有）
+              product['image'] != null
+                  ? Container(
                     width: 100,
                     height: 100,
-                    margin: EdgeInsets.only(right:10),
-                    child: Image.file(_addedProductImage!),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                    ),
+                  child: Image.file(
+                    product['image'],
+                      fit: BoxFit.cover, // 圖片填充方式
+                    ),
+                  )
+                  : Container(
+                    width: 100,
+                    height: 100,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.image, size: 50, color: Colors.grey),
                   ),
-                  Text(
-                    _addedProductName ?? '',
-                    style: TextStyle(fontSize:16),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  GestureDetector(
-                   onTap: _navigateToCreateMerchandise,
-                   child: Text(
-                      '加入你的商品',
-                      textAlign:TextAlign.center,
-                      style: TextStyle(fontSize:20,color:Colors.black),
-                   ),
-                ),
-              ],
-            ),
-       ),
+              SizedBox(height: 5),
+              // 顯示名稱
+              Text(
+                product['name'],
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis, // 當名稱過長時省略
+                textAlign: TextAlign.center,
+              ),
+            ],
+           ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _navigateToCreateMerchandise,
+        backgroundColor: Colors.white,
+        child: Icon(
+            Icons.add,
+            color:Colors.black,
+        ),
+      ),
     );
   }
 }
 
-class OrderPage extends StatelessWidget {//訂單紀錄
+
+class ProductDetailPage extends StatelessWidget {
+  final Map<String, dynamic> product;
+  final int index;
+
+  ProductDetailPage({required this.product, required this.index});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text("訂單"),
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {
-            Navigator.pop(context); // 返回上一頁
-          },
-        ),
+        title: Text('商品詳情'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            // 顯示圖片
+            product['image'] != null
+                ? Image.file(
+              product['image'],
               width: double.infinity,
-              color: Color(0xFF223888),
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '賺入',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    'NT\$100',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                ],
-              ),
+              height: 200,
+              fit: BoxFit.cover,
+            )
+                : Container(
+              width: double.infinity,
+              height: 200,
+              color: Colors.grey[300],
+              child: Icon(Icons.image, size: 100, color: Colors.grey),
             ),
             SizedBox(height: 20),
-            Row(
-              children: [
-                Checkbox(
-                  value: false, // 依實際情況修改
-                  onChanged: (value) {
-                    // 處理選擇狀態改變
-                  },
-                ),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: '數量',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-              ],
+            // 顯示名稱
+            Text(
+              '名稱: ${product['name']}',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            // 顯示刪除按鈕
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pop(context, 'delete');  // 返回上一頁並通知刪除
+              },
+              icon: Icon(Icons.delete),
+              label: Text('刪除商品'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+              ),
             ),
           ],
         ),
@@ -272,4 +297,3 @@ class OrderPage extends StatelessWidget {//訂單紀錄
     );
   }
 }
-
