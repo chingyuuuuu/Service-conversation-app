@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jkmapp/menu.dart';
 import 'package:jkmapp/Login.dart';
@@ -5,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'settingpage.dart';
 import 'createmerchandise.dart';
 import 'dart:io';
-
+import 'productdetail.dart';
 
 
 class dining extends StatelessWidget {
@@ -142,11 +143,8 @@ class MenuPageState extends State<MenuPage> {
     if (result != null && result is Map<String, dynamic>) {
       setState(() {
         //將商品資訊放入列表中
-        _addedProducts.add({
-          'name': result['name'],
-          'image': result['image'] != null ? File(result['image']) : null,
+        _addedProducts.add(result);
         });
-      });
     }
   }
 
@@ -197,22 +195,27 @@ class MenuPageState extends State<MenuPage> {
           },
           child: Column(
             children: [
-              // 顯示圖片（如果有）
+              // 根據不同環境來顯示圖片
               product['image'] != null
                   ? Container(
-                    width: 100,
-                    height: 100,
+                    width: 200,
+                    height: 200,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                     ),
-                  child: Image.file(
-                    product['image'],
-                      fit: BoxFit.cover, // 圖片填充方式
+                  child: kIsWeb
+                       ?Image.memory(//web
+                      product['image'],
+                      fit: BoxFit.cover,
+                   )
+                     :Image.file(
+                     File(product['image']),
+                     fit:BoxFit.cover,
                     ),
                   )
                   : Container(
-                    width: 100,
-                    height: 100,
+                    width: 200,
+                    height: 200,
                     color: Colors.grey[300],
                     child: Icon(Icons.image, size: 50, color: Colors.grey),
                   ),
@@ -242,58 +245,3 @@ class MenuPageState extends State<MenuPage> {
 }
 
 
-class ProductDetailPage extends StatelessWidget {
-  final Map<String, dynamic> product;
-  final int index;
-
-  ProductDetailPage({required this.product, required this.index});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('商品詳情'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 顯示圖片
-            product['image'] != null
-                ? Image.file(
-              product['image'],
-              width: double.infinity,
-              height: 200,
-              fit: BoxFit.cover,
-            )
-                : Container(
-              width: double.infinity,
-              height: 200,
-              color: Colors.grey[300],
-              child: Icon(Icons.image, size: 100, color: Colors.grey),
-            ),
-            SizedBox(height: 20),
-            // 顯示名稱
-            Text(
-              '名稱: ${product['name']}',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            // 顯示刪除按鈕
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pop(context, 'delete');  // 返回上一頁並通知刪除
-              },
-              icon: Icon(Icons.delete),
-              label: Text('刪除商品'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

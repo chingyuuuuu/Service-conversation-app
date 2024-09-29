@@ -4,7 +4,6 @@ import 'package:file_picker/file_picker.dart';//用於web
 import 'package:image_picker/image_picker.dart';//用於app
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart' as p;
 import 'package:flutter/foundation.dart' show kIsWeb;//用於判斷是否為web環境
 import 'dart:io' as io;
 import 'dart:typed_data';
@@ -220,6 +219,8 @@ class CreateMerchandiseState extends State<CreateMerchandise> {
       request.fields['quantity'] = quantity.toString();
       request.fields['user_id'] = userId ?? '';
 
+
+      //上傳圖片
       if (_selectedImageBytes != null || _selectedImageFile != null) {
         if (kIsWeb) {
           // 如果是 Web，使用二進制數據進行上傳
@@ -248,6 +249,10 @@ class CreateMerchandiseState extends State<CreateMerchandise> {
         _showSnackBar("儲存成功", Colors.green);
         Navigator.pop(context, {
           'name': name,
+          'type':type,
+          'price':price,
+          'cost':cost,
+          'quantity':quantity,
           'image': kIsWeb ? _selectedImageBytes : _selectedImageFile?.path, // 根據環境回傳不同的數據
         });
       } else {
@@ -265,7 +270,7 @@ class CreateMerchandiseState extends State<CreateMerchandise> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text("Create merchandise"),
+          title: Text("創建商品"),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -343,6 +348,12 @@ class CreateMerchandiseState extends State<CreateMerchandise> {
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 ),
               ),
+                //實際預覽選擇圖片
+                _selectedImageBytes !=null
+                    ? Image.memory(_selectedImageBytes!, width: 100, height: 100)
+                    : _selectedImageFile != null
+                    ? Image.file(_selectedImageFile!, width: 100, height: 100)
+                    : Container(),
             ],
           ),
         ),
