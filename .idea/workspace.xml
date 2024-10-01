@@ -5,10 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="update-2">
-      <change afterPath="$PROJECT_DIR$/lib/productdetail.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/UI/widgets/image_display.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/client.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/routes/app_routes.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/services/products/loadingproducts.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/services/products/saveproduct_service.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/services/products/typedialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/utils/SnackBar.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/api_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/api_service.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/createmerchandise.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/createmerchandise.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dining.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/menu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/productdetail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/productdetail.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/settingpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/settingpage.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,29 +55,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
-    &quot;Python.flask-swagger-ui.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;ToolWindowRunning Devices.ShowToolbar&quot;: &quot;false&quot;,
-    &quot;com.android.tools.idea.streaming.zoom.toolbar.visible&quot;: &quot;false&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ching/Downloads&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Flutter.main.dart.executor": "Run",
+    "Python.flask-swagger-ui.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.run.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ToolWindowRunning Devices.ShowToolbar": "false",
+    "com.android.tools.idea.streaming.zoom.toolbar.visible": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/ching/Downloads/avec_moi_with_us_app-master",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\services\products" />
+      <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\services" />
       <recent name="C:\Users\ching\PycharmProjects\JKM\my_flask_app" />
       <recent name="C:\Users\ching\PycharmProjects\JKM\my_flask_app\static" />
       <recent name="C:\Users\ching\PycharmProjects\JKM\my_flask_app\app" />
@@ -196,7 +210,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727621276753</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="update-2">
+      <option name="closed" value="true" />
+      <created>1727625624307</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1727625624307</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -223,6 +245,11 @@
           <url>file://$PROJECT_DIR$/lib/main.dart</url>
           <line>9</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/services/products/typedialog.dart</url>
+          <line>62</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart' show kIsWeb;//用於判斷是否為web環境
+import 'package:jkmapp/UI/widgets/image_display.dart';
 
 
 class ProductDetailPage extends StatefulWidget {
@@ -23,6 +25,8 @@ class _productDetailPageState extends State<ProductDetailPage>{
   File? _selectedImageFile;
 
 
+
+
   @override
   void initState(){
     super.initState();
@@ -32,12 +36,14 @@ class _productDetailPageState extends State<ProductDetailPage>{
     _priceController = TextEditingController(text: widget.product['price'].toString());
     _costController = TextEditingController(text: widget.product['cost'].toString());
     _quantityController = TextEditingController(text: widget.product['quantity'].toString());
+
     if (widget.product['image'] is Uint8List) {
       _selectedImageBytes = widget.product['image'];
     } else if (widget.product['image'] is String) {
       _selectedImageFile = File(widget.product['image']);
     }
   }
+
 
   void _saveChanged(){
      Navigator.pop(context,{
@@ -67,17 +73,6 @@ class _productDetailPageState extends State<ProductDetailPage>{
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 顯示圖片
-              _selectedImageBytes != null
-                  ? Image.memory(_selectedImageBytes!, width: 200, height: 200)
-                  : _selectedImageFile != null
-                  ? Image.file(_selectedImageFile!, width: 200, height: 200)
-                  : Container(
-                width: 200,
-                height: 200,
-                color: Colors.grey[300],
-                child: Icon(Icons.image, size: 100, color: Colors.grey),
-              ),
               SizedBox(height: 16),
               // 商品名稱
               TextField(
@@ -114,7 +109,7 @@ class _productDetailPageState extends State<ProductDetailPage>{
                       ElevatedButton(
                           onPressed: _saveChanged,
                           style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: Colors.black,
                           ),
                           child: Text(
                           '儲存',
@@ -125,11 +120,11 @@ class _productDetailPageState extends State<ProductDetailPage>{
                       ElevatedButton(
                         onPressed: _deleteProduct,
                         style:ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
+                        backgroundColor: Colors.white,
                       ),
                       child: Text(
                       '刪除',
-                      style: TextStyle(color:Colors.white),
+                      style: TextStyle(color:Colors.red),
                      ),
                     ),
                 ],

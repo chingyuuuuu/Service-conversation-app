@@ -40,13 +40,16 @@ class  Login extends StatelessWidget {
           context,
           MaterialPageRoute(builder: (context) => Choose()),
         );
-      } else {
-        final responseData = json.decode(response.data);
-        _showErrorDialog(context, responseData['message']);
+      } else if(response.statusCode == 401){
+        _showErrorDialog(context, '帳號或密碼錯誤');
+      }
+      else {
+        //使用dio直接解析response.data
+        _showErrorDialog(context, response.data['message']);
       }
     } catch (e) {
       print('Error occurred: $e');
-      _showErrorDialog(context, '帳號密碼未輸入');
+      _showErrorDialog(context, '伺服器錯誤');
     }
   }
 
@@ -54,6 +57,7 @@ class  Login extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.white,
         title: Text('登入失敗'),
         content: Text(message),
         actions: <Widget>[
@@ -67,6 +71,7 @@ class  Login extends StatelessWidget {
       ),
     );
   }
+
   void _register(BuildContext context) {
     Navigator.push(
       context,

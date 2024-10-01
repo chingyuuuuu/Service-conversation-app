@@ -26,10 +26,13 @@ class SettingsPageState extends State<SettingsPage> {
     _loadInitialValues();//加載保存的設置
   }
 
-  void _loadInitialValues() async {//用於從sharedpreferences加載儲存的值
+  //用於從sharedpreferences加載儲存的值
+  void _loadInitialValues() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _storeNameController.text = prefs.getString('storeName') ?? '店家';
-    _passwordController.text = prefs.getString('password') ?? '123456';
+    setState(() {
+      _storeNameController.text = prefs.getString('storeName') ?? '店家';
+      _passwordController.text = prefs.getString('password') ?? '123456';
+    });
   }
 
   //將店家名稱儲存到sharedpreferences(暫存)
@@ -37,7 +40,6 @@ class SettingsPageState extends State<SettingsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('storeName', storeName);
   }
-
   Future<void> _savePassword(String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('password', password);

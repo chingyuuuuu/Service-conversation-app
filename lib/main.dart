@@ -6,9 +6,9 @@ import 'Forget1.dart';
 import 'Choose.dart';
 import 'Register.dart';
 import 'Forget2.dart';
-import 'api_service.dart';
+import 'services/api_service.dart';
 import 'dining.dart';
-import 'menu.dart';
+import 'client.dart';
 import 'createmerchandise.dart';
 
 void main() {
