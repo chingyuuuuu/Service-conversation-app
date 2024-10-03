@@ -21,8 +21,7 @@ class _productDetailPageState extends State<ProductDetailPage>{
    late TextEditingController _priceController;
    late TextEditingController _costController;
    late TextEditingController _quantityController;
-   Uint8List? _selectedImageBytes;
-   File? _selectedImageFile;
+
 
 
 

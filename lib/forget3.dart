@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login.dart';
-import 'package:jkmapp/routers/app_routes.dart';
 
 class Forget3 extends StatefulWidget {
   @override
@@ -13,8 +12,8 @@ class Forget3 extends StatefulWidget {
 class _Forget3State extends State<Forget3> {
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-  String _message = '';
   String? email; //讀取存取的email
+  String? _message;
 
   @override
   void initState() {
@@ -30,15 +29,15 @@ class _Forget3State extends State<Forget3> {
   }
 
   Future<void> _updatePassword() async {
-    final new_password = _newPasswordController.text;
+    final newPassword = _newPasswordController.text;
     final confirm_password = _confirmPasswordController.text;
-    if ( new_password.isEmpty || confirm_password.isEmpty) {
+    if ( newPassword.isEmpty || confirm_password.isEmpty) {
       setState(() {
         _message = 'Both fields are required';
       });
       return;
     }
-    if (new_password != confirm_password) {
+    if (newPassword != confirm_password) {
       setState(() {
         _message = 'Passwords do not match';
       });
@@ -56,7 +55,7 @@ class _Forget3State extends State<Forget3> {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'email': email,
-        'new_password': new_password,
+        'new_password': newPassword,
         'confirm_password':confirm_password,
       }),
     );

@@ -3,7 +3,6 @@ import 'Forget2.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; //用於解析json數據
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:jkmapp/routers/app_routes.dart';
 
 
 class Forget1 extends StatefulWidget {
