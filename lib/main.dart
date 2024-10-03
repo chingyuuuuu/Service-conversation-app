@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/forget3.dart';
-import 'First.dart'; // 导入你的页面文件
-import 'Login.dart';
-import 'Forget1.dart';
-import 'Choose.dart';
-import 'Register.dart';
-import 'Forget2.dart';
-import 'services/api_service.dart';
-import 'dining.dart';
-import 'client.dart';
-import 'createmerchandise.dart';
+import 'package:jkmapp/routers/app_routes.dart';
+import 'package:jkmapp/services/api_service.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,20 +15,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/first', // 设置初始路由为 first 页面
-      routes: {
-        '/first': (context) => First(),
-        '/login': (context) => Login(),
-        '/forget1':(context)=> Forget1(),
-        '/choose':(context)=> Choose(),
-        '/register':(context)=>Register(),
-        '/forget2':(context)=>Forget2(),
-        '/forget3':(cnotext)=>Forget3(),
-        '/dining':(context)=>dining(),
-        '/createmerchandise':(context)=>CreateMerchandise(),
-        '/menu':(context)=>menu(),
-
-      },
+      initialRoute: Routers.first,
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
@@ -49,11 +28,12 @@ class DataWidget extends StatefulWidget {
 
 class _DataWidgetState extends State<DataWidget> {
   Future<Map<String, dynamic>>? _data;
+  final ApiService _apiService = ApiService();
 
   @override
   void initState() {
     super.initState();
-    _data = fetchData();
+    _data= _apiService.fetchData();//調用api獲取數據
   }
 
   @override
@@ -72,4 +52,5 @@ class _DataWidgetState extends State<DataWidget> {
     );
   }
 }
+
 

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jkmapp/utils/exception.dart';
 import 'Forget1.dart';
-import 'Choose.dart';
-import 'Register.dart';
-import 'dart:convert';
-import 'package:dio/dio.dart';//用於發送網路請求
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:jkmapp/services/user/AuthenticationService.dart';
+import 'package:jkmapp/utils/diolog.dart';
+import 'package:jkmapp/routers/app_routes.dart';
 
 
 
@@ -16,66 +14,26 @@ class  Login extends StatelessWidget {
   Future<void> _login(BuildContext context) async {
     final email = _emailController.text;
     final password = _passwordController.text;
-
-    var dio = Dio();
+    final authService = AuthenticationService();
 
     try {
-      final response = await dio.post(
-        'http://127.0.0.1:5000/login',
-        options: Options(
-          headers: {'Content-type': 'application/json'},
-        ),
-        data: json.encode({'account': email, 'password': password}),
-      );
-
-      if (response.statusCode == 200) {
-        //獲取uesr_id
-         String userId = response.data['user_id'];
-
-        //暫存user_id
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('user_id', userId);
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Choose()),
-        );
-      } else if(response.statusCode == 401){
-        _showErrorDialog(context, '帳號或密碼錯誤');
+      await authService.login(email, password);
+      Navigator.pushNamed(context, Routers.choose,);
+    }catch (e) {
+      if (e is AuthException) {
+        showErrorDialog(context, '帳號或密碼錯誤');
+      } else if (e is ServerException) {
+        showErrorDialog(context, '伺服器錯誤');
+      } else {
+        showErrorDialog(context, '未知錯誤: $e');
       }
-      else {
-        //使用dio直接解析response.data
-        _showErrorDialog(context, response.data['message']);
-      }
-    } catch (e) {
-      print('Error occurred: $e');
-      _showErrorDialog(context, '伺服器錯誤');
     }
   }
 
-  void _showErrorDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: Text('登入失敗'),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: Text('確定'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
   void _register(BuildContext context) {
-    Navigator.push(
+    Navigator.pushNamed(
       context,
-      MaterialPageRoute(builder: (context) => Register()),
+      '/Register',
     );
   }
 

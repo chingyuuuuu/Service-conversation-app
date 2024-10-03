@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dining.dart';
+import 'package:jkmapp/routers/app_routes.dart';
 
 
 class Choose extends StatelessWidget {
@@ -37,10 +37,7 @@ class Choose extends StatelessWidget {
           SizedBox(height:40.0),
           ElevatedButton(
             onPressed: (){
-              Navigator.push(
-                 context,
-                MaterialPageRoute(builder: (context)=>dining()),
-              );
+              Navigator.pushNamed(context, Routers.dining);
             },
              child: Text('餐飲業',
                          style:TextStyle(

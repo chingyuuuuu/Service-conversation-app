@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/client.dart';
-import 'package:jkmapp/Login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'settingpage.dart';
 import 'menu.dart';
+import 'package:jkmapp/routers/app_routes.dart';
+
 
 
 class dining extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,//隱藏右上角的debug
-      home:HomeScreen(),
-    );
+     return HomeScreen();
   }
 }
+
 class HomeScreen extends StatefulWidget {//定義widget的外觀和行為
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -99,20 +97,15 @@ class _HomeScreenState extends State<HomeScreen> {//和statefulwidget適配對�
               leading: Icon(Icons.person_outline),
               title: Text('客人模式'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder:(context)=>menu()),
-                );
+                Navigator.pushNamed(context, Routers.Client);
+
               },
             ),
             ListTile(
               leading: Icon(Icons.logout),
               title: Text('登出'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context)=>Login()),
-                );
+                Navigator.pushNamed(context, Routers.Login);
               },
             ),
           ],

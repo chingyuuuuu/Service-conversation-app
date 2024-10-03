@@ -8,6 +8,7 @@ import 'dart:typed_data';
 import 'package:jkmapp/services/products/saveproduct_service.dart';
 import 'package:jkmapp/services/products/typedialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jkmapp/routers/app_routes.dart';
 
 
 class CreateMerchandise extends StatefulWidget {
@@ -91,7 +92,7 @@ class CreateMerchandiseState extends State<CreateMerchandise> {
 
   final SaveProductService _saveProductService = SaveProductService();
   void _saveProduct() async {
-    // 调用 saveProduct 来保存商品
+    // 调用 saveProduct 来保存商品資訊
     await _saveProductService.saveProduct(
       context: context,
       nameController: _nameController,

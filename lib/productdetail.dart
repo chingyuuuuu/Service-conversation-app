@@ -1,64 +1,80 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:flutter/foundation.dart' show kIsWeb;//用於判斷是否為web環境
-import 'package:jkmapp/UI/widgets/image_display.dart';
+import 'package:jkmapp/services/products/loadingproducts.dart';
+
+
 
 
 class ProductDetailPage extends StatefulWidget {
-  final Map<String, dynamic> product;
-  final int index;
-
-  ProductDetailPage({required this.product, required this.index});
+  final int productId;//接受從上個頁面傳來productId
+  ProductDetailPage({required this.productId});//傳遞productId 來創建
 
   @override
   _productDetailPageState createState()=>_productDetailPageState();
 }
 
 class _productDetailPageState extends State<ProductDetailPage>{
-  late TextEditingController _nameController;
-  late TextEditingController _typeController;
-  late TextEditingController _priceController;
-  late TextEditingController _costController;
-  late TextEditingController _quantityController;
-  Uint8List? _selectedImageBytes;
-  File? _selectedImageFile;
+   Map<String, dynamic>? productDetails;//保存加載到的商品資訊
+   late TextEditingController _nameController;
+   late TextEditingController _typeController;
+   late TextEditingController _priceController;
+   late TextEditingController _costController;
+   late TextEditingController _quantityController;
+   Uint8List? _selectedImageBytes;
+   File? _selectedImageFile;
 
 
 
-
-  @override
+   @override
   void initState(){
     super.initState();
-    //初始化:顯示商品創建時的資訊
-    _nameController = TextEditingController(text: widget.product['name']);
-    _typeController = TextEditingController(text: widget.product['type']);
-    _priceController = TextEditingController(text: widget.product['price'].toString());
-    _costController = TextEditingController(text: widget.product['cost'].toString());
-    _quantityController = TextEditingController(text: widget.product['quantity'].toString());
-
-    if (widget.product['image'] is Uint8List) {
-      _selectedImageBytes = widget.product['image'];
-    } else if (widget.product['image'] is String) {
-      _selectedImageFile = File(widget.product['image']);
-    }
+    //一定要初始化，避免初始化錯誤
+    _nameController = TextEditingController(text: '');
+    _typeController = TextEditingController(text: '');
+    _priceController = TextEditingController(text: '');
+    _costController = TextEditingController(text: '');
+    _quantityController = TextEditingController(text: '');
+     //根據productid加載商品資訊
+    _loadProductDetails(widget.productId);
   }
 
+  Future<void> _loadProductDetails(int productId) async {
+      final product = await ProductService.loadProductDetails(context,productId);
+      if (product != null) {
+        setState(() {
+          productDetails = product;
+          //初始化商品資訊
+          // 初始化 TextEditingController，显示加载到的商品信息
+          _nameController.text = product['name'];
+          _typeController.text = product['type'];
+          _priceController.text = product['price'].toString();
+          _costController.text = product['cost'].toString();
+          _quantityController.text = product['quantity'].toString();
 
-  void _saveChanged(){
-     Navigator.pop(context,{
-       'name': _nameController.text,
-       'type': _typeController.text,
-       'price': double.tryParse(_priceController.text),
-       'cost': double.tryParse(_costController.text),
-       'quantity': int.tryParse(_quantityController.text),
-       'image': _selectedImageBytes ?? _selectedImageFile?.path,
-     });
+        });
+      }
   }
-  //刪除商品
-  void _deleteProduct(){
-     Navigator.pop(context,'delete');//返回delete
+  Future<void> _updateProduct()async{
+      await ProductService.updateProduct(//等待回應，更新產品資訊
+          context,
+          widget.productId,
+          _nameController.text,
+          _typeController.text,
+          double.parse(_priceController.text),
+          double.parse(_costController.text),
+          int.parse(_quantityController.text),
+      );
   }
+
+  Future<void>_deleteProduct()async{
+      bool isDeleted=await ProductService.deleteProduct(context, widget.productId);
+      if(isDeleted) {
+        //刪除成功後刷新
+        Navigator.pop(context,'delete');
+      }
+
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +123,7 @@ class _productDetailPageState extends State<ProductDetailPage>{
                 mainAxisSize: MainAxisSize.min,
                 children: [
                       ElevatedButton(
-                          onPressed: _saveChanged,
+                          onPressed: _updateProduct,//更新商品資訊
                           style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
                           ),

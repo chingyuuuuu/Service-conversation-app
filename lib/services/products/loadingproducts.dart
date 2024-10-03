@@ -32,6 +32,7 @@ class ProductService{//定義一個加載數據的方法
               //將每個商品轉換為map<string,dynamic
               return products.map<Map<String,dynamic>>((product){
                    return{
+                     'product_id':product['product_id'],
                      'name': product['name'],
                      'type': product['type'],
                      'price': product['price'],
@@ -50,4 +51,90 @@ class ProductService{//定義一個加載數據的方法
        }
     }
 
-}
+    static Future<Map<String,dynamic>?> loadProductDetails(BuildContext context,int productId)async{
+      final url = Uri.parse('http://127.0.0.1:5000/getproducts/$productId');
+      try{
+          final response = await http.get(url,headers: {'Content-Type':'application/json'});
+          if (response.statusCode == 200){
+            return json.decode(response.body);
+          }else if(response.statusCode ==404){
+            //找不到商品
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('商品未找到')));
+          }else{
+            //其他錯誤
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('加載商品失败')));
+            return null;
+          }
+      }catch(e){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('發生錯誤')));
+        return null;
+      }
+    }
+
+    static Future<void>updateProduct(
+            BuildContext context,
+            int productId,
+            String name,
+            String type,
+            double price,
+            double cost,
+            int quantity
+        )async{
+         //透過url將productId傳到後端
+         final url = Uri.parse('http://127.0.0.1:5000/update_product/$productId');
+         final headers = {'Content-Type': 'application/json'};
+         final body = json.encode({//傳遞給後端
+           'name': name,
+           'type': type,
+           'price': price,
+           'cost': cost,
+           'quantity': quantity,
+         });
+         try{
+            //response 是由後端回應的數據
+            final response =await http.put(url,headers:headers,body: body);
+            if(response.statusCode==200){
+              SnackBarutils.showSnackBar(context, '商品更新成功', Colors.green);
+              Navigator.pop(context);//回到menu
+            }else if(response.statusCode==404){
+               //商品不存在
+              SnackBarutils.showSnackBar(context, '商品未找到', Colors.red);
+
+            }else{
+              //其他錯誤
+              SnackBarutils.showSnackBar(context, '商品更新失败', Colors.red);
+
+            }
+
+         }catch(e){
+           SnackBarutils.showSnackBar(context, '發生錯誤，稍後重試', Colors.red);
+         }
+    }
+    //刪除商品
+    static Future<bool>deleteProduct(BuildContext context, int productId) async {
+      final url = Uri.parse('http://127.0.0.1:5000/delete_product/$productId');
+      try {
+        final response = await http.delete(
+            url, headers: {'Content-Type': 'application/json'});
+        if (response.statusCode == 200) {
+          //刪除成功
+          SnackBarutils.showSnackBar(context, '商品刪除成功', Colors.green);
+
+          return true;
+        } else if (response.statusCode == 404) {
+          //商品未找到
+          SnackBarutils.showSnackBar(context, '商品未找到', Colors.red);
+
+          return false;
+        } else {
+          //其他錯誤
+          SnackBarutils.showSnackBar(context, '商品刪除失敗', Colors.red);
+          return false;
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('發生錯誤，稍後重試')));
+            return false;
+      }
+    }
+ }

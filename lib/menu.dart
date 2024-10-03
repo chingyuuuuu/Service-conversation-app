@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'createmerchandise.dart';
-import 'productdetail.dart';
 import 'package:jkmapp/UI/widgets/image_display.dart';
 import 'package:jkmapp/services/products/loadingproducts.dart';
+import 'package:jkmapp/routers/app_routes.dart';
+
 
 class MenuPage extends StatefulWidget{
   @override
@@ -20,33 +20,31 @@ class MenuPageState extends State<MenuPage> {
 
   //從ProductService加載商品數據
   void _loadProducts() async {
-    List<Map<String, dynamic>> products = await ProductService.loadProdcuts(context);
+    final loadedProducts = await ProductService.loadProdcuts(context);
     setState(() {
-      _addedProducts = products; // 更新商品數據
+      _addedProducts = loadedProducts;//加載商品列表(有包含productId)
     });
   }
 
+  //problem
   Future<void> _navigateToCreateMerchandise() async {
-    final result = await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => CreateMerchandise())
-    );
+    final result = await Navigator.pushNamed(context,Routers.createMerchandise);
     if (result != null && result is Map<String, dynamic>) {
       setState(() {
         //將新增商品資訊放入列表中
         _addedProducts.add(result);
       });
     }
+    _loadProducts();//返回之後刷新商品頁面
   }
 
+  //傳遞productId到商品資訊頁面
   void _navigateToProductDetail(Map<String, dynamic> product, int index) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ProductDetailPage(product: product, index: index),
-      ),
-    );
-
+    final result = await Navigator.pushNamed(
+        context,Routers.productdetail,
+        arguments:{
+          'product_id':product['product_id'],
+        });
     if (result != null && result == 'delete') {
       setState(() {
         _addedProducts.removeAt(index);  // 刪除商品

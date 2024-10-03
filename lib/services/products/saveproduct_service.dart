@@ -5,8 +5,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jkmapp/utils/SnackBar.dart';
-
-
+import 'dart:convert';
 
 class SaveProductService{
   Future<String?> _getUserId() async {
@@ -93,18 +92,12 @@ class SaveProductService{
 
          final response = await request.send();
          final responseData = await http.Response.fromStream(response);
-         print(responseData.body);
+         final responseBody = json.decode(responseData.body);
 
          if (response.statusCode == 200) {
+           final productId = responseBody['productId'];//獲得產品id
            SnackBarutils.showSnackBar(context, "儲存成功", Colors.green);
-           Navigator.pop(context, {//傳遞值給上個頁面
-             'name': name,
-             'type': type,
-             'price': price,
-             'cost': cost,
-             'quantity': quantity,
-             'image': kIsWeb ? selectedImageBytes : selectedImageFile?.path,
-           });
+           Navigator.pop(context,true);//傳遞true表示需要刷新menu
          } else {
            SnackBarutils.showSnackBar(context, "儲存失敗", Colors.red);
          }

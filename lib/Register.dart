@@ -1,64 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'Login.dart';
+import 'package:jkmapp/utils/diolog.dart';
+import 'package:jkmapp/services/user/AuthenticationService.dart';
+import 'package:jkmapp/utils/exception.dart';
+import 'package:jkmapp/routers/app_routes.dart';
+
 
 class Register extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final AuthenticationService _authService = AuthenticationService();
 
   Future<void> _register(BuildContext context) async {
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/register'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'account': email,
-        'password': password,
-      }),
-    );
-
-    if (response.statusCode == 201 ||response.statusCode == 200) {
-      // Registration successful
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('註冊成功'),
-          content: Text('你已經成功註冊了!'),
-          actions: <Widget>[
-            TextButton(
-              child: Text('確定'),
-              onPressed: () {
-                Navigator.of(ctx).pop(); // Close the dialog
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                );
-              },
-            ),
-          ],
-        ),
-      );
-    } else {
-      final responseData = json.decode(response.body);
-      // Show error message
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('註冊失敗'),
-          content: Text(responseData['message']),
-          actions: <Widget>[
-            TextButton(
-              child: Text('確定'),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            ),
-          ],
-        ),
-      );
+    try {
+      await _authService.register(email, password);
+      showSucessDialog(
+          context, '成功註冊','你已經成功註冊了!', onConfirmed: () {
+        Navigator.pushNamed(context, Routers.Login);
+      });
+    }catch(e){
+      if (e is AuthException) {
+        showErrorDialog(context, e.message);
+      } else if (e is ServerException) {
+        showErrorDialog(context, e.message);
+      } else {
+        showErrorDialog(context, '未知錯誤: $e');
+      }
     }
   }
 

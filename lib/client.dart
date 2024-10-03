@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/dining.dart';
+import 'package:jkmapp/routers/app_routes.dart';
 
 
 
 
-class menu extends StatefulWidget {
+class Client extends StatefulWidget {
   @override
   _MenuState createState() => _MenuState();
 }
 
-class _MenuState extends State<menu> {
+class _MenuState extends State<Client> {
   String password = '123456'; // 預設密碼
   TextEditingController passwordController = TextEditingController();
 
