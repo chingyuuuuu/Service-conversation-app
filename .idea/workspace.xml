@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="update-2">
-      <change afterPath="$PROJECT_DIR$/lib/UI/widgets/image_display.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/client.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/routes/app_routes.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/services/products/loadingproducts.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/services/products/saveproduct_service.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/services/products/typedialog.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utils/SnackBar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/api_service.dart" afterDir="false" />
+    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="修改更新路由">
+      <change beforePath="$PROJECT_DIR$/lib/Forget1.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Forget1.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Forget2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Forget2.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/client.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/createmerchandise.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/createmerchandise.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dining.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/menu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/forget3.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/forget3.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/productdetail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/productdetail.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/settingpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/settingpage.dart" afterDir="false" />
     </list>
@@ -71,18 +67,21 @@
     "ignore.virus.scanning.warn.message": "true",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ching/Downloads/avec_moi_with_us_app-master",
+    "last_opened_file_path": "C:/Users/ching/IdeaProjects/jkmapp/lib/UI/pages/user",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\UI\pages\user" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\UI\pages\user" />
       <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\services\products" />
       <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\services" />
       <recent name="C:\Users\ching\PycharmProjects\JKM\my_flask_app" />
       <recent name="C:\Users\ching\PycharmProjects\JKM\my_flask_app\static" />
-      <recent name="C:\Users\ching\PycharmProjects\JKM\my_flask_app\app" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.main.dart">
@@ -218,7 +217,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727625624307</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="修改載入資料的功能">
+      <option name="closed" value="true" />
+      <created>1727795430846</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1727795430846</updated>
+    </task>
+    <task id="LOCAL-00009" summary="修改更新路由">
+      <option name="closed" value="true" />
+      <created>1727956694365</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1727956694365</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -236,16 +251,13 @@
     <MESSAGE value="initial commit" />
     <MESSAGE value="hello" />
     <MESSAGE value="update-2" />
-    <option name="LAST_COMMIT_MESSAGE" value="update-2" />
+    <MESSAGE value="修改載入資料的功能" />
+    <MESSAGE value="修改更新路由" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改更新路由" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/main.dart</url>
-          <line>9</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/services/products/typedialog.dart</url>
           <line>62</line>
