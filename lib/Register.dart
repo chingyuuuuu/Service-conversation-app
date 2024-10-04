@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:jkmapp/utils/diolog.dart';
 import 'package:jkmapp/services/user/AuthenticationService.dart';
 import 'package:jkmapp/utils/exception.dart' as custom_exceptions;

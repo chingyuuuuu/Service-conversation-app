@@ -8,7 +8,6 @@ import 'dart:typed_data';
 import 'package:jkmapp/services/products/saveproduct_service.dart';
 import 'package:jkmapp/services/products/typedialog.dart';
 import 'package:jkmapp/utils/localStorage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class CreateMerchandise extends StatefulWidget {
