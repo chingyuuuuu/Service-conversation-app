@@ -16,16 +16,20 @@ class  Login extends StatelessWidget {
     final password = _passwordController.text;
     final authService = AuthenticationService();
 
+    //發送登入請求
     try {
       await authService.login(email, password);
-      Navigator.pushNamed(context, Routers.choose,);
+      Navigator.pushNamed(context, Routers.choose);
     }catch (e) {
-      if (e is AuthException) {
-        showErrorDialog(context, '帳號或密碼錯誤');
+      if(e is ClientException) {
+        showErrorDialog(context, e.message);
+      }
+      else if (e is AuthException) {
+        showErrorDialog(context, e.message);
       } else if (e is ServerException) {
         showErrorDialog(context, '伺服器錯誤');
-      } else {
-        showErrorDialog(context, '未知錯誤: $e');
+      }else{
+        showErrorDialog(context,'未知錯誤:${e.toString()}');
       }
     }
   }

@@ -1,58 +1,67 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jkmapp/utils/exception.dart';
 
 class AuthenticationService {
-  final Dio _dio = Dio();
   //登入
   Future<String> login(String email, String password) async {
-    final response = await _dio.post(
-      'http://127.0.0.1:5000/login',
-      options: Options(
-        headers: {'Content-type': 'application/json'},
-      ),
-      data: json.encode({'account': email, 'password': password}),
-    );
+    final url = Uri.parse('http://127.0.0.1:5000/login');
 
-    if (response.statusCode == 200) {
-      // 獲取user_id
-      String userId = response.data['user_id'];
-      //暫存
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('user_id', userId);
-      return userId;
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'account': email, 'password': password}),
+      );
+
+
+      if (response.statusCode == 200) {
+        // 獲取user_id
+        final responseData = json.decode(response.body);
+        String userId = responseData['user_id'];
+        //暫存
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_id', userId);
+        return userId;
+      } else if (response.statusCode == 400) {
+        final responseData = json.decode(response.body);
+        throw ClientException(responseData['message']);
+      } else if (response.statusCode == 401) {
+        final responseData = json.decode(response.body);
+        throw AuthException(responseData['message']);
+      } else if (response.statusCode == 500) {
+        throw ServerException("System error.");
+      } else {
+        throw Exception(
+            'Unknown error occurred with status code: ${response.statusCode}');
+      }
     }
-    else if (response.statusCode == 401) {
-      throw AuthException("Unauthorized. Please check your login details.");
-    }
-    else if (response.statusCode == 500) {
-      throw ServerException("System error.");
-    } else {
-      throw Exception('Failed in unknown reason');
-    }
-  }
+
 
   //註冊
-  Future<String> register(String email,String password)async{
-      final response = await http.post(
-        Uri.parse('http://127.0.0.1:5000/register'),
-          headers:{'Content-Type':'application/json'},
-          body: json.encode({
-          'account': email,
-          'password': password,
-          }),
-      );
-      if(response.statusCode == 200|| response.statusCode == 201){
-         return 'Register successful';
-      }else if(response.statusCode == 400){
-          throw ClientException('No data provided');
-      }else if(response.statusCode ==500){
-        throw ServerException('System error.');
-      }else{
-         final reponseData = json.decode(response.body);
-         throw Exception(reponseData['message']?? 'Unkown error');
-      }
+  Future<String> register(String email, String password) async {
+    final response = await http.post(
+      Uri.parse('http://127.0.0.1:5000/register'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'account': email,
+        'password': password,
+      }),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+       return 'Register successful';
+    } else if (response.statusCode == 400) {
+      final responseData = json.decode(response.body);
+      throw ClientException(responseData['message'] );
+    } else if (response.statusCode == 500) {
+      final responseData = json.decode(response.body);
+      throw ServerException(responseData['message']);
+    } else if(response.statusCode==409){
+      final responseData = json.decode(response.body);
+      throw AuthException(responseData['message']);
+    } else {
+      final responseData = json.decode(response.body);
+      throw Exception( responseData['message'] ?? 'Unkown error');
+    }
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jkmapp/routers/app_routes.dart';
+import 'SnackBar.dart';
 
 void showErrorDialog(BuildContext context, String message) {
   showDialog(
@@ -38,4 +40,74 @@ void showSucessDialog(BuildContext context, String title, String message, {requi
       ],
     ),
   );
+}
+
+Future<String?> _getPassword() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('password');
+}
+
+Future<void> showPasswordDialog(BuildContext context,TextEditingController passwordController)async{
+  //獲取保存的密碼
+  String? savePassword=await _getPassword();
+  showDialog(
+      context: context,
+      builder:(BuildContext context){
+        return AlertDialog(
+           title:const Text(
+             '輸入後臺密碼',
+                 style:TextStyle(color:Colors.red),
+           ),
+          backgroundColor: Colors.white,
+          content:Container(
+             color:Colors.white,
+             child:TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                   hintText: '密碼',
+                ),
+             ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 關閉對話框
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.black,
+              ),
+              child: const Text('取消'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // 檢查密碼是否正確
+                if (passwordController.text == savePassword) {
+                  Navigator.of(context).pop(); // 關閉對話框
+                  SnackBarutils.showSnackBar( context,'密碼正確，進入後台設定',Colors.green);
+
+                  Navigator.pushNamed(context,Routers.dining);
+                } else {
+                  SnackBarutils.showSnackBar( context,'密碼錯誤',Colors.red);
+
+
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('輸入'),
+            ),
+          ],
+        );
+      },
+  );
+}
+
+Future<void> showPasswordNotification(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String savedPassword = prefs.getString('password') ?? '123456';
+
+  SnackBarutils.showSnackBar(context,'後臺密碼是:$savedPassword',Colors.blue);
 }

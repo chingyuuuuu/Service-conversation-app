@@ -7,6 +7,7 @@ import 'dart:io' as io;
 import 'dart:typed_data';
 import 'package:jkmapp/services/products/saveproduct_service.dart';
 import 'package:jkmapp/services/products/typedialog.dart';
+import 'package:jkmapp/utils/localStorage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -35,16 +36,14 @@ class CreateMerchandiseState extends State<CreateMerchandise> {
   }
   //載入以儲存的type
   void _loadTypes() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> types= await StorageHelper.getTypes();
     setState(() {
-      _typeOptions = prefs.getStringList('savedTypes') ?? [];
+      _typeOptions = types;
     });
   }
   //當新增類型時儲存到sharedPrferences
   void _saveTypes() async{
-     SharedPreferences prefs = await SharedPreferences.getInstance();
-     prefs.setStringList('savedTypes',_typeOptions);//將新增的type暫存
-
+    await StorageHelper.saveTypes(_typeOptions);
   }
 
 

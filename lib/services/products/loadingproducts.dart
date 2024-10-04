@@ -13,6 +13,7 @@ Future<String?> _getUserId() async {
 }
 
 class ProductService{//定義一個加載數據的方法
+
     static Future<List<Map<String,dynamic>>> loadProdcuts(BuildContext context)async{
        try{
             String? userId =await _getUserId();
@@ -136,5 +137,40 @@ class ProductService{//定義一個加載數據的方法
             SnackBar(content: Text('發生錯誤，稍後重試')));
             return false;
       }
+    }
+
+    //載入商品資訊到客人頁面
+   static Future<Map<String,List<Map<String,dynamic>>>> loadProductForClient(String userId) async {
+        try{
+              //發送get請求，並將userid作為查詢參數
+              final response = await http.get(
+                Uri.parse('http://127.0.0.1:5000/getprodctsinClient/?user_id=$userId'),
+              );
+
+              if(response.statusCode==200){
+                  List<dynamic>products = json.decode(response.body);
+                  //對商品進行分類
+                  Map<String,List<Map<String,dynamic>>> categorizedProducts={};
+                  //
+                  for (var product in products) {
+                    String type = product['type'];
+                    if (!categorizedProducts.containsKey(type)) { //檢查是否已經有目前type的商品列表
+                      categorizedProducts[type] = []; //沒有就加入這種type
+                    }
+                    categorizedProducts[type]!.add({ //加入其他商品訊息
+                      'name': product['name'],
+                      'price': product['price'],
+                      'image': product['image']
+                    });
+                  }
+                    return categorizedProducts;
+                }else{
+                     print('Failed to load products. Status code:${response.statusCode}');
+                     return {};
+               }
+        }catch(e){
+             print('Error:$e');
+             return {};
+        }
     }
  }

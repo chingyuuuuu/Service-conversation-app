@@ -1,61 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'settingpage.dart';
 import 'menu.dart';
 import 'package:jkmapp/routers/app_routes.dart';
+import 'package:jkmapp/utils/localStorage.dart';
 
 
-
-class dining extends StatelessWidget {
+class dining extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-     return HomeScreen();
-  }
+  _DiningState createState() => _DiningState();
 }
 
-class HomeScreen extends StatefulWidget {//定義widget的外觀和行為
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
 
-class _HomeScreenState extends State<HomeScreen> {//和statefulwidget適配對，實際管理widget的狀態
-  String storeName = 'default';
+class _DiningState extends State<dining> {//和statefulwidget適配對，實際管理widget的狀態
+  String? storeName;
+  String? password;
+
   @override
   void initState(){//初始化
      super.initState();
-     _loadStoreName();
+     _loadData();
   }
 
-  //從本地加載店家名稱
-  void _loadStoreName() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future<void> _loadData() async {
+    String? storedName = await StorageHelper.getStoreName();
+    String? savedPassword = await StorageHelper.getPassword();
+
     setState(() {
-      storeName = prefs.getString('storeName')??'店家';
+      storeName = storedName;
+      password = savedPassword;
     });
   }
 
-  void _navigateToSettings() async {
-    bool? updated = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SettingsPage(
-          onSave: () {
-            setState(() {
-              //當設置頁面儲存，更新主畫面狀態
-              _loadStoreName(); // 更新店家名稱
-            });
-          },
-        ),
-      ),
-    );
-
-    if (updated != null && updated) {
-      _loadStoreName(); //更新
-    }
-  }
-
-
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(//側邊欄位
@@ -71,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {//和statefulwidget適配對�
                 children: [
                   Icon(Icons.person, size: 50),
                   SizedBox(width: 10),
-                  Text(storeName, style: TextStyle(fontSize: 20)),
+                  Text( storeName ?? '店家', style: TextStyle(fontSize: 20)),
                 ],
               ),
             ),
@@ -91,14 +66,15 @@ class _HomeScreenState extends State<HomeScreen> {//和statefulwidget適配對�
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('設定'),
-              onTap: _navigateToSettings,
-            ),
+              onTap: () {
+                Navigator.pushNamed(context, Routers.settingpage);
+              },
+             ),
             ListTile(
               leading: Icon(Icons.person_outline),
               title: Text('客人模式'),
               onTap: () {
                 Navigator.pushNamed(context, Routers.Client);
-
               },
             ),
             ListTile(

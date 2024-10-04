@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:jkmapp/utils/diolog.dart';
 import 'package:jkmapp/services/user/AuthenticationService.dart';
-import 'package:jkmapp/utils/exception.dart';
+import 'package:jkmapp/utils/exception.dart' as custom_exceptions;
 import 'package:jkmapp/routers/app_routes.dart';
 
 
@@ -21,9 +22,11 @@ class Register extends StatelessWidget {
         Navigator.pushNamed(context, Routers.Login);
       });
     }catch(e){
-      if (e is AuthException) {
+      if (e is custom_exceptions.AuthException) {
         showErrorDialog(context, e.message);
-      } else if (e is ServerException) {
+      }else if(e is custom_exceptions.ClientException){
+        showErrorDialog(context, e.message);
+      } else if (e is custom_exceptions.ServerException) {
         showErrorDialog(context, e.message);
       } else {
         showErrorDialog(context, '未知錯誤: $e');

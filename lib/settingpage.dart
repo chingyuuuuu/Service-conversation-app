@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:jkmapp/utils/localStorage.dart';
 
 
 
@@ -17,7 +15,7 @@ class SettingsPageState extends State<SettingsPage> {
   TextEditingController _storeNameController =TextEditingController();
   TextEditingController _passwordController =TextEditingController();
 
-  String storeName = 'default';
+  String storeName = '店家';
   String password = '123456';
 
   @override
@@ -28,21 +26,13 @@ class SettingsPageState extends State<SettingsPage> {
 
   //用於從sharedpreferences加載儲存的值
   void _loadInitialValues() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _storeNameController.text = prefs.getString('storeName') ?? '店家';
-      _passwordController.text = prefs.getString('password') ?? '123456';
-    });
-  }
+    String? storedName = await StorageHelper.getStoreName();
+    String? storedPassword = await StorageHelper.getPassword();
 
-  //將店家名稱儲存到sharedpreferences(暫存)
-  Future<void> _saveStoreName(String storeName) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('storeName', storeName);
-  }
-  Future<void> _savePassword(String password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('password', password);
+    setState(() {
+      _storeNameController.text = storedName ?? '店家'; // 如果没有值则使用默认的 '店家'
+      _passwordController.text = storedPassword ?? '123456'; // 默认密码为 '123456'
+    });
   }
 
   @override
@@ -141,8 +131,8 @@ class SettingsPageState extends State<SettingsPage> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {//保存更改的資料到本地
-                  await  _saveStoreName(_storeNameController.text);//用await直到future完成並返回結果
-                  await  _savePassword(_passwordController.text);
+                  await  StorageHelper.saveStoreName(_storeNameController.text);//用await直到future完成並返回結果
+                  await   StorageHelper.savePassword(_passwordController.text);
                   widget.onSave(); // 调用回调函数，通知已經保存完成
                   Navigator.pop(context,true);//使用這個來實現主頁和設定頁面同步
                 },

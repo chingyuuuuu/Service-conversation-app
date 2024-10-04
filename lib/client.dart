@@ -1,60 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/dining.dart';
-
+import 'package:jkmapp/utils/diolog.dart';
+import 'package:jkmapp/utils/localStorage.dart';
+import 'package:jkmapp/services/products/loadingproducts.dart';
+import 'package:jkmapp/UI/widgets/image_display.dart';
 
 
 
 class Client extends StatefulWidget {
   @override
-  _MenuState createState() => _MenuState();
+  ClientState createState() => ClientState();
 }
 
-class _MenuState extends State<Client> {
-  String password = '123456'; // 預設密碼
+class ClientState extends State<Client> {
   TextEditingController passwordController = TextEditingController();
+  List<String>typeOptions=[];
+  Map<String, List<Map<String, dynamic>>> categorizedProducts = {};
+  String selectedCategory='';//當前選中的分類
 
-  // 初始化不同食物種類和價格
-  List<Map<String, dynamic>> foodItems = [
-    {'name': '飯1', 'price': 120},
-    {'name': '飯2', 'price': 150},
-    {'name': '飯3', 'price': 100},
-    {'name': '飯4', 'price': 130}
-  ];
+   @override
+   void initState(){
+     super.initState();
+     //確保UI完全加載後
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+       showPasswordNotification(context);
+     });
+     _loadTypes();
+     _loadProducts();
+   }
+   //加載typeslist
+   void _loadTypes() async{
+      List<String> types=await StorageHelper.getTypes();
+      setState(() {
+         typeOptions=types;
+      });
+   }
+   //加載商品
+  void _loadProducts()async{
+      //要使用await等待
+      String? userId = await StorageHelper.getUserId();
+      if (userId != null) {
+        Map<String, List<Map<String, dynamic>>> products = await ProductService.loadProductForClient(userId);
+        setState(() {
+          categorizedProducts = products;
+        });
 
-  String selectedCategory = '飯';
+      } else {
+        print('User ID not found');
+      }
+  }
+   //根據選擇的types更新顯示fooditem列表
+   void updateFoodItems(String catecgory){
+      setState(() {
+         selectedCategory=catecgory;
+
+      });
+   }
+
+
+
+
 
   // 購物車內容
   List<Map<String, dynamic>> cartItems = []; // 購物車內的商品列表
   int totalAmount = 0; // 總金額
 
-  // 當按下不同的按鈕時，更新顯示的食物列表
-  void updateFoodItems(String category) {
-    setState(() {
-      selectedCategory = category;
-      if (category == '飯') {
-        foodItems = [
-          {'name': '飯1', 'price': 120},
-          {'name': '飯2', 'price': 150},
-          {'name': '飯3', 'price': 100},
-          {'name': '飯4', 'price': 130}
-        ];
-      } else if (category == '麵') {
-        foodItems = [
-          {'name': '麵1', 'price': 110},
-          {'name': '麵2', 'price': 140},
-          {'name': '麵3', 'price': 130},
-          {'name': '麵4', 'price': 90}
-        ];
-      } else if (category == '飲料') {
-        foodItems = [
-          {'name': '飲料1', 'price': 50},
-          {'name': '飲料2', 'price': 60},
-          {'name': '飲料3', 'price': 45},
-          {'name': '飲料4', 'price': 55}
-        ];
-      }
-    });
-  }
+
 
   // 添加商品至購物車
   void addToCart(String item, int price) {
@@ -70,68 +80,6 @@ class _MenuState extends State<Client> {
       totalAmount -= cartItems[index]['price'] as int; // 使用 as 將值強制轉換為 int
       cartItems.removeAt(index); // 移除該商品
     });
-  }
-
-  // 顯示密碼對話框
-  void _showPasswordDialog(BuildContext context) {
-    showDialog(
-
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            '輸入後台密碼',
-            style: TextStyle(color: Colors.red),
-            ),
-             backgroundColor: Colors.white,//設置對話框為白色
-             content:Container(
-              color:Colors.white,//設置內容為白色
-              child: TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                hintText: '密碼',
-                ),
-               ),
-              ),
-             actions: <Widget>[
-             TextButton(//取消的按鈕
-              onPressed: () {
-                Navigator.of(context).pop(); // 關閉對話框
-               },
-               style: TextButton.styleFrom(
-                 foregroundColor:Colors.black,
-               ),
-              child: const Text('取消'),
-             ),
-             ElevatedButton(
-              onPressed: () {
-                // 檢查密碼是否正確
-                if (passwordController.text == password) {
-                  Navigator.of(context).pop(); // 關閉對話框
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('密碼正確，進入後台設定')),
-                  );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=>dining()),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('密碼錯誤')),
-                  );
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                foregroundColor: Colors.white,
-              ),
-              child: const Text('輸入'),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
@@ -152,43 +100,21 @@ class _MenuState extends State<Client> {
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                updateFoodItems('飯');
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                selectedCategory == '飯' ? Colors.yellow : Colors.grey,
-                minimumSize: const Size(100, 50),
-              ),
-              child: const Text('飯'),
-            ),
-            const SizedBox(width: 8),
-            ElevatedButton(
-              onPressed: () {
-                updateFoodItems('麵');
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                selectedCategory == '麵' ? Colors.yellow : Colors.grey,
-                minimumSize: const Size(100, 50),
-              ),
-              child: const Text('麵'),
-            ),
-            const SizedBox(width: 8),
-            ElevatedButton(
-              onPressed: () {
-                updateFoodItems('飲料');
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                selectedCategory == '飲料' ? Colors.yellow : Colors.grey,
-                minimumSize: const Size(100, 50),
-              ),
-              child: const Text('飲料'),
-            ),
-          ],
+          children: typeOptions.map((type){
+            return Padding(
+                  padding:const EdgeInsets.symmetric(horizontal:4.0),
+                   child:ElevatedButton(
+                        onPressed:(){
+                          updateFoodItems(type);//根據選中的types更新
+                   },
+                  style: ElevatedButton.styleFrom(
+                  backgroundColor: selectedCategory ==type ?Colors.yellow :Colors.white,
+                  minimumSize: const Size(100, 50),
+                  ),
+                 child: Text(type),
+                 ),
+               );
+            }).toList(),
         ),
         actions: const [SizedBox(width: 48)], // 用來確保標題在中間
       ),
@@ -269,12 +195,13 @@ class _MenuState extends State<Client> {
                 // 可以添加通知的動作
               },
             ),
+            SizedBox(height: 80),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('設定'),
               onTap: () {
                 // 點擊 "設定" 時彈出密碼對話框
-                _showPasswordDialog(context);
+                showPasswordDialog(context, passwordController);
               },
             ),
           ],
@@ -284,28 +211,49 @@ class _MenuState extends State<Client> {
         children: [
           Expanded(
             child: GridView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: foodItems.length,
+              padding: const EdgeInsets.all(8.0),
+              itemCount: categorizedProducts[selectedCategory]?.length ?? 0, // 显示当前分类的商品
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // 兩列
-                childAspectRatio: 1.0, // 格子寬高比
+                crossAxisCount: 2, //每行顯示三個商品
+                crossAxisSpacing: 5.0, // 方框之間水平距離
+                mainAxisSpacing: 1.0, // 垂直距離
+                childAspectRatio: 0.8, // 控制圖片和文字的比例
               ),
               itemBuilder: (context, index) {
-                return Card(
-                  elevation: 4,
-                  child: Column(
+                var product = categorizedProducts[selectedCategory]?[index]; // 獲取當前商品
+                return Container(
+                  width: 100,
+                  height:100,
+                  color: Colors.white,
+                  child:Card(
+                    color:Colors.white,
+                    elevation: 4,
+                    child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(foodItems[index]['name']),
+                      ImageDisplay(imageData: product?['image']),
+                      SizedBox(height: 5),
+                      Text(
+                          product?['name'] ?? '',
+                          style: TextStyle(
+                             fontSize: 18,
+                          ),),
                       const SizedBox(height: 8),
-                      Text('NT\$ ${foodItems[index]['price']}'),
+                      Text(
+                          'NT\$ ${product?['price']}',
+                         style:TextStyle(
+                            fontSize: 12,
+                           fontWeight: FontWeight.normal,
+                         ),
+                      ),
                       ElevatedButton(
                         onPressed: () {
-                          addToCart(foodItems[index]['name'], foodItems[index]['price']);
+                          addToCart(product?['name'], product?['price']); // 添加到購物車
                         },
                         child: const Text('訂購'),
                       ),
                     ],
+                  ),
                   ),
                 );
               },
@@ -321,14 +269,18 @@ class _MenuState extends State<Client> {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orange,
                       minimumSize: const Size(150, 50)),
-                  child: const Text('桌號'),
+                  child: const Text('桌號',
+                   style: TextStyle(color:Colors.white),),
                 ),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.black,
                       minimumSize: const Size(150, 50)),
-                  child: const Text('訂購'),
+                  child: const Text(
+                      '訂購',
+                      style: TextStyle(color:Colors.white),
+                  ),
                 ),
               ],
             ),

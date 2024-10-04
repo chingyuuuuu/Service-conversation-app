@@ -10,13 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="修改更新路由">
-      <change beforePath="$PROJECT_DIR$/lib/Forget1.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Forget1.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Forget2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Forget2.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/utils/localStorage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Register.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Register.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/client.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/createmerchandise.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/createmerchandise.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/forget3.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/forget3.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/productdetail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/productdetail.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dining.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/menu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/products/loadingproducts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/products/loadingproducts.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/user/AuthenticationService.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/user/AuthenticationService.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/settingpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/settingpage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/diolog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/diolog.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,7 +238,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727956694365</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="修改更新路由">
+      <option name="closed" value="true" />
+      <created>1727956906413</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1727956906413</updated>
+    </task>
+    <task id="LOCAL-00011" summary="修改更新路由">
+      <option name="closed" value="true" />
+      <created>1727956928551</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1727956928551</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
