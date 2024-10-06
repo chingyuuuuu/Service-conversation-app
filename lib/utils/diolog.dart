@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jkmapp/utils/localStorage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jkmapp/routers/app_routes.dart';
 import 'SnackBar.dart';
@@ -42,14 +43,10 @@ void showSucessDialog(BuildContext context, String title, String message, {requi
   );
 }
 
-Future<String?> _getPassword() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString('password');
-}
 
 Future<void> showPasswordDialog(BuildContext context,TextEditingController passwordController)async{
   //獲取保存的密碼
-  String? savePassword=await _getPassword();
+  String? savePassword=await StorageHelper.getPassword();
   showDialog(
       context: context,
       builder:(BuildContext context){

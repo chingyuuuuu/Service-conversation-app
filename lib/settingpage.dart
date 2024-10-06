@@ -15,8 +15,8 @@ class SettingsPageState extends State<SettingsPage> {
   TextEditingController _storeNameController =TextEditingController();
   TextEditingController _passwordController =TextEditingController();
 
-  String storeName = '店家';
-  String password = '123456';
+  String? storeName;
+  String? password;
 
   @override
   void initState() {
@@ -30,8 +30,8 @@ class SettingsPageState extends State<SettingsPage> {
     String? storedPassword = await StorageHelper.getPassword();
 
     setState(() {
-      _storeNameController.text = storedName ?? '店家'; // 如果没有值则使用默认的 '店家'
-      _passwordController.text = storedPassword ?? '123456'; // 默认密码为 '123456'
+      _storeNameController.text = storedName ?? '店家';
+      _passwordController.text = storedPassword ?? '123456';
     });
   }
 
