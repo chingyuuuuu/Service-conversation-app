@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/routers/app_routes.dart';
 import 'package:jkmapp/services/api_service.dart';
+import 'providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider
+          (create: (_) => CartProvider()),//提供購物車的狀態
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 

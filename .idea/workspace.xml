@@ -9,19 +9,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="修改更新路由">
-      <change afterPath="$PROJECT_DIR$/lib/utils/localStorage.dart" afterDir="false" />
+    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="修改client介面">
+      <change afterPath="$PROJECT_DIR$/lib/UI/widgets/client/ProductCard.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/UI/widgets/client/TypeButton.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/UI/widgets/client/cart.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/providers/cart_provider.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Register.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Register.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/client.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/createmerchandise.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/createmerchandise.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dining.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/menu.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/products/loadingproducts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/products/loadingproducts.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/user/AuthenticationService.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/user/AuthenticationService.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/settingpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/settingpage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/diolog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/diolog.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,11 +79,11 @@
       <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\UI\pages\user" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\UI\widgets\client" />
       <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\UI\pages\user" />
       <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\services\products" />
       <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\services" />
       <recent name="C:\Users\ching\PycharmProjects\JKM\my_flask_app" />
-      <recent name="C:\Users\ching\PycharmProjects\JKM\my_flask_app\static" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.main.dart">
@@ -254,7 +251,31 @@
       <option name="project" value="LOCAL" />
       <updated>1727956928551</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="修改更新路由">
+      <option name="closed" value="true" />
+      <created>1728059298124</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1728059298124</updated>
+    </task>
+    <task id="LOCAL-00013" summary="修改更新路由">
+      <option name="closed" value="true" />
+      <created>1728059331567</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1728059331567</updated>
+    </task>
+    <task id="LOCAL-00014" summary="修改client介面">
+      <option name="closed" value="true" />
+      <created>1728212122582</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1728212122582</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -274,7 +295,8 @@
     <MESSAGE value="update-2" />
     <MESSAGE value="修改載入資料的功能" />
     <MESSAGE value="修改更新路由" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改更新路由" />
+    <MESSAGE value="修改client介面" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改client介面" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
