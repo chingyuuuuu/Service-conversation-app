@@ -10,15 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="修改client介面">
-      <change afterPath="$PROJECT_DIR$/lib/UI/widgets/client/ProductCard.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/UI/widgets/client/TypeButton.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/UI/widgets/client/cart.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/providers/cart_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/client.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/UI/widgets/client/TypeButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/UI/widgets/client/TypeButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/menu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/products/saveproduct_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/products/saveproduct_service.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,7 +269,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728212122582</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="修改client介面">
+      <option name="closed" value="true" />
+      <created>1728223598458</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1728223598458</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

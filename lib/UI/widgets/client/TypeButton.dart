@@ -7,9 +7,9 @@ class TypeButton extends StatelessWidget {
   final String selectedType;
   final Function(String) onTypeSelected;
 
-  TypeButton({required this.type, required this.selectedType, required this.onTypeSelected});
+  TypeButton(
+      {required this.type, required this.selectedType, required this.onTypeSelected});
 
-  @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
@@ -17,9 +17,10 @@ class TypeButton extends StatelessWidget {
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: selectedType == type
-            ? const Color(0xFF223888) // 选中的按钮高亮显示
-            : Colors.white, // 未选中的按钮为白色
-        minimumSize: const Size(100, 40), // 按钮的最小尺寸
+            ? const Color(0xFF223888)
+            : Colors.white,
+        minimumSize: const Size(100, 40),
+        padding: EdgeInsets.zero,
       ),
       child: Text(
         type,

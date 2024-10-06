@@ -14,13 +14,17 @@ class SaveProductService{
     return prefs.getString('user_id');
   }
 
-  bool _validateInput(BuildContext context,String name, String priceStr) {
+  bool _validateInput(BuildContext context,String name, String priceStr,String type) {
     if (name.isEmpty) {
       SnackBarutils.showSnackBar(context,"名稱未輸入", Colors.red);
       return false;
     }
     if (priceStr.isEmpty) {
       SnackBarutils.showSnackBar(context,"價格未輸入", Colors.red);
+      return false;
+    }
+    if (type.isEmpty) {
+      SnackBarutils.showSnackBar(context,"類型未選擇", Colors.red);
       return false;
     }
     return true;
@@ -53,7 +57,7 @@ class SaveProductService{
        String name = nameController.text;
        String type = typeController.text;
        String priceStr = priceController.text;
-       if (!_validateInput(context,name, priceStr)) return;
+       if (!_validateInput(context,name, priceStr,type)) return;
 
        double? price = _parseInput<double>(context, priceStr, double.parse, "價格格式不正確");
        double? cost = _parseInput<double>(context, costController.text, double.parse, "成本格式不正確");
