@@ -10,9 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="修改client介面">
+      <change afterPath="$PROJECT_DIR$/lib/customer.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/customer_data.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/providers/Notification_Provider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/UI/widgets/client/TypeButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/UI/widgets/client/TypeButton.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/menu.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/products/saveproduct_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/products/saveproduct_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/UI/widgets/client/cart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/UI/widgets/client/cart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dining.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/providers/cart_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/cart_provider.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +57,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "DefaultHtmlFileTemplate": "HTML File",
+    "Flutter.customer.dart.executor": "Run",
+    "Flutter.customer_data.dart.executor": "Run",
     "Flutter.main.dart.executor": "Run",
     "Python.flask-swagger-ui.executor": "Run",
     "Python.main.executor": "Run",
@@ -277,7 +286,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728223598458</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="修改client介面">
+      <option name="closed" value="true" />
+      <created>1728230914037</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1728230914037</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

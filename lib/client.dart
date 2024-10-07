@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/UI/widgets/client/TypeButton.dart';
+import 'package:jkmapp/utils/SnackBar.dart';
 import 'package:jkmapp/utils/diolog.dart';
 import 'package:jkmapp/utils/localStorage.dart';
 import 'package:jkmapp/services/products/loadingproducts.dart';
 import 'package:jkmapp/UI/widgets/client/cart.dart';
 import 'package:jkmapp/UI/widgets/client/ProductCard.dart';
-
-
-
+import 'package:jkmapp/providers/Notification_Provider.dart';
+import 'package:provider/provider.dart';
 
 
 class Client extends StatefulWidget {
@@ -97,7 +97,7 @@ class ClientState extends State<Client> {
             return IconButton(
               icon: const Icon(Icons.menu),
               onPressed: () {
-                Scaffold.of(context).openDrawer(); // 打开 Drawer
+                Scaffold.of(context).openDrawer();
               },
             );
           },
@@ -106,8 +106,12 @@ class ClientState extends State<Client> {
           Padding(
             padding: const EdgeInsets.only(right: 24.0),
             child: IconButton(
-              icon: const Icon(Icons.shopping_cart),
-              onPressed: () {
+              icon: const Icon(
+                  Icons.shopping_cart,
+                  color:Colors.black,
+                  size: 30.0,
+                ),
+               onPressed: () {
                 showModalBottomSheet(
                   context: context,
                   builder: (context) {
@@ -118,9 +122,13 @@ class ClientState extends State<Client> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 20.0),
+            padding: const EdgeInsets.only(right: 22.0),
             child: IconButton(
-              icon: const Icon(Icons.search),
+              icon: const Icon(
+                  Icons.search,
+                  color: Colors.black,
+                  size: 30.0,
+               ),
               onPressed: () {
                 print("點擊搜尋按鈕");
               },
@@ -134,6 +142,14 @@ class ClientState extends State<Client> {
           children: [
             const SizedBox(height: 35),
             ListTile(
+              leading: const Icon(Icons.receipt),
+              title: const Text('訂單'),
+              onTap: () {
+
+              },
+            ),
+            const SizedBox(height: 10),
+            ListTile(
               leading: Icon(Icons.notifications,
                   color: isServiceBellTapped
                       ? Colors.yellow
@@ -144,6 +160,10 @@ class ClientState extends State<Client> {
                   isServiceBellTapped = true;
                 });
                 _resetServiceBell();
+                //通知dining
+                Provider.of<NotificationProvider>(context, listen: false).pressServiceBell();
+               //提示消息
+                SnackBarutils.showSnackBar(context, '按下服務鈴', Colors.red);
               },
             ),
             const SizedBox(height: 10),
@@ -159,6 +179,14 @@ class ClientState extends State<Client> {
       ),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: TypeButtonList(
+              typeOptions: typeOptions,
+              selectedType: selectedTypes,
+              onTypeSelected: _filterProductsByType,
+            ),
+          ),
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(8.0),
@@ -167,28 +195,11 @@ class ClientState extends State<Client> {
                 crossAxisCount: 2, // 每行显示两个商品
                 crossAxisSpacing: 10.0, // 方框之间水平距离
                 mainAxisSpacing: 10.0, // 方框之间垂直距离
-                childAspectRatio: 1.2, // 控制图片和文字的比例
+                childAspectRatio: 0.9, // 控制图片和文字的比例
               ),
               itemBuilder: (context, index) {
                 return  ProudctCard(product: displayedProducts[index]);
               },
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Wrap(
-                spacing: 8.0, // 按钮之间的水平间距
-                runSpacing: 4.0, // 按钮之间的垂直间距
-                children: typeOptions.map((type) {
-                    return TypeButton(
-                        type: type,
-                        selectedType: selectedTypes,
-                        onTypeSelected: _filterProductsByType,
-                    );
-                }).toList(),
-              ),
             ),
           ),
         ],

@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'menu.dart';
 import 'package:jkmapp/routers/app_routes.dart';
 import 'package:jkmapp/utils/localStorage.dart';
+import'package:jkmapp/providers/Notification_Provider.dart';
+import 'package:provider/provider.dart';
+import 'package:jkmapp/utils/SnackBar.dart';
+
+
 
 
 class dining extends StatefulWidget {
@@ -51,7 +56,7 @@ class _DiningState extends State<dining> {//和statefulwidget適配對，實際�
               ),
             ),
             ListTile(
-              leading: Icon(Icons.shopping_bag),
+              leading: Icon(Icons.assignment),
               title: Text('訂單'),
               onTap: () {
               },
@@ -87,8 +92,23 @@ class _DiningState extends State<dining> {//和statefulwidget適配對，實際�
           ],
         ),
       ),
-      body: MenuPage(),
+      body: Column(
+        children: [
+          Expanded(child: MenuPage()),
+          // 使用 Consumer 监听服务铃状态
+          Consumer<NotificationProvider>(
+            builder: (context, notificationProvider, child) {
+              if (notificationProvider.serviceBellPressed) {
+                SnackBarutils.showSnackBar(context, '按下服務鈴', Colors.red);
+                // 重置服務鈴狀態
+                notificationProvider.resetServiceBell();
+              }
+
+              return Container(); // 這裡可以返回其他 UI 組件
+            },
+          ),
+        ],
+      ),
     );
   }
 }
-
