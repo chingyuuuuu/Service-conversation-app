@@ -41,12 +41,11 @@ class ClientState extends State<Client> {
     //要使用await等待
     String? userId = await StorageHelper.getUserId();
     if (userId != null) {
-      List<Map<String, dynamic>> loadproducts = await ProductService
-          .loadProductForClient(userId);
+      List<Map<String, dynamic>> loadproducts = await ProductService.loadProductForClient(userId);
       //按照商品分類
       Map<String, List<Map<String, dynamic>>>categorized = {}; //按照types對商品進行分類
-      Set<String> types = loadproducts.map((
-          product) => product['type'] as String).toSet(); //儲存商品的types
+      Set<String> types = loadproducts.map((product) => product['type'] as String).toSet(); //儲存商品的types
+
       for (var type in types) { //遍歷all商品提取type類型
         //根據每個type，將屬於該類型的產品放入
         categorized[type] =

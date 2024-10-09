@@ -40,10 +40,10 @@ class ProudctCard extends StatelessWidget{
                         ),
                         ElevatedButton(
                             onPressed: () {
-                                Provider.of<CartProvider>(context, listen: false)
-                                    .addToCart(
+                                Provider.of<CartProvider>(context, listen: false).addToCart(
                                     product['name'],
                                     product['price'],
+                                    product['product_id']//可能傳遞null
                                 );
                             },
                             style: ElevatedButton.styleFrom(

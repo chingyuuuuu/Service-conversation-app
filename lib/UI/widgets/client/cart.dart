@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:jkmapp/services/order/order_service.dart';
 import 'package:provider/provider.dart';
-import 'package:jkmapp/providers/cart_provider.dart'; //
+import 'package:jkmapp/providers/cart_provider.dart';
 import'package:jkmapp/utils/SnackBar.dart';
 
 
 
 Widget buildCartBottomSheet(BuildContext context) {
   final cartProvider = Provider.of<CartProvider>(context); // 獲取購物車狀態
+  final String tableNumber='A1';
+  //打包成products傳遞給後端
+  final List<Map<String, dynamic>> products = cartProvider.cartItems.map((item) {
+    return {
+      'product_id': item['product_id'],
+      'quantity': item['quantity']
+    };
+  }).toList();  // 提取每個商品的 product_id 和 quantity
+  final double totalAmount=cartProvider.totalAmount;
+
   return Container(
     color: Colors.white,
     child: Column(
@@ -19,7 +30,7 @@ Widget buildCartBottomSheet(BuildContext context) {
               child: Padding(
                 padding: const EdgeInsets.only(left:16.0),
                 child: Text(
-                  'A1',
+                  tableNumber,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -45,7 +56,7 @@ Widget buildCartBottomSheet(BuildContext context) {
         ),
            const SizedBox(height: 10),
            Expanded(
-          child: ListView.builder(
+           child: ListView.builder(
             itemCount: cartProvider.cartItems.length,
             itemBuilder: (context, index) {
               return ListTile(
@@ -56,6 +67,26 @@ Widget buildCartBottomSheet(BuildContext context) {
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    //減少數量按鈕
+                    IconButton(
+                      icon:const Icon(Icons.remove),
+                      onPressed: (){
+                         cartProvider.decreaseQuantiy(index);
+                      },
+                    ),
+                    //顯示數量
+                    Text(
+                      '${cartProvider.cartItems[index]['quantity']}',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    //增加數量按鈕
+                    IconButton(
+                      icon:const Icon(Icons.add),
+                      onPressed: (){
+                        cartProvider.increaseQuantity(index);
+                      },
+                    ),
+                    //顯示價格
                     Text(
                         'NT\$ ${cartProvider.cartItems[index]['price']}',
                          style: const TextStyle(fontSize:16),
@@ -99,10 +130,18 @@ Widget buildCartBottomSheet(BuildContext context) {
         SizedBox(height:10),
         Center(
            child:ElevatedButton(
-          onPressed: () {
-            cartProvider.clearCart();
-            Navigator.pop(context);
-            SnackBarutils.showSnackBar(context, "下單成功", Colors.green);
+          onPressed: () async{
+           bool success =await OrderService.saveOrder(tableNumber,products, totalAmount);
+            if(success){
+              cartProvider.clearCart();
+              Navigator.pop(context);
+              SnackBarutils.showSnackBar(context, "下單成功", Colors.green);
+            }else{
+              SnackBarutils.showSnackBar(context, "下單失敗", Colors.red);
+
+            }
+
+
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.black,

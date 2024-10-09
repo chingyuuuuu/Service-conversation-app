@@ -152,6 +152,7 @@ class ProductService{//定義一個加載數據的方法
 
                   List<Map<String, dynamic>> productList = products.map((product) {
                     return {
+                      'product_id':product['product_id'],//正確傳遞productid提供saveorder使用
                       'name': product['name'],
                       'price': product['price'],
                       'image': product['image'],
