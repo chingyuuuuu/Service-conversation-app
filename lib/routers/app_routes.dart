@@ -12,6 +12,7 @@ import 'package:jkmapp/settingpage.dart';
 import 'package:jkmapp/productdetail.dart';
 import 'package:jkmapp/menu.dart';
 import 'package:jkmapp/client.dart';
+import 'package:jkmapp/orderlistpage.dart';
 
 
 class Routers{
@@ -28,7 +29,7 @@ class Routers{
   static const String productdetail = '/Productdetail';
   static const String menu = '/Menu';
   static const String Client = '/Client';
-
+  static const String orderlistpage='/Orderlistpage';
 }
 
 class RouteGenerator{
@@ -59,6 +60,8 @@ class RouteGenerator{
         return MaterialPageRoute(builder: (_)=>Client());
       case Routers.settingpage:
         return MaterialPageRoute(builder: (_)=>SettingsPage(onSave: (){},));
+      case Routers.orderlistpage:
+        return MaterialPageRoute(builder: (_)=>Orderlistpage());
       case Routers.productdetail:
         final args = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(builder: (_)=>ProductDetailPage(

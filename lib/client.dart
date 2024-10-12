@@ -8,7 +8,7 @@ import 'package:jkmapp/UI/widgets/client/cart.dart';
 import 'package:jkmapp/UI/widgets/client/ProductCard.dart';
 import 'package:jkmapp/providers/Notification_Provider.dart';
 import 'package:provider/provider.dart';
-
+import 'package:jkmapp/providers/order_provider.dart';
 
 class Client extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class ClientState extends State<Client> {
   String selectedTypes = ''; //允許追蹤哪個按鈕被選中
   List<String>typeOptions = [];
   bool isServiceBellTapped = false;
-
+  String tableNumber='A1';//記得處理桌號問題
   @override
   void initState() {
     super.initState();
@@ -144,7 +144,8 @@ class ClientState extends State<Client> {
               leading: const Icon(Icons.receipt),
               title: const Text('訂單'),
               onTap: () {
-
+                Provider.of<OrderProvider>(context,listen: false).fetchOrders(tableNumber, context);
+                Navigator.pushNamed(context,'/Orderlistpage');
               },
             ),
             const SizedBox(height: 10),
