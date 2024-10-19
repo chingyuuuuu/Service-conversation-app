@@ -5,7 +5,6 @@ import 'package:jkmapp/providers/cart_provider.dart';
 import'package:jkmapp/utils/SnackBar.dart';
 
 
-
 Widget buildCartBottomSheet(BuildContext context) {
   final cartProvider = Provider.of<CartProvider>(context); // 獲取購物車狀態
   final String tableNumber='A1';
@@ -67,29 +66,47 @@ Widget buildCartBottomSheet(BuildContext context) {
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    //減少數量按鈕
-                    IconButton(
+                    Container(
+                      width:30,
+                      child: IconButton(//減少數量按鈕
                       icon:const Icon(Icons.remove),
                       onPressed: (){
                          cartProvider.decreaseQuantiy(index);
                       },
                     ),
+                    ),
                     //顯示數量
-                    Text(
+                    SizedBox(width: 8),
+                    Container(
+                      width: 30,
+                      alignment: Alignment.center,
+                      child:
+                      Text(
                       '${cartProvider.cartItems[index]['quantity']}',
                       style: const TextStyle(fontSize: 16),
+                     ),
                     ),
                     //增加數量按鈕
-                    IconButton(
+                    SizedBox(width: 8),
+                    Container(
+                      width: 30,
+                      child: IconButton(
                       icon:const Icon(Icons.add),
                       onPressed: (){
                         cartProvider.increaseQuantity(index);
                       },
                     ),
+                    ),
+                    SizedBox(width: 20),
                     //顯示價格
+                    Container(
+                      width: 70,
+                     alignment: Alignment.centerLeft,
+                    child:
                     Text(
                         'NT\$ ${cartProvider.cartItems[index]['price']}',
                          style: const TextStyle(fontSize:16),
+                    ),
                     ),
                     IconButton(
                       icon: const Icon(Icons.delete, color: Colors.red),

@@ -1,21 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ChatScreen(),
-    );
-  }
-}
-
+import 'customer_data.dart';
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
@@ -24,16 +8,74 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final List<String> messages = [];  // 儲存所有對話內容的列表
-  final TextEditingController _controller = TextEditingController();  // 控制輸入框的文本
+  final List<String> messages = [];
+  final TextEditingController _controller = TextEditingController();
 
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
       setState(() {
-        messages.add(_controller.text);  // 將用戶的訊息加入列表
-        _controller.clear();  // 清空輸入框
+        messages.add(_controller.text);
+        _controller.clear();
       });
     }
+  }
+
+  // 顯示輸入密碼的彈窗
+  void _showPasswordDialog() {
+    String enteredPassword = '';
+    final TextEditingController passwordController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('輸入後台密碼', style: TextStyle(color: Colors.red)),
+          content: TextField(
+            controller: passwordController,
+            obscureText: true,
+            decoration: const InputDecoration(
+              hintText: 'password',
+            ),
+            onChanged: (value) {
+              enteredPassword = value;
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 關閉彈窗
+              },
+              child: const Text('取消'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (enteredPassword == '123') {
+                  Navigator.of(context).pop(); // 密碼正確，關閉彈窗
+                  _navigateToNextScreen(); // 跳轉到新畫面
+                } else {
+                  // 密碼錯誤，提示錯誤訊息
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('密碼錯誤'),
+                    ),
+                  );
+                }
+              },
+              child: const Text('輸入'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // 密碼正確後跳轉到新的畫面
+  void _navigateToNextScreen() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const ServiceScreen(),
+      ),
+    );
   }
 
   @override
@@ -45,21 +87,19 @@ class _ChatScreenState extends State<ChatScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.settings, color: Colors.black),
-          onPressed: () {
-            // 設置按鈕的操作
-          },
+          onPressed: _showPasswordDialog, // 點擊齒輪按鈕時顯示密碼輸入視窗
         ),
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: messages.length,  // 對話框的數量根據訊息數量
+              itemCount: messages.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Align(
-                    alignment: Alignment.centerRight,  // 讓訊息靠右對齊
+                    alignment: Alignment.centerRight,
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -88,12 +128,12 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.send, color: Colors.blue),
-                  onPressed: _sendMessage,  // 點擊發送時觸發訊息
+                  onPressed: _sendMessage,
                 ),
                 IconButton(
                   icon: const Icon(Icons.mic, color: Colors.grey),
                   onPressed: () {
-                    // 語音輸入的操作
+                    // 語音輸入操作
                   },
                 ),
               ],

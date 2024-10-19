@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/providers/order_provider.dart';
 import 'package:provider/provider.dart';
-import'package:jkmapp/orderdetailpage.dart';
+import'package:jkmapp/screens/client/orderdetailpage.dart';
 
 class Orderlistpage extends StatelessWidget {
+  String tableNumber='A1';
   @override
   Widget build(BuildContext context) {
     final orderProvider = Provider.of<OrderProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('訂單列表'),
@@ -20,7 +20,7 @@ class Orderlistpage extends StatelessWidget {
         itemCount: orderProvider.orders.length,
         itemBuilder: (context, index) {
           final order = orderProvider.orders[index];
-          return ListTile(
+           return ListTile(
             title: Text('訂單 : ${order['order_id']}'),
             subtitle: Text('總額: ${order['total_amount']}'),
             trailing: Text('創建時間: ${order['created_at']}'),
@@ -33,7 +33,7 @@ class Orderlistpage extends StatelessWidget {
             } else {
                 print('Error: Invalid orderId');
               }
-            }
+            },
 
           );
         },

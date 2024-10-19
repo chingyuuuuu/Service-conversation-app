@@ -5,7 +5,7 @@ import 'package:jkmapp/utils/localStorage.dart';
 import'package:jkmapp/providers/Notification_Provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/utils/SnackBar.dart';
-
+import 'package:jkmapp/providers/order_provider.dart';
 
 
 
@@ -18,7 +18,7 @@ class dining extends StatefulWidget {
 class _DiningState extends State<dining> {//和statefulwidget適配對，實際管理widget的狀態
   String? storeName;
   String? password;
-
+  String? userId;
   @override
   void initState(){//初始化
      super.initState();
@@ -28,7 +28,7 @@ class _DiningState extends State<dining> {//和statefulwidget適配對，實際�
   Future<void> _loadData() async {
     String? storedName = await StorageHelper.getStoreName();
     String? savedPassword = await StorageHelper.getPassword();
-
+    String? userId= await StorageHelper.getUserId();
     setState(() {
       storeName = storedName;
       password = savedPassword;
@@ -59,6 +59,8 @@ class _DiningState extends State<dining> {//和statefulwidget適配對，實際�
               leading: Icon(Icons.assignment),
               title: Text('訂單'),
               onTap: () {
+                Provider.of<OrderProvider>(context,listen: false).getallorders(userId, context);
+                Navigator.pushNamed(context,Routers.userorderlist);
               },
             ),
             ListTile(

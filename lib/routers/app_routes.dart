@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/First.dart';
-import 'package:jkmapp/Login.dart';
-import 'package:jkmapp/Forget1.dart';
-import 'package:jkmapp/Choose.dart';
-import 'package:jkmapp/Register.dart';
-import 'package:jkmapp/Forget2.dart';
-import 'package:jkmapp/Forget3.dart';
-import 'package:jkmapp/dining.dart';
-import 'package:jkmapp/createmerchandise.dart';
-import 'package:jkmapp/settingpage.dart';
-import 'package:jkmapp/productdetail.dart';
-import 'package:jkmapp/menu.dart';
-import 'package:jkmapp/client.dart';
-import 'package:jkmapp/orderlistpage.dart';
+import 'package:jkmapp/widgets/First.dart';
+import 'package:jkmapp/screens/user/Login.dart';
+import 'package:jkmapp/screens/user/Forget1.dart';
+import 'package:jkmapp/screens/user/Choose.dart';
+import 'package:jkmapp/screens/user/Register.dart';
+import 'package:jkmapp/screens/user/Forget2.dart';
+import 'package:jkmapp/screens/user/Forget3.dart';
+import 'package:jkmapp/screens/restaurant/dining.dart';
+import 'package:jkmapp/screens/products/createmerchandise.dart';
+import 'package:jkmapp/screens/restaurant/settingpage.dart';
+import 'package:jkmapp/screens/products/productdetail.dart';
+import 'package:jkmapp/screens/restaurant/menu.dart';
+import 'package:jkmapp/screens/client/client.dart';
+import 'package:jkmapp/screens/client/orderlistpage.dart';
+import 'package:jkmapp/screens/restaurant/userorderlist.dart';
 
 
 class Routers{
@@ -30,6 +31,7 @@ class Routers{
   static const String menu = '/Menu';
   static const String Client = '/Client';
   static const String orderlistpage='/Orderlistpage';
+  static const String userorderlist='/userorderlist';
 }
 
 class RouteGenerator{
@@ -62,6 +64,8 @@ class RouteGenerator{
         return MaterialPageRoute(builder: (_)=>SettingsPage(onSave: (){},));
       case Routers.orderlistpage:
         return MaterialPageRoute(builder: (_)=>Orderlistpage());
+      case Routers.userorderlist:
+        return MaterialPageRoute(builder: (_)=>Userorderlist());
       case Routers.productdetail:
         final args = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(builder: (_)=>ProductDetailPage(

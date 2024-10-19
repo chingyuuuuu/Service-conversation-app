@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/UI/widgets/image_display.dart';
+import 'package:jkmapp/widgets/image_display.dart';
 import 'package:jkmapp/services/products/loadingproducts.dart';
 import 'package:jkmapp/routers/app_routes.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/UI/widgets/client/TypeButton.dart';
+import 'package:jkmapp/widgets/client/TypeButton.dart';
 import 'package:jkmapp/utils/SnackBar.dart';
 import 'package:jkmapp/utils/diolog.dart';
 import 'package:jkmapp/utils/localStorage.dart';
 import 'package:jkmapp/services/products/loadingproducts.dart';
-import 'package:jkmapp/UI/widgets/client/cart.dart';
-import 'package:jkmapp/UI/widgets/client/ProductCard.dart';
+import 'package:jkmapp/widgets/client/cart.dart';
+import 'package:jkmapp/widgets/client/ProductCard.dart';
 import 'package:jkmapp/providers/Notification_Provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/providers/order_provider.dart';
