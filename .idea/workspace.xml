@@ -10,35 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="加入訂單資訊">
-      <change afterPath="$PROJECT_DIR$/lib/screens/customer service system/customer_data.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/restaurant/useroderdetail.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/restaurant/userorderlist.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Choose.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/Choose.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/First.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/First.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Forget1.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/Forget1.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Forget2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/Forget2.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/Login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Register.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/Register.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/UI/widgets/client/ProductCard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/client/ProductCard.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/UI/widgets/client/TypeButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/client/TypeButton.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/UI/widgets/client/cart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/client/cart.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/UI/widgets/image_display.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/image_display.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/client.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/createmerchandise.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/products/createmerchandise.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/customer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/customer service system/customer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/customer_data.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/forget3.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/forget3.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/menu.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/orderdetailpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/orderdetailpage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/orderlistpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/orderlistpage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/productdetail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/products/productdetail.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/providers/order_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/order_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routers/app_routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routers/app_routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/order/order_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/order/order_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/settingpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/settingpage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/client/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/customer service system/customer_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/customer service system/customer_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/menu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/userorderlist.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/userorderlist.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,30 +51,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Flutter.customer.dart.executor": "Run",
-    "Flutter.customer_data.dart.executor": "Run",
-    "Flutter.main.dart.executor": "Run",
-    "Flutter.t.dart.executor": "Run",
-    "Python.flask-swagger-ui.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.run.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ToolWindowRunning Devices.ShowToolbar": "false",
-    "com.android.tools.idea.streaming.zoom.toolbar.visible": "false",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "io.flutter.reload.alreadyRun": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ching/Desktop/test123",
-    "settings.editor.selected.configurable": "AndroidSdkUpdater",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Flutter.customer.dart.executor&quot;: &quot;Run&quot;,
+    &quot;Flutter.customer_data.dart.executor&quot;: &quot;Run&quot;,
+    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
+    &quot;Flutter.t.dart.executor&quot;: &quot;Run&quot;,
+    &quot;Python.flask-swagger-ui.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ToolWindowRunning Devices.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;com.android.tools.idea.streaming.zoom.toolbar.visible&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ching/Desktop/test123&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;AndroidSdkUpdater&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ching\IdeaProjects\jkmapp\lib\UI\pages\user" />
@@ -330,7 +308,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728726623480</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="加入訂單資訊">
+      <option name="closed" value="true" />
+      <created>1729357899598</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1729357899598</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

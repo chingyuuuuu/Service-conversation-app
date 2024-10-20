@@ -116,8 +116,7 @@ class MenuPageState extends State<MenuPage> {
                         Text(
                           product['name'],
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                           overflow: TextOverflow.ellipsis, // 当名称过长时省略
                           textAlign: TextAlign.center,

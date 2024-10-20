@@ -101,9 +101,12 @@ class _DiningState extends State<dining> {//和statefulwidget適配對，實際�
           Consumer<NotificationProvider>(
             builder: (context, notificationProvider, child) {
               if (notificationProvider.serviceBellPressed) {
-                SnackBarutils.showSnackBar(context, '按下服務鈴', Colors.red);
-                // 重置服務鈴狀態
-                notificationProvider.resetServiceBell();
+                WidgetsBinding.instance.addPostFrameCallback((_) {//在build 完成後顯示
+                  SnackBarutils.showSnackBar(context, '按下服務鈴', Colors.red);
+
+                  // 重置服務鈴狀態
+                  notificationProvider.resetServiceBell();
+                });
               }
 
               return Container(); // 這裡可以返回其他 UI 組件

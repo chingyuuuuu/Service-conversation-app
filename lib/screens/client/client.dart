@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/widgets/client/TypeButton.dart';
-import 'package:jkmapp/utils/SnackBar.dart';
 import 'package:jkmapp/utils/diolog.dart';
 import 'package:jkmapp/utils/localStorage.dart';
 import 'package:jkmapp/services/products/loadingproducts.dart';
@@ -9,6 +8,7 @@ import 'package:jkmapp/widgets/client/ProductCard.dart';
 import 'package:jkmapp/providers/Notification_Provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/providers/order_provider.dart';
+
 
 class Client extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class ClientState extends State<Client> {
   String selectedTypes = ''; //允許追蹤哪個按鈕被選中
   List<String>typeOptions = [];
   bool isServiceBellTapped = false;
-  String tableNumber='A1';//記得處理桌號問題
+  String tableNumber = 'A1'; //記得處理桌號問題
   @override
   void initState() {
     super.initState();
@@ -41,10 +41,12 @@ class ClientState extends State<Client> {
     //要使用await等待
     String? userId = await StorageHelper.getUserId();
     if (userId != null) {
-      List<Map<String, dynamic>> loadproducts = await ProductService.loadProductForClient(userId);
+      List<Map<String, dynamic>> loadproducts = await ProductService
+          .loadProductForClient(userId);
       //按照商品分類
       Map<String, List<Map<String, dynamic>>>categorized = {}; //按照types對商品進行分類
-      Set<String> types = loadproducts.map((product) => product['type'] as String).toSet(); //儲存商品的types
+      Set<String> types = loadproducts.map((
+          product) => product['type'] as String).toSet(); //儲存商品的types
 
       for (var type in types) { //遍歷all商品提取type類型
         //根據每個type，將屬於該類型的產品放入
@@ -88,53 +90,6 @@ class ClientState extends State<Client> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: Builder(
-          builder: (context) {
-            return IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          },
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 24.0),
-            child: IconButton(
-              icon: const Icon(
-                  Icons.shopping_cart,
-                  color:Colors.black,
-                  size: 30.0,
-                ),
-               onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return buildCartBottomSheet(context);
-                  },
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 22.0),
-            child: IconButton(
-              icon: const Icon(
-                  Icons.search,
-                  color: Colors.black,
-                  size: 30.0,
-               ),
-              onPressed: () {
-                print("點擊搜尋按鈕");
-              },
-            ),
-          ),
-        ],
-      ),
       drawer: Drawer(
         backgroundColor: Colors.white,
         child: Column(
@@ -144,26 +99,25 @@ class ClientState extends State<Client> {
               leading: const Icon(Icons.receipt),
               title: const Text('訂單'),
               onTap: () {
-                Provider.of<OrderProvider>(context,listen: false).fetchOrders(tableNumber, context);
-                Navigator.pushNamed(context,'/Orderlistpage');
+                Provider.of<OrderProvider>(context, listen: false)
+                    .fetchOrders(tableNumber, context);
+                Navigator.pushNamed(context, '/Orderlistpage');
               },
             ),
             const SizedBox(height: 10),
             ListTile(
               leading: Icon(Icons.notifications,
-                  color: isServiceBellTapped
-                      ? Colors.yellow
-                      : Colors.black), // 根据状态动态设置颜色),
+                  color: isServiceBellTapped ? Colors.yellow : Colors.black),
               title: Text('服務鈴'),
               onTap: () {
                 setState(() {
                   isServiceBellTapped = true;
                 });
                 _resetServiceBell();
-                //通知dining
-                Provider.of<NotificationProvider>(context, listen: false).pressServiceBell();
-               //提示消息
-                SnackBarutils.showSnackBar(context, '按下服務鈴', Colors.red);
+                Future.delayed(Duration.zero, () {
+                  Provider.of<NotificationProvider>(context, listen: false)
+                      .pressServiceBell();
+                });
               },
             ),
             const SizedBox(height: 10),
@@ -177,29 +131,87 @@ class ClientState extends State<Client> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: TypeButtonList(
-              typeOptions: typeOptions,
-              selectedType: selectedTypes,
-              onTypeSelected: _filterProductsByType,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Colors.white,
+            pinned: true,
+            // AppBar 固定在顶部
+            floating: true,
+            flexibleSpace: FlexibleSpaceBar(//滾動效果
+               background: Container(
+                  color:Colors.white,//設置之後appbar變成白色
+               ),
+            ),
+            leading: Builder(
+              builder: (context) {
+                return IconButton(
+                  icon: const Icon(Icons.menu, color: Colors.black),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                );
+              },
+            ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 24.0),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.shopping_cart,
+                    color: Colors.black,
+                    size: 30.0,
+                  ),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return buildCartBottomSheet(context);
+                      },
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 22.0),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.black,
+                    size: 30.0,
+                  ),
+                  onPressed: () {
+                    print("點擊搜尋按鈕");
+                  },
+                ),
+              ),
+            ],
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: TypeButtonList(
+                typeOptions: typeOptions,
+                selectedType: selectedTypes,
+                onTypeSelected: _filterProductsByType,
+              ),
             ),
           ),
-          Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(8.0),
-              itemCount: displayedProducts.length,
+          SliverPadding(
+            padding: const EdgeInsets.all(8.0),
+            sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, // 每行显示两个商品
-                crossAxisSpacing: 10.0, // 方框之间水平距离
-                mainAxisSpacing: 10.0, // 方框之间垂直距离
+                crossAxisSpacing: 10.0, // 水平間距
+                mainAxisSpacing: 10.0, // 垂直間距
                 childAspectRatio: 0.9, // 控制图片和文字的比例
               ),
-              itemBuilder: (context, index) {
-                return  ProudctCard(product: displayedProducts[index]);
-              },
+              delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                  return ProudctCard(product: displayedProducts[index]);
+                },
+                childCount: displayedProducts.length, // 使用顯示的商品數量
+              ),
             ),
           ),
         ],
