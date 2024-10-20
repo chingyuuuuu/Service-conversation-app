@@ -53,7 +53,9 @@ class Choose extends StatelessWidget {
           ),
           SizedBox(height: 32.0),
           ElevatedButton(
-              onPressed: (){},
+              onPressed: (){
+                 Navigator.pushNamed(context, Routers.customer_data);
+              },
               child: Text('客服',
                           style:TextStyle(
                           fontSize: 30,

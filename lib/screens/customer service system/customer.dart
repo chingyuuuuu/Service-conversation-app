@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'customer_data.dart';
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+import 'package:jkmapp/utils/diolog.dart';
+import 'package:jkmapp/routers/app_routes.dart';
+
+
+class  Customer extends StatefulWidget {
+  const Customer({super.key});
 
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  _CustomerState createState() =>_CustomerState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _CustomerState extends State<Customer> {
   final List<String> messages = [];
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+
 
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
@@ -18,64 +24,6 @@ class _ChatScreenState extends State<ChatScreen> {
         _controller.clear();
       });
     }
-  }
-
-  // 顯示輸入密碼的彈窗
-  void _showPasswordDialog() {
-    String enteredPassword = '';
-    final TextEditingController passwordController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('輸入後台密碼', style: TextStyle(color: Colors.red)),
-          content: TextField(
-            controller: passwordController,
-            obscureText: true,
-            decoration: const InputDecoration(
-              hintText: 'password',
-            ),
-            onChanged: (value) {
-              enteredPassword = value;
-            },
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // 關閉彈窗
-              },
-              child: const Text('取消'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (enteredPassword == '123') {
-                  Navigator.of(context).pop(); // 密碼正確，關閉彈窗
-                  _navigateToNextScreen(); // 跳轉到新畫面
-                } else {
-                  // 密碼錯誤，提示錯誤訊息
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('密碼錯誤'),
-                    ),
-                  );
-                }
-              },
-              child: const Text('輸入'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  // 密碼正確後跳轉到新的畫面
-  void _navigateToNextScreen() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ServiceScreen(),
-      ),
-    );
   }
 
   @override
@@ -87,7 +35,12 @@ class _ChatScreenState extends State<ChatScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.settings, color: Colors.black),
-          onPressed: _showPasswordDialog, // 點擊齒輪按鈕時顯示密碼輸入視窗
+               onPressed: () {
+                 showPasswordDialog(context, passwordController, () { // 傳遞回調函數
+                   Navigator.pushNamed(
+                       context, Routers.customer_data); // 密碼正確後導航到 dining
+                 });
+               },
         ),
       ),
       body: Column(
@@ -133,7 +86,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 IconButton(
                   icon: const Icon(Icons.mic, color: Colors.grey),
                   onPressed: () {
-                    // 語音輸入操作
+
                   },
                 ),
               ],

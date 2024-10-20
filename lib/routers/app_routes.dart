@@ -14,6 +14,8 @@ import 'package:jkmapp/screens/restaurant/menu.dart';
 import 'package:jkmapp/screens/client/client.dart';
 import 'package:jkmapp/screens/client/orderlistpage.dart';
 import 'package:jkmapp/screens/restaurant/userorderlist.dart';
+import 'package:jkmapp/screens/customer service system/customer.dart';
+import 'package:jkmapp/screens/customer service system/customer_data.dart';
 
 
 class Routers{
@@ -32,6 +34,9 @@ class Routers{
   static const String Client = '/Client';
   static const String orderlistpage='/Orderlistpage';
   static const String userorderlist='/userorderlist';
+  static const String customer='/Customer';
+  static const String customer_data='/Customer_data';
+
 }
 
 class RouteGenerator{
@@ -72,6 +77,10 @@ class RouteGenerator{
            productId: args['product_id'],
           ),
         );
+      case Routers.customer:
+        return MaterialPageRoute(builder: (_)=>Customer());
+      case Routers.customer_data:
+        return MaterialPageRoute(builder: (_)=>CustomerData());
       default:
         return null;
     }

@@ -8,7 +8,7 @@ import 'package:jkmapp/widgets/client/ProductCard.dart';
 import 'package:jkmapp/providers/Notification_Provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/providers/order_provider.dart';
-
+import 'package:jkmapp/routers/app_routes.dart';
 
 class Client extends StatefulWidget {
   @override
@@ -25,6 +25,9 @@ class ClientState extends State<Client> {
   List<String>typeOptions = [];
   bool isServiceBellTapped = false;
   String tableNumber = 'A1'; //記得處理桌號問題
+  bool _isSearching = false;
+  TextEditingController _searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -66,17 +69,6 @@ class ClientState extends State<Client> {
     }
   }
 
-  void _filterProductsByType(String type) {
-    setState(() {
-      selectedTypes = type;
-      if (type == '全部') {
-        displayedProducts = products; // 如果选择 "全部"，显示所有商品
-      } else {
-        displayedProducts = categorizedProducts[type] ?? []; // 否则显示对应类型的商品
-      }
-    });
-  }
-
 
   void _resetServiceBell() {
     //設置1分鐘後恢復
@@ -84,6 +76,44 @@ class ClientState extends State<Client> {
       setState(() {
         isServiceBellTapped = false;
       });
+    });
+  }
+
+  // 根據類型篩選商品
+
+  void _filterProductsByType(String type) {
+    setState(() {
+      selectedTypes = type;
+      _applyFilters();
+    });
+  }
+
+  // 根據搜尋框中的輸入動態過濾商品
+  void _filterProducts(String query) {
+    setState(() {
+      _applyFilters(query: query);
+    });
+  }
+
+  // 結合類型篩選和搜尋框篩選
+  void _applyFilters({String query = ''}) {
+    List<Map<String, dynamic>> filteredProducts = [];
+
+    if (selectedTypes == '全部') {
+      filteredProducts = products; // 顯示所有商品
+    } else {
+      filteredProducts = categorizedProducts[selectedTypes] ?? []; // 根據選中的類型篩選
+    }
+
+    if (query.isNotEmpty) {
+      filteredProducts = filteredProducts
+          .where((product) =>
+          product['name'].toLowerCase().contains(query.toLowerCase()))
+          .toList(); // 根據搜尋框中的輸入進行篩選
+    }
+
+    setState(() {
+      displayedProducts = filteredProducts;
     });
   }
 
@@ -99,8 +129,8 @@ class ClientState extends State<Client> {
               leading: const Icon(Icons.receipt),
               title: const Text('訂單'),
               onTap: () {
-                Provider.of<OrderProvider>(context, listen: false)
-                    .fetchOrders(tableNumber, context);
+                Provider.of<OrderProvider>(context, listen: false).fetchOrders(
+                    tableNumber, context);
                 Navigator.pushNamed(context, '/Orderlistpage');
               },
             ),
@@ -122,27 +152,38 @@ class ClientState extends State<Client> {
             ),
             const SizedBox(height: 10),
             ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('設定'),
-              onTap: () {
-                showPasswordDialog(context, passwordController);
-              },
-            ),
-          ],
-        ),
+            leading: const Icon(Icons.settings),
+            title: const Text('設定'),
+            onTap: () {
+            showPasswordDialog(context, passwordController, () { // 傳遞回調函數
+                  Navigator.pushNamed(context, Routers.dining); // 密碼正確後導航到 dining
+            });
+           },
+         ),
+        ],
       ),
+    ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             backgroundColor: Colors.white,
             pinned: true,
-            // AppBar 固定在顶部
             floating: true,
-            flexibleSpace: FlexibleSpaceBar(//滾動效果
-               background: Container(
-                  color:Colors.white,//設置之後appbar變成白色
-               ),
+            flexibleSpace: FlexibleSpaceBar(
+              background: Container(color: Colors.white),
             ),
+            title: _isSearching
+                 ?TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: '搜尋商品...',
+                border: InputBorder.none,
+              ),
+              onChanged: (value) {
+                _filterProducts(value); // 根據輸入的值過濾商品
+              },
+            )
+            :null,
             leading: Builder(
               builder: (context) {
                 return IconButton(
@@ -155,7 +196,26 @@ class ClientState extends State<Client> {
             ),
             actions: [
               Padding(
-                padding: const EdgeInsets.only(right: 24.0),
+              padding: const EdgeInsets.only(right:16.0),
+              child:IconButton(
+                icon: Icon(_isSearching
+                    ? Icons.close
+                    : Icons.search, color: Colors.black,size:30.0),
+                onPressed: () {
+                  setState(() {
+                    if (_isSearching) {
+                      _isSearching = false; // 關閉搜尋框
+                      _searchController.clear(); // 清空搜尋框
+                      _applyFilters(); // 重置顯示的商品
+                    } else {
+                      _isSearching = true; // 顯示搜尋框
+                    }
+                  });
+                },
+              ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
                 child: IconButton(
                   icon: const Icon(
                     Icons.shopping_cart,
@@ -172,19 +232,6 @@ class ClientState extends State<Client> {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 22.0),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.search,
-                    color: Colors.black,
-                    size: 30.0,
-                  ),
-                  onPressed: () {
-                    print("點擊搜尋按鈕");
-                  },
-                ),
-              ),
             ],
           ),
           SliverToBoxAdapter(
@@ -193,7 +240,7 @@ class ClientState extends State<Client> {
               child: TypeButtonList(
                 typeOptions: typeOptions,
                 selectedType: selectedTypes,
-                onTypeSelected: _filterProductsByType,
+                onTypeSelected: _filterProductsByType, // 點擊按鈕過濾類型
               ),
             ),
           ),
@@ -201,16 +248,16 @@ class ClientState extends State<Client> {
             padding: const EdgeInsets.all(8.0),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // 每行显示两个商品
-                crossAxisSpacing: 10.0, // 水平間距
-                mainAxisSpacing: 10.0, // 垂直間距
-                childAspectRatio: 0.9, // 控制图片和文字的比例
+                crossAxisCount: 2, // 每行顯示兩個商品
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                childAspectRatio: 0.9, // 控制圖片和文字的比例
               ),
               delegate: SliverChildBuilderDelegate(
                     (context, index) {
                   return ProudctCard(product: displayedProducts[index]);
                 },
-                childCount: displayedProducts.length, // 使用顯示的商品數量
+                childCount: displayedProducts.length,
               ),
             ),
           ),

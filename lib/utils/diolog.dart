@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/utils/localStorage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:jkmapp/routers/app_routes.dart';
 import 'SnackBar.dart';
 
 void showErrorDialog(BuildContext context, String message) {
@@ -44,7 +43,7 @@ void showSucessDialog(BuildContext context, String title, String message, {requi
 }
 
 
-Future<void> showPasswordDialog(BuildContext context,TextEditingController passwordController)async{
+Future<void> showPasswordDialog(BuildContext context,TextEditingController passwordController, VoidCallback onPasswordCorrect)async{
   //獲取保存的密碼
   String? savePassword=await StorageHelper.getPassword();
   showDialog(
@@ -82,12 +81,9 @@ Future<void> showPasswordDialog(BuildContext context,TextEditingController passw
                 if (passwordController.text == savePassword) {
                   Navigator.of(context).pop(); // 關閉對話框
                   SnackBarutils.showSnackBar( context,'密碼正確，進入後台設定',Colors.green);
-
-                  Navigator.pushNamed(context,Routers.dining);
+                  onPasswordCorrect();
                 } else {
                   SnackBarutils.showSnackBar( context,'密碼錯誤',Colors.red);
-
-
                 }
               },
               style: ElevatedButton.styleFrom(

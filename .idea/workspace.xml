@@ -9,14 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="加入訂單資訊">
+    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="修改介面">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routers/app_routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routers/app_routes.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/client/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/customer service system/customer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/customer service system/customer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/customer service system/customer_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/customer service system/customer_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/menu.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/userorderlist.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/userorderlist.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/user/Choose.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/Choose.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/diolog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/diolog.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -316,7 +316,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729357899598</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="修改介面">
+      <option name="closed" value="true" />
+      <created>1729429151594</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1729429151594</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -339,7 +347,8 @@
     <MESSAGE value="修改client介面" />
     <MESSAGE value="修改訂單邏輯" />
     <MESSAGE value="加入訂單資訊" />
-    <option name="LAST_COMMIT_MESSAGE" value="加入訂單資訊" />
+    <MESSAGE value="修改介面" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改介面" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

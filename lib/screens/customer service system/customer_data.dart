@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 
 
-
-
-
 // 密碼正確後的新頁面
-class ServiceScreen extends StatefulWidget {
-  const ServiceScreen({super.key});
+class CustomerData extends StatefulWidget {
+  const CustomerData({super.key});
 
   @override
-  _ServiceScreenState createState() => _ServiceScreenState();
+  CustomerDataState createState() => CustomerDataState();
 }
 
-class _ServiceScreenState extends State<ServiceScreen> {
+class CustomerDataState extends State<CustomerData> {
   List<String> categories = ['類別1', '類別2'];
   List<QuestionForm> questionForms = [];
 
