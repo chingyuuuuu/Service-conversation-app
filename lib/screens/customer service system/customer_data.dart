@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:jkmapp/utils/localStorage.dart';
+import 'package:jkmapp/routers/app_routes.dart';
+import 'package:provider/provider.dart';
+import 'package:jkmapp/providers/QA_provider.dart';
+import 'package:jkmapp/screens/customer service system/question_form.dart';
+import 'package:jkmapp/screens/customer service system/datadetail.dart';
 
-
-// 密碼正確後的新頁面
 class CustomerData extends StatefulWidget {
   const CustomerData({super.key});
 
@@ -10,69 +14,40 @@ class CustomerData extends StatefulWidget {
 }
 
 class CustomerDataState extends State<CustomerData> {
-  List<String> categories = ['類別1', '類別2'];
-  List<QuestionForm> questionForms = [];
+  List<String> categories = [];
 
-  void _addQuestionForm() {
-    setState(() {
-      questionForms.add(QuestionForm(
-        categories: categories,
-        onDelete: (index) {
-          setState(() {
-            questionForms.removeAt(index);
-          });
-        },
-      ));
-    });
+  @override
+  void initState() {
+    super.initState();
+    _loadDataTypes();
+    final qaProvider = Provider.of<QAprovider>(context, listen: false);
+    qaProvider.fetchQAData(); // 載入qa
   }
 
-  void _addCategory() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        String newCategory = '';
-        return AlertDialog(
-          title: const Text('新增類別'),
-          content: TextField(
-            onChanged: (value) {
-              newCategory = value;
-            },
-            decoration: const InputDecoration(hintText: '請輸入類別名稱'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('取消'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  categories.add(newCategory);
-                });
-                Navigator.of(context).pop();
-              },
-              child: const Text('加入'),
-            ),
-          ],
-        );
-      },
-    );
+  // 載入types
+  Future<void> _loadDataTypes() async {
+    List<String>? savedCategories = await StorageHelper.getDataTypes();
+    if (savedCategories != null) {
+      setState(() {
+        categories = savedCategories;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final qaProvider = Provider.of<QAprovider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Service', style: TextStyle(fontSize: 30, fontFamily: 'Cursive')),
+        title: const Text('客服資料庫', style: TextStyle(fontSize: 30)),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.black),
+          icon: const Icon(Icons.person_outline, color: Colors.black),
           onPressed: () {
-            // 菜單按鈕操作
+            Navigator.pushNamed(context, Routers.customer);
           },
         ),
       ),
@@ -80,152 +55,101 @@ class CustomerDataState extends State<CustomerData> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Expanded(
+            qaProvider.qaList.isEmpty
+                ? const Center(child: Text('沒有已建立的問答'))
+                : Expanded(
               child: ListView.builder(
-                itemCount: questionForms.length,
+                itemCount: qaProvider.qaList.length,
                 itemBuilder: (context, index) {
-                  return questionForms[index];
+                  final qa = qaProvider.qaList[index];
+                  final qaId = qa['qaId']; // 獲取qaid
+                  return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Color(0xFF223888)), // 藍色外框
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: ListTile(
+                      title: Text.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: "Q: ",
+                              style: TextStyle(
+                                fontSize: 25.0,
+                                color: Color(0xFF223888),
+                              ),
+                            ),
+                            TextSpan(
+                              text: qa['question'],
+                              style: const TextStyle(
+                                  fontSize: 25.0,
+                                  color:Color(0xFF223888),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      subtitle: Text.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: "A: ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            TextSpan(
+                              text: qa['answer'],
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                      onTap: () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                Datadetail(
+                                  qaId: qaId.toString(),
+                                  categories: categories,
+                                ),
+                          ),
+                        );
+                        if (result == true) {
+                          qaProvider.fetchQAData(); // 重新加载QA数据
+                        }
+                      },
+                    ),
+                  );
                 },
               ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: _addQuestionForm, // 新增問題表單
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-// 表單元件
-class QuestionForm extends StatefulWidget {
-  final List<String> categories;
-  final Function(int) onDelete;
-
-  const QuestionForm({
-    required this.categories,
-    required this.onDelete,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _QuestionFormState createState() => _QuestionFormState();
-}
-
-class _QuestionFormState extends State<QuestionForm> {
-  String? selectedCategory;
-  String? imageUrl; // 用於存儲圖片 URL
-
-  // 顯示輸入圖片連結的彈窗
-  void _showImageDialog() {
-    String tempUrl = '';
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('輸入圖片連結'),
-          content: TextField(
-            onChanged: (value) {
-              tempUrl = value;
-            },
-            decoration: const InputDecoration(hintText: '請輸入圖片的URL'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // 取消操作
-              },
-              child: const Text('取消'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  imageUrl = tempUrl; // 更新圖片URL
-                });
-                Navigator.of(context).pop(); // 確定操作並關閉彈窗
-              },
-              child: const Text('確定'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    // 新增類別的操作
-                  },
-                ),
-                Expanded(
-                  child: DropdownButton<String>(
-                    value: selectedCategory,
-                    hint: const Text('請選擇類別'),
-                    items: widget.categories.map((String category) {
-                      return DropdownMenuItem<String>(
-                        value: category,
-                        child: Text(category),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedCategory = value;
-                      });
-                    },
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white, // 设置浮动按钮背景为白色
+        child: const Icon(Icons.add, color: Colors.black), // 图标设置为黑色
+        onPressed: () async {
+          // 按下 + 导航到 QuestionForm 页面
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  QuestionForm(
+                    categories: categories,
                   ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () {
-                    widget.onDelete(0); // 刪除該表單
-                  },
-                ),
-              ],
             ),
-            const TextField(
-              decoration: InputDecoration(
-                labelText: 'Q: 請輸入你的問題',
-              ),
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                labelText: 'A: 請輸入你的回答',
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.image),
-                  onPressed: _showImageDialog, // 點擊圖片按鈕，顯示輸入圖片URL的彈窗
-                ),
-                const Text('圖片'),
-              ],
-            ),
-            if (imageUrl != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Image.network(imageUrl!), // 顯示輸入的圖片
-              ),
-          ],
-        ),
+          );
+          if (result) {
+            final qaProvider = Provider.of<QAprovider>(context, listen: false);
+            qaProvider.fetchQAData();
+          }
+        },
       ),
     );
   }

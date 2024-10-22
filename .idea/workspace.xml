@@ -10,13 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="修改介面">
+      <change afterPath="$PROJECT_DIR$/lib/providers/QA_provider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/customer service system/datadetail.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/customer service system/question_form.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/services/customer service system/QA_service.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routers/app_routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routers/app_routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/client/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/customer service system/customer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/customer service system/customer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/customer service system/customer_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/customer service system/customer_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/user/Choose.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/Choose.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/diolog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/diolog.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/products/typedialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/products/typedialog.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/localStorage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/localStorage.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -324,7 +327,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729429151594</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="修改介面">
+      <option name="closed" value="true" />
+      <created>1729450319557</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1729450319558</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -353,11 +364,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/services/products/typedialog.dart</url>
-          <line>62</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/widgets/client/ProductCard.dart</url>
           <option name="timeStamp" value="5" />

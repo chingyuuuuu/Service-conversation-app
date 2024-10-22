@@ -45,7 +45,7 @@ class DialogService {
               onPressed: () {
                 Navigator.pop(context); // 關閉對話框
               },
-              child: Text('取消'),
+              child: Text('取消',style: TextStyle(color:Colors.black)),
             ),
             TextButton(
               onPressed: () {
@@ -53,7 +53,7 @@ class DialogService {
                   Navigator.pop(context, typeController.text); // 返回輸入的文本
                 }
               },
-              child: Text('儲存'),
+              child: Text('儲存',style: TextStyle(color:Colors.black)),
             ),
           ],
         );

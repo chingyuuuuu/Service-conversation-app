@@ -80,11 +80,11 @@ class _CustomerState extends State<Customer> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.send, color: Colors.blue),
+                  icon: const Icon(Icons.send, color:Color(0xFF223888)),
                   onPressed: _sendMessage,
                 ),
                 IconButton(
-                  icon: const Icon(Icons.mic, color: Colors.grey),
+                  icon: const Icon(Icons.mic, color: Colors.black),
                   onPressed: () {
 
                   },

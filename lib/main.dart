@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/providers/Notification_Provider.dart';
+import 'package:jkmapp/providers/QA_provider.dart';
 import 'package:jkmapp/providers/order_provider.dart';
 import 'package:jkmapp/routers/app_routes.dart';
 import 'package:jkmapp/services/api_service.dart';
@@ -16,6 +17,8 @@ void main() {
         ChangeNotifierProvider(create: (_)=>NotificationProvider()
         ),
         ChangeNotifierProvider(create: (_)=>OrderProvider()
+        ),
+        ChangeNotifierProvider(create: (_)=>QAprovider()
         ),
       ],
       child: MyApp(),

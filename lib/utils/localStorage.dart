@@ -4,6 +4,7 @@ class StorageHelper{
   static const String storeNameKey = 'storeName';
   static const String passwordKey = 'password';
   static const String savedTypesKey = 'savedTypes';
+  static const String dataTypesKey='categories';
   //獲取店家名稱
   static Future<String?> getStoreName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -44,5 +45,16 @@ class StorageHelper{
     return prefs.getString('user_id');
   }
 
+  // 暫存客服資料的 type
+  static Future<void> saveDataTypes(List<String> categories) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(dataTypesKey, categories);
+  }
+
+  // 獲取暫存的 type 列表
+  static Future<List<String>?> getDataTypes() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(dataTypesKey);
+  }
 
 }
