@@ -1,10 +1,19 @@
 import 'dart:convert';
-import 'package:jkmapp/utils/localStorage.dart';
 import'package:http/http.dart' as http;
+import 'dart:io';
+import 'dart:typed_data';
 
 class QAService{
       //儲存到資料庫
-  Future<bool> saveQAData(String question, String answer, {String? type, String? imageUrl, required String userId}) async {
+  Future<bool> saveQAData(
+        String question,
+        String answer,{
+        String? type,
+        Uint8List? selectedImageBytes,
+        File? selectedImageFile,
+        String? imageFileName,
+        required String userId,
+      }) async {
       try {
         // 构建 multipart/form-data 请求
         var request = http.MultipartRequest(
@@ -16,17 +25,30 @@ class QAService{
         request.fields['question'] = question;
         request.fields['answer'] = answer;
         request.fields['user_id'] = userId;
-
         if (type != null) {
           request.fields['type'] = type;
         }
 
-        // 如果有图片 URL，可以在这里传递
-        if (imageUrl != null) {
-          request.fields['image'] = imageUrl; // 直接传递 URL
+
+        //上傳圖片
+        if (selectedImageBytes != null) {
+         //web
+          request.files.add(http.MultipartFile.fromBytes(
+            'image',
+            selectedImageBytes,
+            filename: imageFileName ?? 'default_image.png', // 使用默认文件名
+          ));
+        } else if (selectedImageFile != null) {
+          // 处理App上传
+          var multipartFile = await http.MultipartFile.fromPath(
+            'image',
+            selectedImageFile.path,
+            filename: imageFileName ?? selectedImageFile.path.split('/').last, // 使用原始文件名
+          );
+          request.files.add(multipartFile);
         }
 
-        // 发送请求并获取响应
+        // 發生請求並獲得回應
         var response = await request.send();
 
         // 检查是否成功
@@ -57,6 +79,7 @@ class QAService{
            throw Exception('Failed to load QA data');
          }
      }
+
      //載入商品資訊
      Future<List<Map<String, dynamic>>> fetchQAByqaid(String qaId) async {
        final response =await http.get(
@@ -66,7 +89,6 @@ class QAService{
        if(response.statusCode==200){
          List<Map<String,dynamic>>qalist = List<Map<String,dynamic>>.from(jsonDecode(response.body));
          return qalist;
-
        }else{
          throw Exception('Failed to load QA data');
        }

@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/providers/QA_provider.dart';
 import 'package:jkmapp/widgets/image_display.dart'; // Import ImageDisplay widget
+import 'package:jkmapp/utils/localStorage.dart';
 
-class Datadetail extends StatefulWidget {
+  class Datadetail extends StatefulWidget {
   final String qaId;
-  final List<String> categories;
 
   const Datadetail({
-    Key? key,
-    required this.qaId,
-    required this.categories,
+     Key? key,
+     required this.qaId,
   }) : super(key: key);
 
   @override
@@ -22,11 +21,20 @@ class DatadetailState extends State<Datadetail> {
   final TextEditingController _answerController = TextEditingController();
   String? selectedCategory;
   dynamic imageData;
+  List<String> _typeOptions = [];
 
   @override
   void initState() {
     super.initState();
     _loadQAData();
+    _loadSavedTypes();
+  }
+
+  Future<void> _loadSavedTypes() async {
+    List<String> savedTypes = await StorageHelper.getDataTypes() ?? [];
+    setState(() {
+      _typeOptions = savedTypes;
+    });
   }
 
   // 載入QA資料
@@ -38,7 +46,7 @@ class DatadetailState extends State<Datadetail> {
         _questionController.text = qa['question'];
         _answerController.text = qa['answer'];
         selectedCategory = qa['type'];
-        imageData = qa['image']; // 这可能是URL或图片字节
+        imageData = qa['image'];
       });
     }
   }
@@ -58,8 +66,8 @@ class DatadetailState extends State<Datadetail> {
             Container(
               color:Colors.white,
               child: DropdownButton<String>(
-                value: selectedCategory,
-                items: widget.categories.map((category) {
+                value: selectedCategory,//這裡顯示從後端載入的type
+                items: _typeOptions.map((category) {
                   return DropdownMenuItem(
                     value: category,
                     child: Text(category),
@@ -67,7 +75,7 @@ class DatadetailState extends State<Datadetail> {
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    selectedCategory = value;
+                    selectedCategory = value;//更新選擇的type
                   });
                 },
                 dropdownColor: Colors.white,
@@ -104,7 +112,6 @@ class DatadetailState extends State<Datadetail> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // 删除按钮放在左边
                 ElevatedButton(
                   onPressed: () async {
                     await qaProvider.deleteData(widget.qaId);

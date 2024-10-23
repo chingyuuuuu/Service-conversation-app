@@ -23,6 +23,7 @@ class _QuestionFormState extends State<QuestionForm> {
   TextEditingController _answerController = TextEditingController();
   List<String> _typeOptions = [];
 
+
   @override
   void initState() {
     super.initState();
@@ -61,10 +62,21 @@ class _QuestionFormState extends State<QuestionForm> {
     }
   }
 
+  void saveData()async{
+    final qaProvider = Provider.of<QAprovider>(context, listen: false);
+    bool isSaved = await qaProvider.savedata(
+      question: _questionController.text,
+      answer: _answerController.text,
+      type: selectedCategory,
+    );
+    if (isSaved) {
+      Navigator.pop(context, true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final qaProvider = Provider.of<QAprovider>(context);
-
+    final qaProvider = Provider.of<QAprovider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('問答表單'),
@@ -94,6 +106,7 @@ class _QuestionFormState extends State<QuestionForm> {
                     }).toList(),
                     onChanged: (value) => setState(() {
                       selectedCategory = value;
+
                     }),
                   ),
                 ),
@@ -131,16 +144,8 @@ class _QuestionFormState extends State<QuestionForm> {
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () async {
-                bool isSaved = await qaProvider.savedata(
-                  question: _questionController.text,
-                  answer: _answerController.text,
-                  type: selectedCategory,
-                  imageUrl: qaProvider.selectedImageUrl, // 傳遞圖片
-                );
-                if(isSaved){
-                   Navigator.pop(context,true);
-                }
+              onPressed: (){
+                 saveData();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF36FDE6),

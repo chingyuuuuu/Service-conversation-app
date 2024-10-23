@@ -10,21 +10,21 @@ import 'package:flutter/foundation.dart';
 
 
 class QAprovider with ChangeNotifier {
-  String? selectedCategory;
   String question = '';
   String answer = '';
-  Uint8List? _selectedImageBytes;
-  io.File? _selectedImageFile;
+  Uint8List? _selectedImageBytes;//儲存圖片二進位(web)
+  io.File? _selectedImageFile;//用於儲存圖片文件(app)
   String? _imageFileName;
-  String? selectedImageUrl;
 
   Uint8List? get selectedImageBytes => _selectedImageBytes;
   String? get imageFileName => _imageFileName;
+
+
   List<Map<String,dynamic>>qaList=[];
   final QAService qaService = QAService();
 
 
-  //圖片選擇邏輯（适用于 Web 和 App）
+  //圖片選擇邏輯（ Web 和 App）-將圖片儲存再bytes/file
   Future<void> pickImage() async {
     if (kIsWeb) {
       // web 处理逻辑
@@ -52,7 +52,7 @@ class QAprovider with ChangeNotifier {
     required String question,
     required String answer,
     String? type,
-    String? imageUrl,
+
   }) async {
     if (question.isNotEmpty && answer.isNotEmpty) {
       try {
@@ -61,8 +61,10 @@ class QAprovider with ChangeNotifier {
         bool success = await qaService.saveQAData(
           question,
           answer,
-          type: selectedCategory,
-          imageUrl: imageUrl,
+          type: type,
+          selectedImageBytes: _selectedImageBytes,
+          selectedImageFile: _selectedImageFile,
+          imageFileName: _imageFileName,
           userId: userId ?? '',
         );
 
@@ -108,6 +110,7 @@ class QAprovider with ChangeNotifier {
       print('Failed to fetch QA data: $e');
     }
   }
+
   //載入商品資訊
   Future<Map<String, dynamic>?> fetchQADataByQAid(String qaId) async {
     try {

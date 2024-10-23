@@ -115,7 +115,6 @@ class CustomerDataState extends State<CustomerData> {
                             builder: (context) =>
                                 Datadetail(
                                   qaId: qaId.toString(),
-                                  categories: categories,
                                 ),
                           ),
                         );
