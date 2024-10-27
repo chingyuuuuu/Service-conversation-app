@@ -9,13 +9,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="修改問答介面">
+    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="解決圖片顯示問題">
+      <change afterPath="$PROJECT_DIR$/lib/screens/restaurant/restaurant_database.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/restaurant/restaurant_qasytem.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/providers/QA_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/QA_provider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routers/app_routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routers/app_routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/client/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/client.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/customer service system/customer_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/customer service system/customer_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/customer service system/datadetail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/customer service system/datadetail.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/customer service system/question_form.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/customer service system/question_form.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/customer service system/QA_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/customer service system/QA_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/customer service system/datadetail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/datadetail.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/customer service system/question_form.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/question_form.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/user/Choose.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/Choose.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/user/Forget1.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/Forget1.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/user/Forget2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/Forget2.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/user/Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/Login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/user/forget3.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/user/forget3.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/customer service system/QA_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/QA/QA_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/user/AuthenticationService.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/user/AuthenticationService.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/localStorage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/localStorage.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -339,7 +351,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729613706132</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="解決圖片顯示問題">
+      <option name="closed" value="true" />
+      <created>1729692957283</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1729692957283</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -364,7 +384,8 @@
     <MESSAGE value="加入訂單資訊" />
     <MESSAGE value="修改介面" />
     <MESSAGE value="修改問答介面" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改問答介面" />
+    <MESSAGE value="解決圖片顯示問題" />
+    <option name="LAST_COMMIT_MESSAGE" value="解決圖片顯示問題" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/utils/exception.dart';
-import 'Forget1.dart';
 import 'package:jkmapp/services/user/AuthenticationService.dart';
 import 'package:jkmapp/utils/diolog.dart';
 import 'package:jkmapp/routers/app_routes.dart';
@@ -19,7 +18,7 @@ class  Login extends StatelessWidget {
     //發送登入請求
     try {
       await authService.login(email, password);
-      Navigator.pushNamed(context, Routers.choose);
+      Navigator.pushNamed(context, Routers.dining);
     }catch (e) {
       if(e is ClientException) {
         showErrorDialog(context, e.message);
@@ -35,10 +34,7 @@ class  Login extends StatelessWidget {
   }
 
   void _register(BuildContext context) {
-    Navigator.pushNamed(
-      context,
-      '/Register',
-    );
+    Navigator.pushNamed(context, '/Register',);
   }
 
   @override
@@ -126,16 +122,29 @@ class  Login extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 50.0),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Forget1()),
-                      );
+                      Navigator.pushNamed(context, Routers.forget1);
                     },
                     child: Text(
                       '忘記密碼?',
                       style: TextStyle(
                         color: Colors.black12,
                         decoration: TextDecoration.underline,
+                      )
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  alignment: Alignment.centerRight,
+                  margin: const EdgeInsets.only(right: 50.0),
+                  child : GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, Routers.customer); // 替換成您的客服系統路由
+                    },
+                    child: Text(
+                      '客服系統', // 新增的客服系統文本
+                      style: TextStyle(
+                        color: Colors.grey, // 設置為灰色字體
                       ),
                     ),
                   ),

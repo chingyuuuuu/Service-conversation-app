@@ -5,6 +5,12 @@ class StorageHelper{
   static const String passwordKey = 'password';
   static const String savedTypesKey = 'savedTypes';
   static const String dataTypesKey='categories';
+  static const String emailKey='user_email';
+  //暫存email
+  static Future<void> saveEmail(String email) async {
+    SharedPreferences prefs= await SharedPreferences.getInstance();
+    await prefs.setString(emailKey, email);
+  }
   //獲取店家名稱
   static Future<String?> getStoreName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

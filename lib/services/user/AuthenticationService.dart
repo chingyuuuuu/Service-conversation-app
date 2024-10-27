@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jkmapp/utils/exception.dart';
+import 'package:jkmapp/utils/localStorage.dart';
+import 'package:jkmapp/routers/app_routes.dart';
+
 
 class AuthenticationService {
   //登入
@@ -64,4 +67,15 @@ class AuthenticationService {
       throw Exception( responseData['message'] ?? 'Unkown error');
     }
   }
+
+  //忘記密碼
+  static Future<http.Response>sendResetCode(String email) async {
+    final response = await http.post(
+      Uri.parse('http://127.0.0.1:5000/forget_password'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email}),
+    );
+    return response;
+  }
+
 }

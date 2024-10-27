@@ -85,6 +85,14 @@ class _DiningState extends State<dining> {//和statefulwidget適配對，實際�
               },
             ),
             ListTile(
+              leading:Icon(Icons.storage),
+              title:Text('問答資料庫'),
+              onTap:(){
+                 Navigator.pushNamed(context, Routers.restaurant_database);
+              },
+            ),
+            const SizedBox(height:30),
+            ListTile(
               leading: Icon(Icons.logout),
               title: Text('登出'),
               onTap: () {

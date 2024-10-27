@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'Forget2.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert'; //用於解析json數據
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jkmapp/utils/localStorage.dart';
+import 'package:jkmapp/routers/app_routes.dart';
+import 'package:jkmapp/services/user/AuthenticationService.dart';
 
 
 class Forget1 extends StatefulWidget {
@@ -16,8 +16,7 @@ class _Forget1State extends State<Forget1> {
   String _message = '';
 
   Future<void> _storeEmail(String email) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('user_email', email);
+    await StorageHelper.saveEmail(email);
   }
 
   Future<void> _sendResetCode() async {
@@ -35,11 +34,7 @@ class _Forget1State extends State<Forget1> {
       _message = '';
     });
 
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/forget_password'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': email}),
-    );
+    final response = await AuthenticationService.sendResetCode(email);
 
     setState(() {
       _isSending = false;
@@ -51,12 +46,7 @@ class _Forget1State extends State<Forget1> {
       });
       await _storeEmail(email); // Store email
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Forget2(), // Navigate to Forget2
-        ),
-      );
+      Navigator.pushNamed(context,Routers.forget2);
     } else {
       final responseData = jsonDecode(response.body);
       setState(() {

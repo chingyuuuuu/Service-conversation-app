@@ -130,4 +130,23 @@ class QAService{
        }
      }
 
+     //發送問題到後端去回答問題
+     Future<String>fetchanswer(String question)async{
+          try{
+              final response = await http.post(
+                  Uri.parse('http://127.0.0.1:5000/query_qa'),
+                  headers:{"Content-Type":"application/json"},
+                  body: jsonEncode({"question":question}),
+              );
+              if(response.statusCode==200){
+                 final responseData=jsonDecode(response.body);
+                 return responseData['answer']??"抱歉，目前無法回答您這個問題";
+              }else{
+                 return "無法取得回應，請稍後再試";
+              }
+          }catch(e){
+              return "發生錯誤，請檢查網路連線";
+          }
+     }
+
 }

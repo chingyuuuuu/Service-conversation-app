@@ -3,8 +3,8 @@ import 'package:jkmapp/utils/localStorage.dart';
 import 'package:jkmapp/routers/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/providers/QA_provider.dart';
-import 'package:jkmapp/screens/customer service system/question_form.dart';
-import 'package:jkmapp/screens/customer service system/datadetail.dart';
+import 'package:jkmapp/screens/restaurant/question_form.dart';
+import 'package:jkmapp/screens/restaurant/datadetail.dart';
 
 class CustomerData extends StatefulWidget {
   const CustomerData({super.key});

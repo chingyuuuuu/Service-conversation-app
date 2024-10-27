@@ -129,12 +129,19 @@ class ClientState extends State<Client> {
               leading: const Icon(Icons.receipt),
               title: const Text('訂單'),
               onTap: () {
-                Provider.of<OrderProvider>(context, listen: false).fetchOrders(
-                    tableNumber, context);
+                Provider.of<OrderProvider>(context, listen: false).fetchOrders(tableNumber, context);
                 Navigator.pushNamed(context, '/Orderlistpage');
               },
             ),
             const SizedBox(height: 10),
+            ListTile(
+               leading:const Icon(Icons.question_answer_outlined),
+               title: const Text('客服'),
+               onTap:(){
+                  Navigator.pushNamed(context, Routers.restaurant_qasytstem);
+               }
+            ),
+            const SizedBox(height: 40),
             ListTile(
               leading: Icon(Icons.notifications,
                   color: isServiceBellTapped ? Colors.yellow : Colors.black),

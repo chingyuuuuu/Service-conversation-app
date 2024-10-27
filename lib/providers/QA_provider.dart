@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/utils/localStorage.dart';
-import 'package:jkmapp/services/customer service system/QA_service.dart';
+import 'package:jkmapp/services/QA/QA_service.dart';
 import 'dart:typed_data';
 import 'dart:io' as io;
 import 'package:file_picker/file_picker.dart';
@@ -15,13 +15,12 @@ class QAprovider with ChangeNotifier {
   Uint8List? _selectedImageBytes;//儲存圖片二進位(web)
   io.File? _selectedImageFile;//用於儲存圖片文件(app)
   String? _imageFileName;
-
   Uint8List? get selectedImageBytes => _selectedImageBytes;
   String? get imageFileName => _imageFileName;
-
-
   List<Map<String,dynamic>>qaList=[];
   final QAService qaService = QAService();
+  final List<Map<String,String>>_messages=[];//回答問題(message="sender":"","text":"")
+  List<Map<String,String>>get messages=>_messages;
 
 
   //圖片選擇邏輯（ Web 和 App）-將圖片儲存再bytes/file
@@ -145,6 +144,20 @@ class QAprovider with ChangeNotifier {
     } catch (e) {
       print('Failed to update QA data: $e');
     }
+  }
+
+  //回答問題
+  Future<void>sendMessage(String userQuestion)async{
+      //分辨user還是bot去回應
+      //加入客人的資訊-user
+      _messages.add({"sender":"user","text":userQuestion});
+      notifyListeners();
+      //獲得答案
+      String answer=await qaService.fetchanswer(userQuestion);
+      //加入機器人回應訊息-用delay去模擬思考
+      await Future.delayed(Duration(seconds:3));
+      _messages.add({"sender":"bot","text":answer});
+      notifyListeners();
   }
 
 }

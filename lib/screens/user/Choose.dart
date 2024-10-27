@@ -11,7 +11,7 @@ class Choose extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // 返回到上一个页面
+            Navigator.pop(context);//返回上page
           },
         ),
       ),
@@ -59,14 +59,13 @@ class Choose extends StatelessWidget {
               child: Text('客服',
                           style:TextStyle(
                           fontSize: 30,
-
                   ),
                ),
               style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xFF36FDE6),
               foregroundColor: Colors.white,
               minimumSize: Size(250, 80),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),//邊距對稱(左右20,上下10)
            ),
           ),
         ],

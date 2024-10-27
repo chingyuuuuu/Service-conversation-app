@@ -14,7 +14,7 @@ class _Forget2State extends State<Forget2> {
   final TextEditingController _verifyController = TextEditingController();
   bool isSubmitting = false;
   String _message = '';
-  String? email; // 用于存储从 SharedPreferences 读取的 email
+  String? email; // 從暫存中讀取email
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _Forget2State extends State<Forget2> {
       _message = '';
     });
 
-    // 发送请求到后端进行验证码验证
+    // 發送請請到後端進行驗證
     final response = await http.post(
       Uri.parse('http://127.0.0.1:5000/verify'),
       headers: {'Content-Type': 'application/json'},
@@ -79,7 +79,7 @@ class _Forget2State extends State<Forget2> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // 返回到上一个页面
+            Navigator.pop(context);
           },
         ),
       ),
