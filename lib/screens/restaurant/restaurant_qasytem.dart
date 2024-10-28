@@ -53,9 +53,11 @@ class RestaurantQASystemState extends State<RestaurantQASystem> {
           },
         ),
       ),
-      Column(
+    SliverToBoxAdapter(
+    child: Column(
         children: [
-          Expanded(
+         SizedBox(
+           height: MediaQuery.of(context).size.height * 0.8,
             child: ListView.builder(
               itemCount: qaProvider.messages.length,
               itemBuilder: (context, index) {//提供index從0開始遞增，取得第幾條訊息
@@ -113,6 +115,7 @@ class RestaurantQASystemState extends State<RestaurantQASystem> {
           ),
         ],
       ),
+    ),
     ],
     ),
     );
