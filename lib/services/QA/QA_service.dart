@@ -2,7 +2,7 @@ import 'dart:convert';
 import'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:jkmapp/utils/localStorage.dart';
 class QAService{
       //儲存到資料庫
   Future<bool> saveQAData(
@@ -132,11 +132,14 @@ class QAService{
 
      //發送問題到後端去回答問題
      Future<String>fetchanswer(String question)async{
+         final userId = await StorageHelper.getUserId();
           try{
               final response = await http.post(
                   Uri.parse('http://127.0.0.1:5000/query_qa'),
                   headers:{"Content-Type":"application/json"},
-                  body: jsonEncode({"question":question}),
+                  body: jsonEncode({
+                    "user_id":userId,
+                    "question":question}),
               );
               if(response.statusCode==200){
                  final responseData=jsonDecode(response.body);
@@ -147,6 +150,30 @@ class QAService{
           }catch(e){
               return "發生錯誤，請檢查網路連線";
           }
+     }
+     //加載未解答的問題表
+     static Future<List<Map<String, dynamic>>>fetchUnanswered()async {
+       final userId = await StorageHelper.getUserId();
+       try {
+         final response = await http.get(
+             Uri.parse('http://127.0.0.1:5000/unanswered_questions?user_id=$userId')
+         );
+         if (response.statusCode == 200) {
+           final data = json.decode(response.body) as List;
+           return data.map((item) {
+             return {
+               "id": item["id"],
+               "question": item["question"],
+               "count": item["occurrence_count"],
+             };
+           }).toList();
+         } else {
+           throw Exception("Failed to load unanswered questions");
+         }
+       } catch (e) {
+         print("Error fetching unanswered questions: $e");
+         return [];
+       }
      }
 
 }

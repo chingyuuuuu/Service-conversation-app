@@ -133,27 +133,11 @@ class  Login extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
-                Container(
-                  alignment: Alignment.centerRight,
-                  margin: const EdgeInsets.only(right: 50.0),
-                  child : GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, Routers.customer); // 替換成您的客服系統路由
-                    },
-                    child: Text(
-                      '客服系統', // 新增的客服系統文本
-                      style: TextStyle(
-                        color: Colors.grey, // 設置為灰色字體
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            ]
           ),
-        ],
-      ),
+        ),
+      ]
+      )
     );
   }
 }

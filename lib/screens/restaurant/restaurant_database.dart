@@ -53,6 +53,16 @@ class restaurantDataState extends State<restaurantData> {
             ),
             floating: true,
             pinned: true,
+            //加入右邊按鈕
+            actions: [
+               IconButton(
+                  icon:const Icon(Icons.question_mark_outlined,color:Colors.black),
+                  tooltip: '未解答的問題',
+                  onPressed: (){
+                     Navigator.pushNamed(context,  '/UnansweredQuestions');
+                  },
+               )
+            ],
           ),
           SliverToBoxAdapter(
             child: Padding(
