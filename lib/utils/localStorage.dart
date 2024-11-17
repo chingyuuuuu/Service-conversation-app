@@ -63,4 +63,14 @@ class StorageHelper{
     return prefs.getStringList(dataTypesKey);
   }
 
+  //載入備註的狀態
+  static Future<bool>loadRemarkEnabled()async{
+     final prefs=await SharedPreferences.getInstance();
+     return prefs.getBool('enable_remark')??false;//預設是false
+  }
+  //儲存備註的狀態
+  static Future<void>saveRemarkEnabled(bool isEnabled)async{
+    final prefs=await SharedPreferences.getInstance();
+    await prefs.setBool('enable_remark', isEnabled);
+  }
 }

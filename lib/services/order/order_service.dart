@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'package:jkmapp/utils/localStorage.dart';
 
 class OrderService{
-     static Future<bool> saveOrder(String tableNumber,List<Map<String, dynamic>> products,double totalAmount)async{
+     static Future<bool> saveOrder(String tableNumber,List<Map<String, dynamic>> products,double totalAmount,remark)async{
          String? userId=await StorageHelper.getUserId();
-
          final response =await http.post(
            Uri.parse('http://127.0.0.1:5000/saveorder'),
            headers: {'Content-Type':'application/json'},
@@ -14,6 +13,7 @@ class OrderService{
                 'products':products,
                 'total_amount':totalAmount,
                 'user_id':userId,
+                'remark':remark,
            }),
          );
          return response.statusCode==200;
@@ -74,6 +74,25 @@ class OrderService{
        } catch (e) {
          throw Exception('Error:$e');
        }
+     }
+
+     //刷新每日清單-把is_active改成false
+     static Future<bool>clearTodayOrder(String? userId)async{
+        try{
+           final response =await http.post(
+             Uri.parse('http://127.0.0.1:5000/refresh_orders'),//使用路徑參數
+             headers: {'Content-Type': 'application/json'},
+           );
+           if(response.statusCode==200){
+              return true;
+           }else{
+              print('Failed to refresh orders:${response.body}');
+              return false;
+           }
+        }catch(e){
+           print("Error while refreshing orders:$e");
+           return false;
+        }
      }
 
 }

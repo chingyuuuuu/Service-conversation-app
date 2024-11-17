@@ -4,6 +4,7 @@ import 'package:jkmapp/providers/QA_provider.dart';
 import 'package:jkmapp/providers/order_provider.dart';
 import 'package:jkmapp/routers/app_routes.dart';
 import 'package:jkmapp/services/api_service.dart';
+import 'package:jkmapp/providers/remark_provider.dart';
 import 'providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,8 @@ void main() {
         ChangeNotifierProvider(create: (_)=>OrderProvider()
         ),
         ChangeNotifierProvider(create: (_)=>QAprovider()
+        ),
+        ChangeNotifierProvider(create: (_)=>RemarkProvider()
         ),
       ],
       child: MyApp(),

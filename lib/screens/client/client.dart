@@ -18,8 +18,7 @@ class Client extends StatefulWidget {
 class ClientState extends State<Client> {
   TextEditingController passwordController = TextEditingController();
   List<Map<String, dynamic>> products = []; // 儲存all prodcuts
-  Map<String, List<Map<String, dynamic>>> categorizedProducts = {
-  }; //按照types分類的商品
+  Map<String, List<Map<String, dynamic>>> categorizedProducts = {}; //按照types分類的商品
   List<Map<String, dynamic>> displayedProducts = []; //儲存介面上顯示的商品列表
   String selectedTypes = ''; //允許追蹤哪個按鈕被選中
   List<String>typeOptions = [];

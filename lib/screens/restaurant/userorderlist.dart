@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:jkmapp/providers/order_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/screens/restaurant/useroderdetail.dart';
+import 'package:jkmapp/providers/remark_provider.dart';
+import 'package:jkmapp/routers/app_routes.dart';
+import 'package:jkmapp/utils/diolog.dart';
 
 class Userorderlist extends StatefulWidget{
    @override
@@ -11,26 +14,42 @@ class Userorderlist extends StatefulWidget{
 class _UserorderlistState  extends State<Userorderlist> {
   Map<int, bool> _completedOrders = {};
 
-
-
   @override
   Widget build(BuildContext context) {
     final orderProvider = Provider.of<OrderProvider>(context);
+    final remarkProvider = Provider.of<RemarkProvider>(context, listen: true);
+    final activeOrders=orderProvider.orders.where((order)=>order['is_active']==true).toList();
     return Scaffold(
       appBar: AppBar(
         title: Text('店家訂單列表'),
+        actions: [
+           IconButton(
+              icon:Icon(Icons.history),
+              onPressed: (){
+                  Navigator.pushNamed(context,Routers.order_history);
+              },
+           ),
+          Padding(
+            padding: const EdgeInsets.only(right:16.0),
+            child:IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: (){
+                showConfirmationDialog(context);
+            },
+          ),
+          ),
+        ],
       ),
       body: orderProvider.isLoading
           ? Center(child: CircularProgressIndicator()) // 顯示加載指示器
-          : orderProvider.orders.isEmpty
+          : activeOrders.isEmpty
           ? Center(child: Text('尚未加入訂單')) // 如果沒有訂單，顯示提示
           : ListView.builder(
-        itemCount: orderProvider.orders.length,
+        itemCount: activeOrders.length,
         itemBuilder: (context, index) {
-          final order = orderProvider.orders[index];
+          final order = activeOrders[index];
           final int orderId = int.parse(order['order_id'].toString());
           final bool isCompleted = _completedOrders[orderId] ?? false;
-
           return GestureDetector(
             behavior: HitTestBehavior.translucent,//讓外層點擊事件不會攔截內部的inkwell
             onTap: () {
@@ -64,6 +83,8 @@ class _UserorderlistState  extends State<Userorderlist> {
                           Text('桌號 ${order['table']}'),
                           Text('總額: NT\$ ${order['total_amount']}'),
                           Text('創建時間: ${order['created_at']}'),
+                          if( remarkProvider.isRemarkEnabled&&order['remark']!=null&&order['remark'].isNotEmpty)
+                            Text('備註:${order['remark']}'),
                           Text(
                             '結帳狀態: ${order['check'] == true ? '已結帳' : '未結帳'}',
                             style: TextStyle(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jkmapp/widgets/First.dart';
 import 'package:jkmapp/screens/user/Login.dart';
 import 'package:jkmapp/screens/user/Forget1.dart';
-import 'package:jkmapp/screens/user/Choose.dart';
 import 'package:jkmapp/screens/user/Register.dart';
 import 'package:jkmapp/screens/user/Forget2.dart';
 import 'package:jkmapp/screens/user/Forget3.dart';
@@ -17,6 +16,7 @@ import 'package:jkmapp/screens/restaurant/userorderlist.dart';
 import 'package:jkmapp/screens/restaurant/restaurant_database.dart';
 import 'package:jkmapp/screens/restaurant/restaurant_qasytem.dart';
 import 'package:jkmapp/screens/restaurant/QA_unanswered.dart';
+import 'package:jkmapp/screens/restaurant/order_history.dart';
 
 class Routers{
   static const String first ='/First';
@@ -39,6 +39,7 @@ class Routers{
   static const String restaurant_database='/restaurant_database';
   static const String restaurant_qasytstem='/restaurant_qasytstem';
   static const String QA_unanswered='/UnansweredQuestions';
+  static const String order_history='/Orderhistory';
 }
 
 class RouteGenerator{
@@ -57,8 +58,6 @@ class RouteGenerator{
         return MaterialPageRoute(builder: (_)=>Forget2());
       case Routers.forget3:
         return MaterialPageRoute(builder: (_)=>Forget3());
-      case Routers.choose:
-        return MaterialPageRoute(builder: (_)=>Choose());
       case Routers.dining:
         return MaterialPageRoute(builder: (_)=>dining());
       case Routers.createMerchandise:
@@ -85,6 +84,8 @@ class RouteGenerator{
         return MaterialPageRoute(builder: (_)=>RestaurantQASystem());
       case Routers.QA_unanswered:
         return MaterialPageRoute(builder: (_)=>UnansweredQuestionsPage());
+      case Routers.order_history:
+           return MaterialPageRoute(builder: (_)=>orderHistory());
       default:
         return null;
     }

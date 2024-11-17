@@ -79,4 +79,13 @@ class OrderProvider with ChangeNotifier {
         notifyListeners();  // 最終狀態更新，通知 UI 更新
     }
   }
+
+  Future<bool>clearTodayOrder(BuildContext context)async{
+    String? userId=await StorageHelper.getUserId();
+    _isLoading=true;
+    notifyListeners();
+    bool success=await OrderService.clearTodayOrder(userId);
+    notifyListeners();
+    return success;
+  }
 }

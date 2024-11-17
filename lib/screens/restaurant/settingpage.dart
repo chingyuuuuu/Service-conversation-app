@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/utils/localStorage.dart';
-
+import 'package:jkmapp/providers/remark_provider.dart';
+import 'package:provider/provider.dart';
 
 
 class SettingsPage extends StatefulWidget{
@@ -37,6 +38,8 @@ class SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final remarkProvider = Provider.of<RemarkProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -127,6 +130,24 @@ class SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                 ],
+              ),
+              SizedBox(height:10),
+              Row(
+                 children: [
+                     Icon(Icons.note_alt,size:40),
+                     SizedBox(width: 10),
+                     Text(
+                        "開啟備註",
+                         style:TextStyle(fontSize: 18),
+                     ),
+                    Spacer(),
+                    Switch(
+                        value: remarkProvider.isRemarkEnabled,
+                        onChanged: (value)async{
+                           await remarkProvider.saveRemarkStatus(value);//儲存備註的狀態
+                       },
+                    )
+                 ],
               ),
               SizedBox(height: 20),
               ElevatedButton(

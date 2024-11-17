@@ -3,10 +3,12 @@ import 'package:jkmapp/services/order/order_service.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/providers/cart_provider.dart';
 import'package:jkmapp/utils/SnackBar.dart';
+import 'package:jkmapp/providers/remark_provider.dart';
 
 
 Widget buildCartBottomSheet(BuildContext context) {
   final cartProvider = Provider.of<CartProvider>(context); // 獲取購物車狀態
+  final remarkProvider = Provider.of<RemarkProvider>(context);
   final String tableNumber='A1';
   //打包成products傳遞給後端
   final List<Map<String, dynamic>> products = cartProvider.cartItems.map((item) {
@@ -16,6 +18,7 @@ Widget buildCartBottomSheet(BuildContext context) {
     };
   }).toList();  // 提取每個商品的 product_id 和 quantity
   final double totalAmount=cartProvider.totalAmount;
+  final TextEditingController remarkController = TextEditingController();
 
   return Container(
     color: Colors.white,
@@ -144,21 +147,32 @@ Widget buildCartBottomSheet(BuildContext context) {
             ],
           ),
         ),
-        SizedBox(height:10),
+        const  SizedBox(height:10),
+        //加入備註欄
+        if(remarkProvider.isRemarkEnabled)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child:TextField(
+              controller: remarkController,
+              decoration: const InputDecoration(
+                  labelText:'備註',
+                  hintText: '輸入備註...',
+              ),
+            ),
+        ),
+        const SizedBox(height: 10),
         Center(
            child:ElevatedButton(
-          onPressed: () async{
-           bool success =await OrderService.saveOrder(tableNumber,products, totalAmount);
+           onPressed: () async{
+             final String remark=remarkController.text;
+            bool success =await OrderService.saveOrder(tableNumber,products, totalAmount,remark);
             if(success){
               cartProvider.clearCart();
               Navigator.pop(context);
               SnackBarutils.showSnackBar(context, "下單成功", Colors.green);
             }else{
               SnackBarutils.showSnackBar(context, "下單失敗", Colors.red);
-
             }
-
-
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.black,
