@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import'package:jkmapp/screens/client/orderdetailpage.dart';
 
 class Orderlistpage extends StatelessWidget {
-  String tableNumber='A1';
+
   @override
   Widget build(BuildContext context) {
     final orderProvider = Provider.of<OrderProvider>(context);

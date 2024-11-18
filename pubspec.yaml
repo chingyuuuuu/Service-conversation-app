@@ -20,6 +20,12 @@ dependencies:
   cookie_jar: ^4.0.8  # 用於儲存 Cookies
   path_provider: ^2.0.11
   provider: ^6.0.0
+  qr_flutter: ^4.1.0
+  qr_code_scanner: ^1.0.0
+  permission_handler: ^10.2.0
+  image_gallery_saver: ^1.7.1
+
+
 
 dev_dependencies:
   flutter_test:

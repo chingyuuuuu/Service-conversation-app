@@ -11,10 +11,9 @@ class OrderProvider with ChangeNotifier {
   List<dynamic> get orders => _orders;
   bool get isLoading => _isLoading;
   bool get hasError => _hasError;
-  String tableNumber='A1';
 
   // 獲取訂單並更新狀態
-  Future<void> fetchOrders(String tableNumer,BuildContext context) async {
+  Future<void> fetchOrders(String tableNumber,BuildContext context) async {
     _isLoading = true;
     _hasError = false;
     notifyListeners();  // 通知 UI 進行更新

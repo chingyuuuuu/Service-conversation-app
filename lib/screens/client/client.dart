@@ -11,6 +11,9 @@ import 'package:jkmapp/providers/order_provider.dart';
 import 'package:jkmapp/routers/app_routes.dart';
 
 class Client extends StatefulWidget {
+  final String tableNumber;//接收桌號
+  Client({required this.tableNumber});
+
   @override
   ClientState createState() => ClientState();
 }
@@ -23,7 +26,6 @@ class ClientState extends State<Client> {
   String selectedTypes = ''; //允許追蹤哪個按鈕被選中
   List<String>typeOptions = [];
   bool isServiceBellTapped = false;
-  String tableNumber = 'A1'; //記得處理桌號問題
   bool _isSearching = false;
   TextEditingController _searchController = TextEditingController();
 
@@ -128,8 +130,11 @@ class ClientState extends State<Client> {
               leading: const Icon(Icons.receipt),
               title: const Text('訂單'),
               onTap: () {
-                Provider.of<OrderProvider>(context, listen: false).fetchOrders(tableNumber, context);
-                Navigator.pushNamed(context, '/Orderlistpage');
+                Provider.of<OrderProvider>(context, listen: false).fetchOrders(widget.tableNumber, context);
+                Navigator.pushNamed(
+                  context,
+                  Routers.orderlistpage,
+                );
               },
             ),
             const SizedBox(height: 10),
@@ -189,7 +194,11 @@ class ClientState extends State<Client> {
                 _filterProducts(value); // 根據輸入的值過濾商品
               },
             )
-            :null,
+            :Text(
+               '桌號:${widget.tableNumber}',
+                key: ValueKey('tabletitle'),
+                style: TextStyle(color:Colors.black,fontSize:20),
+            ),
             leading: Builder(
               builder: (context) {
                 return IconButton(

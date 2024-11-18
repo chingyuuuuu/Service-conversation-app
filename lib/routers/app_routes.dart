@@ -17,6 +17,8 @@ import 'package:jkmapp/screens/restaurant/restaurant_database.dart';
 import 'package:jkmapp/screens/restaurant/restaurant_qasytem.dart';
 import 'package:jkmapp/screens/restaurant/QA_unanswered.dart';
 import 'package:jkmapp/screens/restaurant/order_history.dart';
+import 'package:jkmapp/screens/restaurant/TableManagementPage.dart';
+
 
 class Routers{
   static const String first ='/First';
@@ -40,6 +42,7 @@ class Routers{
   static const String restaurant_qasytstem='/restaurant_qasytstem';
   static const String QA_unanswered='/UnansweredQuestions';
   static const String order_history='/Orderhistory';
+  static const String TableManagementPage='/TableManagement';
 }
 
 class RouteGenerator{
@@ -65,11 +68,12 @@ class RouteGenerator{
       case Routers.menu:
         return MaterialPageRoute(builder: (_)=>MenuPage());
       case Routers.Client:
-        return MaterialPageRoute(builder: (_)=>Client());
+        final args=settings.arguments as String;
+        return MaterialPageRoute(builder: (_)=>Client(tableNumber: args),);
       case Routers.settingpage:
         return MaterialPageRoute(builder: (_)=>SettingsPage(onSave: (){},));
       case Routers.orderlistpage:
-        return MaterialPageRoute(builder: (_)=>Orderlistpage());
+        return MaterialPageRoute(builder: (_)=>Orderlistpage(),);
       case Routers.userorderlist:
         return MaterialPageRoute(builder: (_)=>Userorderlist());
       case Routers.productdetail:
@@ -86,6 +90,8 @@ class RouteGenerator{
         return MaterialPageRoute(builder: (_)=>UnansweredQuestionsPage());
       case Routers.order_history:
            return MaterialPageRoute(builder: (_)=>orderHistory());
+      case Routers.TableManagementPage:
+         return MaterialPageRoute(builder: (_)=>TableGeneratorPage());
       default:
         return null;
     }

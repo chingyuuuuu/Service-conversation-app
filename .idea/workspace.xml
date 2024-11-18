@@ -10,20 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="修改QA系統">
-      <change afterPath="$PROJECT_DIR$/lib/providers/remark_provider.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/restaurant/order_history.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/restaurant/TableManagementPage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/services/user/table_generate_service.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/utils/DialogUtils.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/providers/order_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/order_provider.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/routers/app_routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routers/app_routes.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/client/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/client/orderlistpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/orderlistpage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/settingpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/settingpage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/userorderlist.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/userorderlist.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/user/Choose.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/order/order_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/order/order_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/diolog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/diolog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/localStorage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/localStorage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/client/cart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/client/cart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -379,7 +377,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731774203720</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="修改QA系統">
+      <option name="closed" value="true" />
+      <created>1731865099064</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1731865099064</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

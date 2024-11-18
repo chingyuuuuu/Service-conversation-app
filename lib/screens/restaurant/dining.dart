@@ -6,7 +6,7 @@ import'package:jkmapp/providers/Notification_Provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/utils/SnackBar.dart';
 import 'package:jkmapp/providers/order_provider.dart';
-
+import 'package:jkmapp/screens/client/client.dart';
 
 
 class dining extends StatefulWidget {
@@ -81,7 +81,10 @@ class _DiningState extends State<dining> {//和statefulwidget適配對，實際�
               leading: Icon(Icons.person_outline),
               title: Text('客人模式'),
               onTap: () {
-                Navigator.pushNamed(context, Routers.Client);
+                Navigator.pushNamed(
+                    context, Routers.Client,
+                    arguments: 'A1',
+                );
               },
             ),
             ListTile(
@@ -90,6 +93,13 @@ class _DiningState extends State<dining> {//和statefulwidget適配對，實際�
               onTap:(){
                  Navigator.pushNamed(context, Routers.restaurant_database);
               },
+            ),
+            ListTile(
+               leading: Icon(Icons.table_bar),
+               title:Text('生成桌號'),
+               onTap:(){
+                  Navigator.pushNamed(context,Routers.TableManagementPage);
+               },
             ),
             const SizedBox(height:30),
             ListTile(
