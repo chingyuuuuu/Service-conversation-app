@@ -1,4 +1,3 @@
-// table_generator_service.dart
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:jkmapp/utils/DialogUtils.dart';
@@ -7,10 +6,13 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:html' as html;  // 適用於web
+import 'package:flutter/rendering.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 class TableGeneratorService {
+
   static void generateTables(BuildContext context, TextEditingController tableCountController,
       Function(List<Map<String, String>>) onGenerate) {
     final int? count = int.tryParse(tableCountController.text);
@@ -27,21 +29,13 @@ class TableGeneratorService {
       onGenerate(tableData);
       tableCountController.clear();
     } else {
-      DialogUtils.showDialogWithMessage(
-        context: context,
-        title: "警告",
-        message: "請輸入有效數字（1-50）",
-      );
+      DialogUtils.showDialogWithMessage(context: context, title: "警告", message: "請輸入有效數字（1-50）",);
     }
   }
 
   static void showQRCode(BuildContext context, String tableNumber, String qrData) {
     if (qrData.isEmpty) {
-      DialogUtils.showDialogWithMessage(
-        context: context,
-        title: "錯誤",
-        message: "無效的 QR Code 數據",
-      );
+      DialogUtils.showDialogWithMessage(context: context, title: "錯誤", message: "無效的 QR Code 數據",);
       return;
     }
     showDialog(
@@ -86,27 +80,51 @@ class TableGeneratorService {
     if (qrData.isEmpty) return;
 
     try {
-      final directory = await getExternalStorageDirectory();
-      final path = directory?.path;
-      final qrValidationImage = await QrPainter(
-        data: qrData,
-        version: QrVersions.auto,
-      ).toImage(320.0);
-      final bytes = await qrValidationImage.toByteData(format: ui.ImageByteFormat.png);
-      final imageFile = File('$path/QRCode.png');
-      await imageFile.writeAsBytes(bytes!.buffer.asUint8List());
+      // 使用Canvas繪製
+      final qrKey = GlobalKey(); // GlobalKey 獲取 widget 的 context
+      final qrCode = RepaintBoundary( // 使用 RepaintBoundary 包裹 QR 组件
+        key: qrKey,
+        child: QrImageView(
+          data: qrData,
+          version: QrVersions.auto,
+          size: 320.0,
+        ),
+      );
 
-      //保存到本地
-      final result = await ImageGallerySaver.saveFile(imageFile.path);
-      if (result != null) {
-        print("QRcode已經保存");
-      } else {
-        print("保存失敗");
-      }
+      // 使用 WidgetsBinding 確保
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        final context = qrKey.currentContext;
+        if (context == null) {
+          print("QRView context is null");
+          return;
+        }
+
+        // render
+        final RenderRepaintBoundary boundary = context.findRenderObject() as RenderRepaintBoundary;
+        final image = await boundary.toImage(pixelRatio: 3.0); // 转换为图像
+
+        final byteData = await image.toByteData(format: ui.ImageByteFormat.png); // 转换为 byte 数据
+        if (byteData == null) {
+          print("Failed to convert image to byte data");
+          return;
+        }
+
+        final buffer = byteData.buffer.asUint8List(); // 获取 byte 数据
+
+        final blob = html.Blob([buffer]);
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        final anchor = html.AnchorElement(href: url)
+          ..target = 'blank'
+          ..download = 'QRCode.png';
+        anchor.click(); // 觸發下载
+        html.Url.revokeObjectUrl(url); // 釋放資源
+      });
+
     } catch (e) {
-      print("保存QRcode失敗: $e");
+      print("保存失败: $e");
     }
   }
+
   //加載已經保存的桌號
   static Future<List<Map<String, String>>> loadSavedTables() async {
     final prefs = await SharedPreferences.getInstance();

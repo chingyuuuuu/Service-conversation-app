@@ -198,6 +198,7 @@ class ClientState extends State<Client> {
                '桌號:${widget.tableNumber}',
                 key: ValueKey('tabletitle'),
                 style: TextStyle(color:Colors.black,fontSize:20),
+                textAlign: TextAlign.center,
             ),
             leading: Builder(
               builder: (context) {

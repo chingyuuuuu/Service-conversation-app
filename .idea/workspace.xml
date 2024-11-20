@@ -9,19 +9,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="修改QA系統">
-      <change afterPath="$PROJECT_DIR$/lib/screens/restaurant/TableManagementPage.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/services/user/table_generate_service.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utils/DialogUtils.dart" afterDir="false" />
+    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="加入生成桌號功能">
+      <change afterPath="$PROJECT_DIR$/lib/providers/Speech_provider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/services/QA/Speech_service.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/providers/order_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/order_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routers/app_routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routers/app_routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/providers/QA_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/QA_provider.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/client/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/client.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/client/orderlistpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/orderlistpage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/settingpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/settingpage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/restaurant_qasytem.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/restaurant_qasytem.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/user/table_generate_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/user/table_generate_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +46,7 @@
   </component>
   <component name="ProblemsViewState">
     <option name="proportion" value="0.9" />
+    <option name="selectedTabId" value="CurrentFile" />
     <option name="showPreview" value="true" />
   </component>
   <component name="ProjectColorInfo">{
@@ -385,7 +387,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731865099064</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="加入生成桌號功能">
+      <option name="closed" value="true" />
+      <created>1731946881087</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1731946881087</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -412,7 +422,8 @@
     <MESSAGE value="修改問答介面" />
     <MESSAGE value="解決圖片顯示問題" />
     <MESSAGE value="修改QA系統" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改QA系統" />
+    <MESSAGE value="加入生成桌號功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="加入生成桌號功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

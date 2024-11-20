@@ -24,6 +24,7 @@ dependencies:
   qr_code_scanner: ^1.0.0
   permission_handler: ^10.2.0
   image_gallery_saver: ^1.7.1
+  flutter_tts: ^3.2.2 #用於語音合成
 
 
 
