@@ -7,17 +7,19 @@ import 'package:jkmapp/screens/user/Forget2.dart';
 import 'package:jkmapp/screens/user/Forget3.dart';
 import 'package:jkmapp/screens/restaurant/dining.dart';
 import 'package:jkmapp/screens/products/createmerchandise.dart';
-import 'package:jkmapp/screens/restaurant/settingpage.dart';
+import 'package:jkmapp/screens/restaurant/Setting/settingpage.dart';
 import 'package:jkmapp/screens/products/productdetail.dart';
 import 'package:jkmapp/screens/restaurant/menu.dart';
 import 'package:jkmapp/screens/client/client.dart';
 import 'package:jkmapp/screens/client/orderlistpage.dart';
-import 'package:jkmapp/screens/restaurant/userorderlist.dart';
-import 'package:jkmapp/screens/restaurant/restaurant_database.dart';
-import 'package:jkmapp/screens/restaurant/restaurant_qasytem.dart';
-import 'package:jkmapp/screens/restaurant/QA_unanswered.dart';
-import 'package:jkmapp/screens/restaurant/order_history.dart';
-import 'package:jkmapp/screens/restaurant/TableManagementPage.dart';
+import 'package:jkmapp/screens/restaurant/Order/userorderlist.dart';
+import 'package:jkmapp/screens/restaurant/QA/restaurant_database.dart';
+import 'package:jkmapp/screens/restaurant/QA/restaurant_qasytem.dart';
+import 'package:jkmapp/screens/restaurant/QA/QA_unanswered.dart';
+import 'package:jkmapp/screens/restaurant/Order/order_history.dart';
+import 'package:jkmapp/screens/restaurant/Table/TableManagementPage.dart';
+import 'package:jkmapp/screens/restaurant/Checkout/checkpage.dart';
+import 'package:jkmapp/screens/restaurant/Checkout/RevenuePage.dart';
 
 
 class Routers{
@@ -43,6 +45,8 @@ class Routers{
   static const String QA_unanswered='/UnansweredQuestions';
   static const String order_history='/Orderhistory';
   static const String TableManagementPage='/TableManagement';
+  static const String CheckPage='/Checkpage';
+  static const String RevenuePage='/Revenuepage';
 }
 
 class RouteGenerator{
@@ -75,7 +79,7 @@ class RouteGenerator{
       case Routers.orderlistpage:
         return MaterialPageRoute(builder: (_)=>Orderlistpage(),);
       case Routers.userorderlist:
-        return MaterialPageRoute(builder: (_)=>Userorderlist());
+        return MaterialPageRoute(builder: (_)=>UserOrderList());
       case Routers.productdetail:
         final args = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(builder: (_)=>ProductDetailPage(
@@ -92,6 +96,10 @@ class RouteGenerator{
            return MaterialPageRoute(builder: (_)=>orderHistory());
       case Routers.TableManagementPage:
          return MaterialPageRoute(builder: (_)=>TableGeneratorPage());
+      case Routers.CheckPage:
+        return MaterialPageRoute(builder: (_)=>Checkpage());
+      case Routers.RevenuePage:
+        return MaterialPageRoute(builder: (_)=>RevenuePage());
       default:
         return null;
     }

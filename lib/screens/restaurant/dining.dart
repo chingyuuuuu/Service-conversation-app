@@ -101,6 +101,13 @@ class _DiningState extends State<dining> {//和statefulwidget適配對，實際�
                   Navigator.pushNamed(context,Routers.TableManagementPage);
                },
             ),
+            ListTile(
+              leading: Icon(Icons.price_check_sharp),
+              title:Text('結帳'),
+              onTap:(){
+                Navigator.pushNamed(context,Routers.CheckPage);
+              },
+            ),
             const SizedBox(height:30),
             ListTile(
               leading: Icon(Icons.logout),

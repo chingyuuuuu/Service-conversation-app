@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/providers/order_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:jkmapp/screens/restaurant/useroderdetail.dart';
+import 'package:jkmapp/screens/restaurant/Order/useroderdetail.dart';
 import 'package:jkmapp/providers/remark_provider.dart';
 
 
@@ -23,12 +23,12 @@ class _orderHistoryState  extends State<orderHistory> {
       ),
       body: orderProvider.isLoading
           ? Center(child: CircularProgressIndicator()) // 顯示加載指示器
-          : orderProvider.orders.isEmpty
+          : orderProvider.allorders.isEmpty
           ? Center(child: Text('尚未加入訂單')) // 如果沒有訂單，顯示提示
           : ListView.builder(
-        itemCount: orderProvider.orders.length,
+        itemCount: orderProvider.allorders.length,
         itemBuilder: (context, index) {
-          final order = orderProvider.orders[index];
+          final order = orderProvider.allorders[index];
           final int orderId = int.parse(order['order_id'].toString());
           return GestureDetector(
             behavior: HitTestBehavior.translucent,//讓外層點擊事件不會攔截內部的inkwell
@@ -65,8 +65,7 @@ class _orderHistoryState  extends State<orderHistory> {
                           Text('創建時間: ${order['created_at']}'),
                           if( remarkProvider.isRemarkEnabled&&order['remark']!=null&&order['remark'].isNotEmpty)
                             Text('備註:${order['remark']}'),
-                          Text(
-                            '結帳狀態: ${order['check'] == true ? '已結帳' : '未結帳'}',
+                          Text('結帳狀態: ${order['check'] == true ? '已結帳' : '未結帳'}',
                             style: TextStyle(
                               color: order['check'] == true
                                   ? Colors.green

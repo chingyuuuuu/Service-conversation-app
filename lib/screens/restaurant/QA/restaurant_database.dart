@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jkmapp/utils/localStorage.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/providers/QA_provider.dart';
-import 'package:jkmapp/screens/restaurant/question_form.dart';
-import 'package:jkmapp/screens/restaurant/datadetail.dart';
+import 'package:jkmapp/screens/restaurant/QA/question_form.dart';
+import 'package:jkmapp/screens/restaurant/QA/datadetail.dart';
 
 class restaurantData extends StatefulWidget {
   const restaurantData({super.key});

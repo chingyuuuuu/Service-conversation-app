@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart';
 
 
-
 class QAprovider with ChangeNotifier {
   String question = '';
   String answer = '';
@@ -21,7 +20,6 @@ class QAprovider with ChangeNotifier {
   final QAService qaService = QAService();
   final List<Map<String,String>>_messages=[];//回答問題(message="sender":"","text":"")
   List<Map<String,String>>get messages=>_messages;
-
 
   //圖片選擇邏輯（ Web 和 App）-將圖片儲存再bytes/file
   Future<void> pickImage() async {
@@ -146,20 +144,77 @@ class QAprovider with ChangeNotifier {
     }
   }
 
+  //用來判斷是否為keyword
+  //將type也放入keyword的一種
+  Future<bool> isKeyword(String userQuestion)async{
+      List<String>keywords=['點餐','下訂單'];
+      //獲取types
+      List<String>storedTypes=await  StorageHelper.getDBtypes();
+      //將types合併到keyword表中
+      keywords.addAll(storedTypes);
+      //判斷客人輸入使否包含關鍵字
+      for(var keyword in keywords){
+          if(userQuestion.contains(keyword)){
+              return true;
+          }
+      }
+      return false;
+  }
+
   //回答問題
   Future<void>sendMessage(String userQuestion)async{
       //分辨user還是bot去回應
       //加入客人的資訊-user
       _messages.add({"sender":"user","text":userQuestion});
       notifyListeners();
-      //獲得答案
-      String answer=await qaService.fetchanswer(userQuestion);
-      //加入機器人回應訊息-用delay去模擬思考
-      await Future.delayed(Duration(seconds:3));
-      _messages.add({"sender":"bot","text":answer});
-      notifyListeners();
-  }
 
-  //
+      if(await isKeyword(userQuestion)){ //如果是keyword就調用任務處理
+        String taskResponse = await handleTask(userQuestion);
+         await Future.delayed(Duration(seconds:3));
+         _messages.add({"sender":"bot","text":taskResponse});
+         notifyListeners();
+      }else{
+        //獲得答案
+        String answer=await qaService.fetchanswer(userQuestion);
+        //加入機器人回應訊息-用delay去模擬思考
+        await Future.delayed(Duration(seconds:3));
+        _messages.add({"sender":"bot","text":answer});
+        notifyListeners();
+      }
+    }
+
+    //處理關鍵字任務
+    Future<String>handleTask(String task)async {
+      //獲取types
+      List<String> foodTypes = await StorageHelper.getDBtypes();
+      if (task.contains('點餐')) {
+        //Step1.發送點餐請求到後端，獲得all types
+        if (foodTypes.isNotEmpty) {
+          return '請選擇商品類型: ${foodTypes.join(',')}'; //返回bot回應
+        } else {
+          return '目前無法提供商品類型，請稍後再試';
+        }
+      } else if (foodTypes.contains(task)) {
+        //輸出該type的商品資訊
+        Map<String, List<Map<String, dynamic>>> productsByType = await StorageHelper.getProductsByType();
+         if(productsByType.containsKey(task)){
+           List<Map<String, dynamic>> products = productsByType[task]!;
+           if (products.isNotEmpty) {
+             // 合併資訊
+             String productList = products.map((p) => '${p['name']} (${p['price']}元)').join(', ');
+             return '以下是 $task 的商品資訊: $productList ,請選擇你想要的商品?';
+           } else {
+             return '目前 $task 沒有可用商品';
+           }
+         } else {
+           return '目前暫無 $task 類的商品資訊';
+         }
+      } else if (task.contains('下訂單')) {
+        return '您的訂單已下定成功!';
+      } else {
+        return '無法識別任務';
+      }
+    }
+
 
 }

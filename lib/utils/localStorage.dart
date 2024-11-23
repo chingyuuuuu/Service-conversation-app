@@ -1,11 +1,13 @@
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:convert';
 class StorageHelper{
   static const String storeNameKey = 'storeName';
   static const String passwordKey = 'password';
   static const String savedTypesKey = 'savedTypes';
   static const String dataTypesKey='categories';
   static const String emailKey='user_email';
+  static const String DBtypeskEY='types';
+  static const String Products='product';
   //暫存email
   static Future<void> saveEmail(String email) async {
     SharedPreferences prefs= await SharedPreferences.getInstance();
@@ -72,5 +74,32 @@ class StorageHelper{
   static Future<void>saveRemarkEnabled(bool isEnabled)async{
     final prefs=await SharedPreferences.getInstance();
     await prefs.setBool('enable_remark', isEnabled);
+  }
+  //暫存真實儲存在資料庫中商品的type
+  static Future<void>saveDBtype(List<String>types)async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(DBtypeskEY, types);
+  }
+  //獲取已經存儲的types
+   static Future<List<String>>getDBtypes()async{
+       SharedPreferences prefs=await SharedPreferences.getInstance();
+       return prefs.getStringList(DBtypeskEY) ??[];
+   }
+   //暫存商品資訊
+  static Future<void> saveProductsByType(Map<String, List<Map<String, dynamic>>> productsByType) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String encodedProducts = json.encode(productsByType);
+    await prefs.setString(Products, encodedProducts);
+  }
+  //獲取商品-讀取時需要將json.encode轉成map
+  static Future<Map<String, List<Map<String, dynamic>>>> getProductsByType() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? encodedProducts = prefs.getString(Products);
+    if (encodedProducts != null) {
+      Map<String, dynamic> decodedProducts = json.decode(encodedProducts);
+      return decodedProducts.map((key, value) => MapEntry(
+          key, List<Map<String, dynamic>>.from(value as List<dynamic>)));
+    }
+    return {};
   }
 }

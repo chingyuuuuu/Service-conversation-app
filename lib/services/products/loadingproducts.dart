@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:jkmapp/utils/SnackBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:jkmapp/utils/localStorage.dart';
 
 
 Future<String?> _getUserId() async {
@@ -13,11 +13,9 @@ Future<String?> _getUserId() async {
 }
 
 class ProductService{//定義一個加載數據的方法
-
     static Future<List<Map<String,dynamic>>> loadProdcuts(BuildContext context)async{
        try{
             String? userId =await _getUserId();
-
             if(userId == null){
               SnackBarutils.showSnackBar(context, "未找到用戶id", Colors.red);
               return[];
@@ -159,7 +157,21 @@ class ProductService{//定義一個加載數據的方法
                       'type': product['type'], // 如果需要展示商品类型，可以保留这个字段
                     };
                   }).toList();
-
+                  //將所有type暫存
+                  List<String> types = productList.map((product) => product['type'] as String).toSet().toList();
+                  await StorageHelper.saveDBtype(types);
+                  //按type 分類並暫存
+                  Map<String, List<Map<String, dynamic>>> productsByType = {};
+                  for (var product in productList) {
+                    String type = product['type'];
+                    if (!productsByType.containsKey(type)) {
+                      productsByType[type] = []; // 使用變量type
+                    }
+                    productsByType[type]!.add({'name': product['name'], 'price': product['price']});
+                  }
+                  await StorageHelper.saveProductsByType(productsByType);
+                  Map<String, List<Map<String, dynamic>>> savedProductsByType = await StorageHelper.getProductsByType();
+                  print('已存储的商品信息: $savedProductsByType');
                   return productList;
               } else {
                 print('Failed to load products. Status code: ${response.statusCode}');
@@ -170,4 +182,5 @@ class ProductService{//定義一個加載數據的方法
           return [];
         }
    }
+
  }

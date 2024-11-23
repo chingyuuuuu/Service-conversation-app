@@ -4,11 +4,15 @@ import 'package:jkmapp/utils/SnackBar.dart';
 import 'package:jkmapp/utils/localStorage.dart';
 
 class OrderProvider with ChangeNotifier {
-  List<dynamic> _orders = [];  // 用來存放訂單的列表
+  List<dynamic>_orders=[];
+  List<dynamic> _todayOrders = []; // 用來存放訂單的列表
+  List<dynamic> _allOrders = [];
   bool _isLoading = false;  // 加載狀態
   bool _hasError = false;
+  List<dynamic>get orders=>_orders;
+  List<dynamic> get todayorders => _todayOrders;
+  List<dynamic> get allorders => _allOrders;
 
-  List<dynamic> get orders => _orders;
   bool get isLoading => _isLoading;
   bool get hasError => _hasError;
 
@@ -48,7 +52,7 @@ class OrderProvider with ChangeNotifier {
   }
 
 
-  //獲取所有訂單(業者)
+  //獲取所有訂單(業者)-歷史紀錄
   Future<void>getallorders(String? userId,BuildContext context)async{
     String? userId= await StorageHelper.getUserId();
      _isLoading=true;
@@ -56,16 +60,15 @@ class OrderProvider with ChangeNotifier {
      notifyListeners();
     try{
         List<dynamic> orders = await OrderService.getorder(userId);
-        _orders = orders;  // 更新訂單列表
+        _allOrders = orders;  // 更新訂單列表
         if (orders.isEmpty) {
           SnackBarutils.showSnackBar(context, "尚未加入訂單", Colors.red);
         }else{
-          _orders=orders;//更新訂單
+          _allOrders=orders;//更新訂單
         }
       } catch (e) {
         // 根據捕獲的錯誤顯示不同的提示
         _hasError = true;
-
         if (e.toString().contains('尚未加入訂單')) {
           SnackBarutils.showSnackBar(context, "尚未加入訂單", Colors.red);
         } else if (e.toString().contains('網路錯誤')) {
@@ -78,13 +81,41 @@ class OrderProvider with ChangeNotifier {
         notifyListeners();  // 最終狀態更新，通知 UI 更新
     }
   }
-
-  Future<bool>clearTodayOrder(BuildContext context)async{
-    String? userId=await StorageHelper.getUserId();
-    _isLoading=true;
-    notifyListeners();
-    bool success=await OrderService.clearTodayOrder(userId);
-    notifyListeners();
-    return success;
+  //根據日期調用訂單-今日訂單
+  Future<void>fetchordersByDate({String? date})async{
+     String? userId= await StorageHelper.getUserId();
+     _isLoading=true;
+      notifyListeners();
+      try{
+        List<dynamic> orders = await OrderService.fetchOrdersByDate(userId, date: date);
+        //更新狀態
+        _todayOrders= List<dynamic>.from(orders);
+      }catch(e){
+         print('Error fetching orders:$e');
+         _todayOrders=[];
+      }finally{
+         _isLoading=false;
+         notifyListeners();
+      }
   }
+
+  Future<bool> markOrderAsChecked(int orderId) async {
+    try {
+      final response = await OrderService.updateOrderCheckStatus(orderId, true);
+      if (response) {
+        final index =
+        _todayOrders.indexWhere((order) => order['order_id'] == orderId);
+        if (index != -1) {
+          _todayOrders[index]['check'] = true; // 更新本地状态
+          notifyListeners();
+        }
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print('Error updating order status: $e');
+      return false;
+    }
+  }
+
 }

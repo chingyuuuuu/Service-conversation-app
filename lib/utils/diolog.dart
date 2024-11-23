@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/providers/order_provider.dart';
 import 'package:jkmapp/utils/localStorage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'SnackBar.dart';
-import 'package:provider/provider.dart';
 
 void showErrorDialog(BuildContext context, String message) {
   showDialog(
@@ -106,38 +104,3 @@ Future<void> showPasswordNotification(BuildContext context) async {
   SnackBarutils.showSnackBar(context,'後臺密碼是:$savedPassword',Colors.blue);
 }
 
-
-Future<void> showConfirmationDialog(BuildContext context) async {
-  return showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Colors.white,
-        title: Text('每日刷新',style: TextStyle(color:Colors.black),),
-        content: Text('請問確定要刪除今天的訂單?此操作無法還原',style: TextStyle(color:Colors.red),),
-        actions: [
-          TextButton(
-            child: Text('取消',style: TextStyle(color:Colors.grey),),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          ElevatedButton(
-            child: Text('確定',style: TextStyle(color:Colors.black)),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-            onPressed: () async {
-              Navigator.of(context).pop();
-              final orderProvider = Provider.of<OrderProvider>(context, listen: false);
-              bool success = await orderProvider.clearTodayOrder(context);
-              if (success) {
-                SnackBarutils.showSnackBar(context, "已刷新今日訂單", Colors.green);
-              } else {
-                SnackBarutils.showSnackBar(context, "刷新失敗", Colors.red);
-              }
-            },
-          ),
-        ],
-      );
-    },
-  );
-}

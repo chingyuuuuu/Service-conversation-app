@@ -76,23 +76,39 @@ class OrderService{
        }
      }
 
-     //刷新每日清單-把is_active改成false
-     static Future<bool>clearTodayOrder(String? userId)async{
-        try{
-           final response =await http.post(
-             Uri.parse('http://127.0.0.1:5000/refresh_orders'),//使用路徑參數
-             headers: {'Content-Type': 'application/json'},
-           );
-           if(response.statusCode==200){
-              return true;
-           }else{
-              print('Failed to refresh orders:${response.body}');
-              return false;
-           }
-        }catch(e){
-           print("Error while refreshing orders:$e");
-           return false;
-        }
-     }
+     //根據日期去調用訂單
+     static Future<List<dynamic>> fetchOrdersByDate(String? userId, {String? date}) async {
+         try{
+                 String url='http://127.0.0.1:5000/getdayorder/$userId';
+                 if(date!=null){
+                   url+'date=$date';
+                 }
+                 final response =await http.get(
+                 Uri.parse(url),//使用路徑參數
+                 headers: {'Content-Type': 'application/json'},
 
+               );
+               if (response.statusCode == 200) {
+                   final data = json.decode(response.body); //傳回訂單數據
+                   return data;//從後端數據提取表單
+               } else if(response.statusCode==404){
+                   throw Exception('尚未加入訂單');
+               }else if(response.statusCode==500){
+                   throw Exception('網路錯誤，請稍後再試');
+               }else{
+                   throw Exception('無法加載訂單，未知錯誤');
+               }
+         } catch (e) {
+               throw Exception('Error:$e');
+           }
+         }
+
+     static Future<bool> updateOrderCheckStatus(int orderId, bool isChecked) async {
+       final response = await http.put(
+         Uri.parse('http://127.0.0.1:5000/updateorder/$orderId'),
+         headers: {'Content-Type': 'application/json'},
+         body: jsonEncode({'check': isChecked}),
+       );
+       return response.statusCode == 200;
+     }
 }
