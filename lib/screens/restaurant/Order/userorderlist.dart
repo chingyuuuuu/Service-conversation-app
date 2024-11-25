@@ -28,6 +28,7 @@ class _UserOrderListState extends State<UserOrderList> {
   Widget build(BuildContext context) {
     final orderProvider = Provider.of<OrderProvider>(context);
     final remarkProvider = Provider.of<RemarkProvider>(context, listen: true);
+    final uncheckOrders=orderProvider.todayorders.where((order)=>order['check']==false).toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('今日店家訂單列表'),
@@ -42,12 +43,12 @@ class _UserOrderListState extends State<UserOrderList> {
       ),
       body: orderProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : orderProvider.todayorders.isEmpty
+          : uncheckOrders.isEmpty
           ? const Center(child: Text('今日尚未加入訂單'))
           : ListView.builder(
-        itemCount: orderProvider.todayorders.length,
+        itemCount: uncheckOrders.length,
         itemBuilder: (context, index) {
-          final order = orderProvider.todayorders[index];
+          final order = uncheckOrders[index];
           final int orderId = int.parse(order['order_id'].toString());
           final bool isCompleted = _completedOrders[orderId] ?? false;
           return GestureDetector(

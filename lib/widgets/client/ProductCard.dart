@@ -24,19 +24,10 @@ class ProudctCard extends StatelessWidget{
                     children: [
                         ImageDisplay(imageData: product['image']),
                         const SizedBox(height: 5),
-                        Text(
-                            product['name'] ?? '',
-                            style: const TextStyle(
-                                fontSize: 18,
-                            ),
+                        Text(product['name'] ?? '', style: const TextStyle(fontSize: 18,),
                         ),
                         const SizedBox(height: 8),
-                        Text(
-                            'NT\$ ${product['price']}',
-                            style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                            ),
+                        Text('NT\$ ${product['price']}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.normal,),
                         ),
                         ElevatedButton(
                             onPressed: () {
@@ -50,9 +41,7 @@ class ProudctCard extends StatelessWidget{
                                 backgroundColor: Colors.white,
                                 minimumSize: const Size(100, 40),
                             ),
-                            child: const Text(
-                                '加入購物車',
-                                style: TextStyle(color: Colors.black)),
+                            child: const Text('加入購物車', style: TextStyle(color: Colors.black)),
                         ),
                     ],
                 ),

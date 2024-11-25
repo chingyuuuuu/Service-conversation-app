@@ -78,7 +78,7 @@ class _TableGeneratorPageState extends State<TableGeneratorPage> {
             SizedBox(height: 20),
             Expanded(
               child: tableData.isEmpty
-                  ? Center(child: Text("尚未生成任何桌号", style: TextStyle(color: Colors.black)))
+                  ? Center(child: Text("尚未生成任何桌號", style: TextStyle(color: Colors.black)))
                   : ListView.builder(
                 itemCount: tableData.length,
                 itemBuilder: (context, index) {

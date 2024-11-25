@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/*
+ 客人page中顯示的分類餐點按鈕
+ */
+
 class TypeButton extends StatelessWidget {
   final String type;
   final String selectedType;
@@ -10,19 +14,18 @@ class TypeButton extends StatelessWidget {
     required this.selectedType,
     required this.onTypeSelected,
   });
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(
-        decoration: BoxDecoration(
+        decoration: BoxDecoration( //設置容器外觀
           border: Border(
             bottom: BorderSide(
               color: selectedType == type
-                  ? const Color(0xFF223888) // 选中时底部边框为蓝色
-                  : Colors.transparent, // 未选中时没有底部边框
-              width: 3.0, // 底部边框宽度
+                  ? const Color(0xFF223888) //選中底部加入藍色
+                  : Colors.transparent,
+              width: 3.0, // 底部顏色寬度
             ),
           ),
         ),
@@ -34,16 +37,14 @@ class TypeButton extends StatelessWidget {
             backgroundColor: Colors.white,
             minimumSize: const Size(100, 40),
             padding: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(0),
+            shape: RoundedRectangleBorder( //圓角矩形-定義按鈕的形狀
+              borderRadius: BorderRadius.circular(0),//邊角半徑設為0=皆為直角
             ),
           ),
-          child: Text(
-            type,
-            style: TextStyle(
+          child: Text(type, style: TextStyle(
               color: selectedType == type
-                  ? const Color(0xFF223888) // 选中时文字为蓝色
-                  : Colors.black, // 未选中时文字为黑色
+                  ? const Color(0xFF223888) // 選中
+                  : Colors.black,
               fontSize: 16,
             ),
           ),
@@ -66,10 +67,10 @@ class TypeButtonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal, // 设置为横向滑动
-      child: Row(
-        children: typeOptions.map((type) {
+    return SingleChildScrollView( //滾動的表單
+      scrollDirection: Axis.horizontal, //設置為橫向滑動
+      child: Row( //水平方向排列
+        children: typeOptions.map((type) {//將列表中每個元素轉換成flutter widget
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: TypeButton(
@@ -78,7 +79,7 @@ class TypeButtonList extends StatelessWidget {
               onTypeSelected: onTypeSelected,
             ),
           );
-        }).toList(),
+        }).toList(),  //將map的結果轉換成實際的列表
       ),
     );
   }

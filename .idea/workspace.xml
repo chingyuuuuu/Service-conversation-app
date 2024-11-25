@@ -9,30 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="加入錄音功能">
-      <change afterPath="$PROJECT_DIR$/lib/screens/restaurant/Checkout/RevenuePage.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/restaurant/Checkout/checkpage.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/restaurant/QA/restaurant_qasytem.dart" afterDir="false" />
+    <list default="true" id="0ab88597-ba95-491b-a4c1-7069e0e62463" name="Changes" comment="加入結帳功能">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/providers/QA_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/QA_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/providers/order_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/order_provider.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/routers/app_routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routers/app_routes.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/client/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/client.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/QA_unanswered.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/QA/QA_unanswered.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/TableManagementPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/Table/TableManagementPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/datadetail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/QA/datadetail.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/dining.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/order_history.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/Order/order_history.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/question_form.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/QA/question_form.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/restaurant_database.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/QA/restaurant_database.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/restaurant_qasytem.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/settingpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/Setting/settingpage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/useroderdetail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/Order/useroderdetail.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/userorderlist.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/Order/userorderlist.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/order/order_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/order/order_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/client/orderlistpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/client/orderlistpage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/Checkout/RevenuePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/Checkout/RevenuePage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/Checkout/checkpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/Checkout/checkpage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/Order/userorderlist.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/Order/userorderlist.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/restaurant/Table/TableManagementPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/restaurant/Table/TableManagementPage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/services/products/loadingproducts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/products/loadingproducts.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/diolog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/diolog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/localStorage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/localStorage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/user/table_generate_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/user/table_generate_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/client/ProductCard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/client/ProductCard.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/client/TypeButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/client/TypeButton.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/client/cart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/client/cart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/image_display.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/image_display.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -413,7 +404,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732118872154</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="加入結帳功能">
+      <option name="closed" value="true" />
+      <created>1732378173742</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1732378173742</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -442,16 +441,7 @@
     <MESSAGE value="修改QA系統" />
     <MESSAGE value="加入生成桌號功能" />
     <MESSAGE value="加入錄音功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="加入錄音功能" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/widgets/client/ProductCard.dart</url>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="加入結帳功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="加入結帳功能" />
   </component>
 </project>

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jkmapp/screens/client/orderlistpage.dart';
 import 'package:jkmapp/widgets/client/TypeButton.dart';
 import 'package:jkmapp/utils/diolog.dart';
 import 'package:jkmapp/utils/localStorage.dart';
@@ -126,10 +127,12 @@ class ClientState extends State<Client> {
               title: const Text('訂單'),
               onTap: () {
                 Provider.of<OrderProvider>(context, listen: false).fetchOrders(widget.tableNumber, context);
-                Navigator.pushNamed(
-                  context,
-                  Routers.orderlistpage,
-                );
+                if (context.mounted) { //
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => Orderlistpage(tableNumber: widget.tableNumber),
+                   ),
+                  );
+                }
               },
             ),
             const SizedBox(height: 10),
@@ -237,7 +240,7 @@ class ClientState extends State<Client> {
                     showModalBottomSheet(
                       context: context,
                       builder: (context) {
-                        return buildCartBottomSheet(context);
+                        return buildCartBottomSheet(context,widget.tableNumber);
                       },
                     );
                   },

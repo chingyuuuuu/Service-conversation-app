@@ -3,7 +3,7 @@ import 'dart:typed_data';//用於處理unit8list
 import 'dart:io';//用於處理file
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-
+//
 
 class ImageDisplay extends StatelessWidget {
   final dynamic imageData; // 接收圖片data

@@ -171,7 +171,6 @@ class ProductService{//定義一個加載數據的方法
                   }
                   await StorageHelper.saveProductsByType(productsByType);
                   Map<String, List<Map<String, dynamic>>> savedProductsByType = await StorageHelper.getProductsByType();
-                  print('已存储的商品信息: $savedProductsByType');
                   return productList;
               } else {
                 print('Failed to load products. Status code: ${response.statusCode}');

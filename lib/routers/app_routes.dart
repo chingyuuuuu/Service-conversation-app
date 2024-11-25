@@ -77,7 +77,8 @@ class RouteGenerator{
       case Routers.settingpage:
         return MaterialPageRoute(builder: (_)=>SettingsPage(onSave: (){},));
       case Routers.orderlistpage:
-        return MaterialPageRoute(builder: (_)=>Orderlistpage(),);
+        final args=settings.arguments as String;
+        return MaterialPageRoute(builder: (_)=>Orderlistpage(tableNumber: args),);
       case Routers.userorderlist:
         return MaterialPageRoute(builder: (_)=>UserOrderList());
       case Routers.productdetail:

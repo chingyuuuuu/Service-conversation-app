@@ -6,10 +6,9 @@ import'package:jkmapp/utils/SnackBar.dart';
 import 'package:jkmapp/providers/remark_provider.dart';
 
 
-Widget buildCartBottomSheet(BuildContext context) {
+Widget buildCartBottomSheet(BuildContext context,String tableNumber) {
   final cartProvider = Provider.of<CartProvider>(context); // 獲取購物車狀態
   final remarkProvider = Provider.of<RemarkProvider>(context);
-  final String tableNumber='A1';
   //打包成products傳遞給後端
   final List<Map<String, dynamic>> products = cartProvider.cartItems.map((item) {
     return {
@@ -28,12 +27,10 @@ Widget buildCartBottomSheet(BuildContext context) {
         Row(
           children: [
             Align(
-              alignment: Alignment.centerLeft, // 將A1對齊到左邊
+              alignment: Alignment.centerLeft, // 將桌號對齊到左邊
               child: Padding(
                 padding: const EdgeInsets.only(left:16.0),
-                child: Text(
-                  tableNumber,
-                  style: TextStyle(
+                child: Text(tableNumber, style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -50,15 +47,15 @@ Widget buildCartBottomSheet(BuildContext context) {
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
            const SizedBox(height: 10),
            Expanded(
-           child: ListView.builder(
+           child: ListView.builder( //動態列表
             itemCount: cartProvider.cartItems.length,
             itemBuilder: (context, index) {
               return ListTile(
@@ -130,14 +127,12 @@ Widget buildCartBottomSheet(BuildContext context) {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Total',
-                  style: TextStyle(
+              const Text('Total', style: TextStyle(
                       color: Colors.black,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                   )),
-              Text(
-                'NT\$ ${cartProvider.totalAmount.toString()}',
+              Text('NT\$ ${cartProvider.totalAmount.toString()}',
                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 18,
