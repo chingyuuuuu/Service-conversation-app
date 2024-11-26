@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:jkmapp/utils/localStorage.dart';
 class QAService{
-      //儲存到資料庫
+  //儲存到資料庫
   Future<bool> saveQAData(
         String question,
         String answer,{
@@ -15,13 +15,13 @@ class QAService{
         required String userId,
       }) async {
       try {
-        // 构建 multipart/form-data 请求
-        var request = http.MultipartRequest(
+        // 建構 multipart/form-data 请求
+        var request = http.MultipartRequest(//多部分請求
           'POST',
           Uri.parse('http://127.0.0.1:5000/savedata'),
         );
 
-        // 添加表单字段
+        // 加入表單欄位
         request.fields['question'] = question;
         request.fields['answer'] = answer;
         request.fields['user_id'] = userId;
@@ -39,7 +39,7 @@ class QAService{
             filename: imageFileName ?? 'default_image.png', // 使用默认文件名
           ));
         } else if (selectedImageFile != null) {
-          // 处理App上传
+          // 處理app上傳
           var multipartFile = await http.MultipartFile.fromPath(
             'image',
             selectedImageFile.path,
@@ -50,7 +50,6 @@ class QAService{
 
         // 發生請求並獲得回應
         var response = await request.send();
-
         // 检查是否成功
         if (response.statusCode == 200) {
           print('Data saved successfully');
@@ -65,7 +64,7 @@ class QAService{
       }
    }
 
-     //從資料庫中獲取已儲存的QA
+     //加載QA
      Future<List<Map<String, dynamic>>> fetchQA(String userId) async {
        final response =await http.get(
            Uri.parse('http://127.0.0.1:5000/getqa?user_id=$userId'),
@@ -74,13 +73,12 @@ class QAService{
          if(response.statusCode==200){
             List<Map<String,dynamic>>qalist = List<Map<String,dynamic>>.from(jsonDecode(response.body));
             return qalist;
-
          }else{
            throw Exception('Failed to load QA data');
          }
      }
 
-     //載入商品資訊
+     //載入QA資訊
      Future<List<Map<String, dynamic>>> fetchQAByqaid(String qaId) async {
        final response =await http.get(
          Uri.parse('http://127.0.0.1:5000/getqabyqaid/$qaId'),
@@ -93,7 +91,7 @@ class QAService{
          throw Exception('Failed to load QA data');
        }
      }
-     //更新data
+     //更新QA
      Future<void> updatedata({
        required String qaId,
        required String question,
@@ -111,46 +109,47 @@ class QAService{
            'image': image,
          }),
        );
-
        if (response.statusCode != 200) {
          throw Exception('Failed to update QA data');
        }
      }
+
       //從資料庫中刪除
      Future<bool>deleteData(String qaId)async{
        try{
-            final response =await http.delete(
-                 Uri.parse('http://127.0.0.1:5000/deletedata/$qaId'),
-                 headers: {'Content-Type': 'application/json'},
-            );
-            return response.statusCode == 200;
+          final response =await http.delete(
+               Uri.parse('http://127.0.0.1:5000/deletedata/$qaId'),
+               headers: {'Content-Type': 'application/json'},
+          );
+          return response.statusCode == 200;
        }catch(e){
           print('Error deleting QA data:$e');
           return false;
        }
      }
 
-     //發送問題到後端去回答問題
+     //發送問題-得到答案
      Future<String>fetchanswer(String question)async{
-         final userId = await StorageHelper.getUserId();
-          try{
-              final response = await http.post(
-                  Uri.parse('http://127.0.0.1:5000/query_qa'),
-                  headers:{"Content-Type":"application/json"},
-                  body: jsonEncode({
-                    "user_id":userId,
-                    "question":question}),
-              );
-              if(response.statusCode==200){
-                 final responseData=jsonDecode(response.body);
-                 return responseData['answer']??"抱歉，目前無法回答您這個問題";
-              }else{
-                 return "無法取得回應，請稍後再試";
-              }
-          }catch(e){
-              return "發生錯誤，請檢查網路連線";
-          }
+       final userId = await StorageHelper.getUserId();
+        try{
+            final response = await http.post(
+                Uri.parse('http://127.0.0.1:5000/query_qa'),
+                headers:{"Content-Type":"application/json"},
+                body: jsonEncode({
+                  "user_id":userId,
+                  "question":question}),
+            );
+            if(response.statusCode==200){
+               final responseData=jsonDecode(response.body);
+               return responseData['answer']??"抱歉，目前無法回答您這個問題";
+            }else{
+               return "無法取得回應，請稍後再試";
+            }
+        }catch(e){
+            return "發生錯誤，請檢查網路連線";
+        }
      }
+
      //加載未解答的問題表
      static Future<List<Map<String, dynamic>>>fetchUnanswered()async {
        final userId = await StorageHelper.getUserId();
@@ -164,7 +163,7 @@ class QAService{
              return {
                "id": item["id"],
                "question": item["question"],
-               "count": item["occurrence_count"],
+               "count": item["occurence_count"],
              };
            }).toList();
          } else {

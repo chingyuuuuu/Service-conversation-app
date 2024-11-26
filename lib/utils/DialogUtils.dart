@@ -10,10 +10,9 @@ class DialogUtils {
     String? cancelText,
     VoidCallback? onCancel, // 可選的取消按鈕回調
   }) {
-    showDialog(
+    showDialog( //顯示對話框
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
+      builder: (context) => AlertDialog(backgroundColor: Colors.white,
         title: Text(
           title,
           style: const TextStyle(fontWeight: FontWeight.bold),

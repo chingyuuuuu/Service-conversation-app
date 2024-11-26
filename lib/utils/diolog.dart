@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/utils/localStorage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'SnackBar.dart';
 
 void showErrorDialog(BuildContext context, String message) {
@@ -96,11 +95,5 @@ Future<void> showPasswordDialog(BuildContext context,TextEditingController passw
         );
       },
   );
-}
-
-Future<void> showPasswordNotification(BuildContext context) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String savedPassword = prefs.getString('password') ?? '123456';
-  SnackBarutils.showSnackBar(context,'後臺密碼是:$savedPassword',Colors.blue);
 }
 

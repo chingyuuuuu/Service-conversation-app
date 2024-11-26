@@ -3,17 +3,12 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jkmapp/utils/SnackBar.dart';
 import 'dart:convert';
+import 'package:jkmapp/utils/localStorage.dart';
 
 class SaveProductService{
-  Future<String?> _getUserId() async {
-    //從暫存中獲取user_id
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('user_id');
-  }
-
+  //防呆機制
   bool _validateInput(BuildContext context,String name, String priceStr,String type) {
     if (name.isEmpty) {
       SnackBarutils.showSnackBar(context,"名稱未輸入", Colors.red);
@@ -31,8 +26,7 @@ class SaveProductService{
   }
 
   //驗證數值是否正確
-  T? _parseInput<T>(BuildContext context,String input, T Function(String) parser,
-      String errorMessage) {
+  T? _parseInput<T>(BuildContext context,String input, T Function(String) parser, String errorMessage) {
     try {
       return parser(input);
     } catch (e) {
@@ -41,6 +35,7 @@ class SaveProductService{
     }
   }
 
+  //業者儲存商品
   Future<void> saveProduct({
       required BuildContext context,
       required TextEditingController nameController,
@@ -53,7 +48,7 @@ class SaveProductService{
       String? imageFileName,
 
   })async{
-       String? userId = await _getUserId();
+       String? userId = await StorageHelper.getUserId();
        String name = nameController.text;
        String type = typeController.text;
        String priceStr = priceController.text;

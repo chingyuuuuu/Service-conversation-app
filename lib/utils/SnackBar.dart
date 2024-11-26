@@ -7,7 +7,6 @@ class SnackBarutils{
              backgroundColor:Colors.white,
              content:Text(message,style: TextStyle(color:color)),
              duration:Duration(seconds: 2),
-
          ),
     );
    }

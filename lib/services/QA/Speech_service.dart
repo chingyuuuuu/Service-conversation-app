@@ -1,5 +1,6 @@
 import 'dart:html' as html;
 
+//語音服務
 class SpeechService {
   static html.SpeechRecognition? _speechRecognition;
   static bool _isListening = false;
@@ -19,7 +20,6 @@ class SpeechService {
       print('SpeechRecognition Ended');
       _isListening = false;
     });
-
     print('Speech Recognition initialized successfully.');
   }
 
@@ -43,14 +43,15 @@ class SpeechService {
         final result = event.results!.last;
         final transcript = result.item(0).transcript ?? ''; // 获取识别的文本
         print('Transcript: $transcript');
-        onResult(transcript);  // 实时更新 UI
+        onResult(transcript);  // 實時更新UI
         // 检查是否是最终结果
         if (result.isFinal ?? false) {
           print('Final recognition: $transcript');
-          _isListening = false; // 标记识别结束
+          _isListening = false; // 標記結束
         }
       } else {
         print('No results detected or empty event.');
+
       }
     });
     _speechRecognition!.start();

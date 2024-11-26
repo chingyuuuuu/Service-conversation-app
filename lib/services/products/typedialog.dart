@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//業者上傳type的對話服務
 class DialogService {
   static Future<String?> showAddTypeDialog(BuildContext context, TextEditingController typeController, List<String> typeOptions, String? selectedType) {
     return showDialog<String>(

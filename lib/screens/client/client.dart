@@ -10,6 +10,7 @@ import 'package:jkmapp/providers/Notification_Provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/providers/order_provider.dart';
 import 'package:jkmapp/routers/app_routes.dart';
+import 'package:jkmapp/providers/client_provider.dart';
 
 class Client extends StatefulWidget {
   final String tableNumber;//接收桌號
@@ -29,13 +30,13 @@ class ClientState extends State<Client> {
   bool isServiceBellTapped = false;
   bool _isSearching = false;
   TextEditingController _searchController = TextEditingController();
-
+  final ClientProvider clientProvider = ClientProvider();
   @override
   void initState() {
     super.initState();
     //確保UI完全加載後
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      showPasswordNotification(context);
+      clientProvider.showPasswordNotification(context);
     });
     _loadProducts();
   }
