@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/utils/localStorage.dart';
-import 'package:jkmapp/providers/remark_provider.dart';
+import 'package:jkmapp/providers/restaurant/remark_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:jkmapp/routers/app_routes.dart';
 
 class SettingsPage extends StatefulWidget{
   final VoidCallback onSave;//回調函數
@@ -38,7 +37,7 @@ class SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final remarkProvider = Provider.of<RemarkProvider>(context);
+    final remarkProvider = Provider.of<RemarkProvider>(context);//有無開啟remark
 
     return Scaffold(
       backgroundColor: Colors.white,

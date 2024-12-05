@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/utils/localStorage.dart';
 import 'package:provider/provider.dart';
-import 'package:jkmapp/providers/QA_provider.dart';
+import 'package:jkmapp/providers/QA/QA_provider.dart';
 import 'package:jkmapp/screens/restaurant/QA/question_form.dart';
 import 'package:jkmapp/screens/restaurant/QA/datadetail.dart';
 
@@ -86,13 +86,13 @@ class restaurantDataState extends State<restaurantData> {
           qaProvider.qaList.isEmpty
               ? SliverToBoxAdapter(
             child: Center(child: Text('沒有已建立的問答')),
-          )
-              : SliverList(
+           )
+            : SliverList(
             delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                final qa = qaProvider.qaList[index];
-                final qaId = qa['qaId'];
-                return Container(
+                  final qa = qaProvider.qaList[index];
+                  final qaId = qa['qaId'];
+                  return Container(
                   margin: const EdgeInsets.symmetric(vertical: 8.0),
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
@@ -172,7 +172,7 @@ class restaurantDataState extends State<restaurantData> {
           );
           if (result == true) {
             final qaProvider = Provider.of<QAprovider>(context, listen: false);
-            qaProvider.fetchQAData();
+            qaProvider.fetchQAData();//載入數據
           }
         },
       ),

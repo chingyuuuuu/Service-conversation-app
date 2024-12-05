@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/providers/Notification_Provider.dart';
-import 'package:jkmapp/providers/QA_provider.dart';
-import 'package:jkmapp/providers/order_provider.dart';
+import 'package:jkmapp/providers/client/Notification_Provider.dart';
+import 'package:jkmapp/providers/QA/QA_provider.dart';
+import 'package:jkmapp/providers/restaurant/order_provider.dart';
 import 'package:jkmapp/routers/app_routes.dart';
 import 'package:jkmapp/services/api_service.dart';
-import 'package:jkmapp/providers/remark_provider.dart';
-import 'package:jkmapp/providers/Speech_provider.dart';
-import 'providers/cart_provider.dart';
+import 'package:jkmapp/providers/restaurant/remark_provider.dart';
+import 'package:jkmapp/providers/QA/Speech_provider.dart';
+import 'package:jkmapp/providers/client/client_provider.dart';
+import 'package:jkmapp/providers/restaurant/product_provider.dart';
+import 'package:jkmapp/providers/user/Forget_provider.dart';
+
+import 'providers/client/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -14,8 +18,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider
-          (create: (_) => CartProvider()//提供購物車的狀態
+        ChangeNotifierProvider(create: (_) => CartProvider()//提供購物車的狀態
         ),
         ChangeNotifierProvider(create: (_)=>NotificationProvider()
         ),
@@ -27,6 +30,13 @@ void main() {
         ),
         ChangeNotifierProvider(create: (_)=>SpeechProvider()
         ),
+        ChangeNotifierProvider(create: (_)=>ClientProvider()
+        ),
+        ChangeNotifierProvider(create: (_)=>ProductProvider()
+        ),
+        ChangeNotifierProvider(create: (_)=>ForgetProvider()
+        ),
+
       ],
       child: MyApp(),
     ),

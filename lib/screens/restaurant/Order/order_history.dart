@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/providers/order_provider.dart';
+import 'package:jkmapp/providers/restaurant/order_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/screens/restaurant/Order/useroderdetail.dart';
-import 'package:jkmapp/providers/remark_provider.dart';
+import 'package:jkmapp/providers/restaurant/remark_provider.dart';
 
 
 class orderHistory extends StatefulWidget{

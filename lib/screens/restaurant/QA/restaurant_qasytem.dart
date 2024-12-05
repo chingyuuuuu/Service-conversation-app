@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/providers/QA_provider.dart';
+import 'package:jkmapp/providers/QA/QA_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:jkmapp/providers/Speech_provider.dart';
+import 'package:jkmapp/providers/QA/Speech_provider.dart';
 
-enum Task{orderFood,checkOrder,help,placeOrder}
+//客服系統
 
 class RestaurantQASystem extends StatefulWidget {
   const RestaurantQASystem({super.key});
@@ -14,7 +14,6 @@ class RestaurantQASystem extends StatefulWidget {
 
 class RestaurantQASystemState extends State<RestaurantQASystem> {
   final TextEditingController _controller = TextEditingController();
-  Task? currentTask; //當前任務
 
   @override
   void initState() {
@@ -74,12 +73,15 @@ class RestaurantQASystemState extends State<RestaurantQASystem> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Align(
-                      alignment: isUser ? Alignment.centerRight : Alignment
-                          .centerLeft,
+                      alignment: isUser //bot or client
+                          ? Alignment.centerRight
+                          : Alignment.centerLeft,
                       child: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: isUser ? Colors.black12 : Colors.white,
+                          color: isUser
+                              ? Colors.black12
+                              : Colors.white,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
@@ -95,7 +97,7 @@ class RestaurantQASystemState extends State<RestaurantQASystem> {
               ),
             ),
           ),
-          // 餐點操作按钮区域
+          // 關鍵字任務
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -122,7 +124,7 @@ class RestaurantQASystemState extends State<RestaurantQASystem> {
               ),
             ),
           ),
-          // 输入框和语音按钮区域
+          //輸入/語音
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -153,8 +155,9 @@ class RestaurantQASystemState extends State<RestaurantQASystem> {
                       backgroundColor: Colors.white,
                       child: Icon(
                         Icons.mic,
-                        color: speechProvider.isRecording ? Colors.red : Colors
-                            .black,
+                        color: speechProvider.isRecording
+                            ? Colors.red
+                            : Colors.black,
                       ),
                     ),
                   ),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/providers/order_provider.dart';
+import 'package:jkmapp/providers/restaurant/order_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/screens/restaurant/Order/useroderdetail.dart';
-import 'package:jkmapp/providers/remark_provider.dart';
+import 'package:jkmapp/providers/restaurant/remark_provider.dart';
 import 'package:jkmapp/routers/app_routes.dart';
 
+//店家可以看到今天的訂單
 class UserOrderList extends StatefulWidget {
   @override
   _UserOrderListState createState() => _UserOrderListState();
@@ -18,10 +19,11 @@ class _UserOrderListState extends State<UserOrderList> {
      super.initState();
      _fetchTodayOrders();
   }
+
   void _fetchTodayOrders(){ //加載今日訂單
      final orderProvider = Provider.of<OrderProvider>(context, listen: false);
      final today = DateTime.now().toIso8601String().split('T')[0]; //格式化
-     orderProvider.fetchordersByDate(date: today); // 示例 userId 为 '123'
+     orderProvider.fetchordersByDate(date: today);
   }
 
   @override
@@ -52,7 +54,7 @@ class _UserOrderListState extends State<UserOrderList> {
           final int orderId = int.parse(order['order_id'].toString());
           final bool isCompleted = _completedOrders[orderId] ?? false;
           return GestureDetector(
-            behavior: HitTestBehavior.translucent,
+            behavior: HitTestBehavior.translucent,//透明，將事件傳給子組件
             onTap: () {
               Navigator.push(
                 context,
@@ -120,10 +122,10 @@ class _UserOrderListState extends State<UserOrderList> {
                           ),
                           child: _completedOrders[orderId] == true
                               ? const Icon(
-                            Icons.check,
-                            color: Colors.green,
-                            size: 24,
-                          )
+                                Icons.check,
+                                color: Colors.green,
+                                size: 24,
+                              )
                               : const SizedBox.shrink(),
                         ),
                       ),

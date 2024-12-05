@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'menu.dart';
 import 'package:jkmapp/routers/app_routes.dart';
 import 'package:jkmapp/utils/localStorage.dart';
-import'package:jkmapp/providers/Notification_Provider.dart';
+import'package:jkmapp/providers/client/Notification_Provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jkmapp/utils/SnackBar.dart';
-import 'package:jkmapp/providers/order_provider.dart';
-import 'package:jkmapp/screens/client/client.dart';
+import 'package:jkmapp/providers/restaurant/order_provider.dart';
 
 
 class dining extends StatefulWidget {
@@ -122,18 +121,15 @@ class _DiningState extends State<dining> {//和statefulwidget適配對，實際�
       body: Column(
         children: [
           Expanded(child: MenuPage()),
-          // 使用 Consumer 监听服务铃状态
-          Consumer<NotificationProvider>(
+          Consumer<NotificationProvider>( // 使用 Consumer監聽狀態
             builder: (context, notificationProvider, child) {
               if (notificationProvider.serviceBellPressed) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {//在build 完成後顯示
                   SnackBarutils.showSnackBar(context, '按下服務鈴', Colors.red);
-
                   // 重置服務鈴狀態
                   notificationProvider.resetServiceBell();
                 });
               }
-
               return Container(); // 這裡可以返回其他 UI 組件
             },
           ),

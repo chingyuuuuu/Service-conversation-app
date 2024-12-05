@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jkmapp/widgets/image_display.dart';
-import 'package:jkmapp/providers/cart_provider.dart';
+import 'package:jkmapp/providers/client/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 

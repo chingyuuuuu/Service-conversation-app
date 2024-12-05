@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:jkmapp/screens/client/orderlistpage.dart';
 import 'package:jkmapp/widgets/client/TypeButton.dart';
 import 'package:jkmapp/utils/diolog.dart';
-import 'package:jkmapp/utils/localStorage.dart';
-import 'package:jkmapp/services/products/loadingproducts.dart';
 import 'package:jkmapp/widgets/client/cart.dart';
 import 'package:jkmapp/widgets/client/ProductCard.dart';
-import 'package:jkmapp/providers/Notification_Provider.dart';
 import 'package:provider/provider.dart';
-import 'package:jkmapp/providers/order_provider.dart';
+import 'package:jkmapp/providers/restaurant/order_provider.dart';
 import 'package:jkmapp/routers/app_routes.dart';
-import 'package:jkmapp/providers/client_provider.dart';
+import 'package:jkmapp/providers/client/client_provider.dart';
 
 class Client extends StatefulWidget {
   final String tableNumber;//接收桌號
@@ -21,104 +18,27 @@ class Client extends StatefulWidget {
 }
 
 class ClientState extends State<Client> {
-  TextEditingController passwordController = TextEditingController();
-  List<Map<String, dynamic>> products = []; // 儲存all prodcuts
-  Map<String, List<Map<String, dynamic>>> categorizedProducts = {}; //按照types分類的商品
-  List<Map<String, dynamic>> displayedProducts = []; //儲存介面上顯示的商品列表
-  String selectedTypes = ''; //允許追蹤哪個按鈕被選中
-  List<String>typeOptions = [];
-  bool isServiceBellTapped = false;
-  bool _isSearching = false;
+  bool _isSearching =false;//是否開啟搜尋狀態
   TextEditingController _searchController = TextEditingController();
-  final ClientProvider clientProvider = ClientProvider();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     //確保UI完全加載後
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      clientProvider.showPasswordNotification(context);
-    });
-    _loadProducts();
-  }
-
-
-  //加載商品，從商品中取得type(因為儲存在資料庫中當中，所以不會不見)
-  void _loadProducts() async {
-    //要使用await等待
-    String? userId = await StorageHelper.getUserId();
-    if (userId != null) {
-      List<Map<String, dynamic>> loadproducts = await ProductService.loadProductForClient(userId);
-      //按照商品分類
-      Map<String, List<Map<String, dynamic>>>categorized = {}; //按照types對商品進行分類
-      Set<String> types = loadproducts.map((product) => product['type'] as String).toSet(); //儲存商品的types
-      for (var type in types) { //遍歷all商品提取type類型
-        //根據每個type，將屬於該類型的產品放入
-        categorized[type] = loadproducts.where((product) => product['type'] == type).toList();
-      }
-
-      setState(() {
-        products = loadproducts; //將產品放入這個表
-        typeOptions = ['全部', ...types.toList()]; //將types保存到這個表
-        categorizedProducts = categorized;
-        displayedProducts = loadproducts; //預設顯示所有商品
-      });
-    } else {
-      print('User ID not found');
-    }
-  }
-
-
-  void _resetServiceBell() {
-    //設置1分鐘後恢復
-    Future.delayed(Duration(minutes: 1), () {
-      setState(() {
-        isServiceBellTapped = false;
-      });
+      final clientProvider = Provider.of<ClientProvider>(context, listen: false);//表示只會載入一次
+      clientProvider.showPasswordNotification(context);//確保加載這個對話框
+      clientProvider.loadProducts();//加載
     });
   }
 
-  // 根據類型篩選商品
-
-  void _filterProductsByType(String type) {
-    setState(() {
-      selectedTypes = type;
-      _applyFilters();
-    });
-  }
-
-  // 根據搜尋框中的輸入動態過濾商品
-  void _filterProducts(String query) {
-    setState(() {
-      _applyFilters(query: query);
-    });
-  }
-
-  // 結合類型篩選和搜尋框篩選
-  void _applyFilters({String query = ''}) {
-    List<Map<String, dynamic>> filteredProducts = [];
-
-    if (selectedTypes == '全部') {
-      filteredProducts = products; // 顯示所有商品
-    } else {
-      filteredProducts = categorizedProducts[selectedTypes] ?? []; // 根據選中的類型篩選
-    }
-
-    if (query.isNotEmpty) {
-      filteredProducts = filteredProducts
-          .where((product) =>
-          product['name'].toLowerCase().contains(query.toLowerCase()))
-          .toList(); // 根據搜尋框中的輸入進行篩選
-    }
-
-    setState(() {
-      displayedProducts = filteredProducts;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    final clientProvider = Provider.of<ClientProvider>(context);
     return Scaffold(
-      drawer: Drawer(
+      drawer: Drawer( //側邊儀表板
         backgroundColor: Colors.white,
         child: Column(
           children: [
@@ -127,10 +47,10 @@ class ClientState extends State<Client> {
               leading: const Icon(Icons.receipt),
               title: const Text('訂單'),
               onTap: () {
-                Provider.of<OrderProvider>(context, listen: false).fetchOrders(widget.tableNumber, context);
-                if (context.mounted) { //
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => Orderlistpage(tableNumber: widget.tableNumber),
+                 final orderProvider=Provider.of<OrderProvider>(context, listen: false);
+                 orderProvider.fetchOrders(widget.tableNumber, context);
+                if (context.mounted) { //滑鼠點擊之後
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Orderlistpage(tableNumber: widget.tableNumber),
                    ),
                   );
                 }
@@ -147,17 +67,12 @@ class ClientState extends State<Client> {
             const SizedBox(height: 40),
             ListTile(
               leading: Icon(Icons.notifications,
-                  color: isServiceBellTapped ? Colors.yellow : Colors.black),
+                  color: clientProvider.isServiceBellTapped
+                        ? Colors.yellow
+                        : Colors.black),
               title: Text('服務鈴'),
               onTap: () {
-                setState(() {
-                  isServiceBellTapped = true;
-                });
-                _resetServiceBell();
-                Future.delayed(Duration.zero, () {
-                  Provider.of<NotificationProvider>(context, listen: false)
-                      .pressServiceBell();
-                });
+                clientProvider.toggleServiceBell();
               },
             ),
             const SizedBox(height: 10),
@@ -183,17 +98,17 @@ class ClientState extends State<Client> {
               background: Container(color: Colors.white),
             ),
             title: _isSearching
-                 ?TextField(
+             ?TextField(
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: '搜尋商品...',
                 border: InputBorder.none,
               ),
               onChanged: (value) {
-                _filterProducts(value); // 根據輸入的值過濾商品
+                clientProvider.filterProducts(value); //搜尋-根據輸入的值過濾商品
               },
-            )
-            :Text(
+             )
+            :Text( //顯示桌號
                '桌號:${widget.tableNumber}',
                 key: ValueKey('tabletitle'),
                 style: TextStyle(color:Colors.black,fontSize:20),
@@ -216,12 +131,12 @@ class ClientState extends State<Client> {
                 icon: Icon(_isSearching
                     ? Icons.close
                     : Icons.search, color: Colors.black,size:30.0),
-                onPressed: () {
+                  onPressed: () {
                   setState(() {
                     if (_isSearching) {
                       _isSearching = false; // 關閉搜尋框
                       _searchController.clear(); // 清空搜尋框
-                      _applyFilters(); // 重置顯示的商品
+                      clientProvider.applyFilters(); // 重置顯示的商品
                     } else {
                       _isSearching = true; // 顯示搜尋框
                     }
@@ -238,7 +153,7 @@ class ClientState extends State<Client> {
                     size: 30.0,
                   ),
                   onPressed: () {
-                    showModalBottomSheet(
+                    showModalBottomSheet(//打開購物車
                       context: context,
                       builder: (context) {
                         return buildCartBottomSheet(context,widget.tableNumber);
@@ -249,17 +164,17 @@ class ClientState extends State<Client> {
               ),
             ],
           ),
-          SliverToBoxAdapter(
+          SliverToBoxAdapter(//介面設計-type欄
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: TypeButtonList(
-                typeOptions: typeOptions,
-                selectedType: selectedTypes,
-                onTypeSelected: _filterProductsByType, // 點擊按鈕過濾類型
+                typeOptions: clientProvider.typeOptions,
+                selectedType: clientProvider.selectedTypes,
+                onTypeSelected: clientProvider.filterProductsByType, // 點擊按鈕過濾類型
               ),
             ),
           ),
-          SliverPadding(
+          SliverPadding( //商品資訊
             padding: const EdgeInsets.all(8.0),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -268,11 +183,10 @@ class ClientState extends State<Client> {
                 mainAxisSpacing: 10.0,
                 childAspectRatio: 0.9, // 控制圖片和文字的比例
               ),
-              delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                  return ProudctCard(product: displayedProducts[index]);
+              delegate: SliverChildBuilderDelegate((context, index) {
+                  return ProudctCard(product: clientProvider.displayedProducts[index]);
                 },
-                childCount: displayedProducts.length,
+                childCount: clientProvider.displayedProducts.length,//告訴有多少個子項目需要去處理
               ),
             ),
           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/utils/localStorage.dart';
 import 'package:provider/provider.dart';
-import 'package:jkmapp/providers/QA_provider.dart';
+import 'package:jkmapp/providers/QA/QA_provider.dart';
 import 'package:jkmapp/services/products/typedialog.dart';
 
 class QuestionForm extends StatefulWidget {
@@ -27,10 +27,10 @@ class _QuestionFormState extends State<QuestionForm> {
   @override
   void initState() {
     super.initState();
-    _loadSavedTypes(); // 加载已保存的类型
+    _loadSavedTypes();
   }
 
-  // 加载存储的类型列表
+
   Future<void> _loadSavedTypes() async {
     List<String> savedTypes = await StorageHelper.getDataTypes() ?? [];
     setState(() {
@@ -38,12 +38,12 @@ class _QuestionFormState extends State<QuestionForm> {
     });
   }
 
-  // 暂存类型列表
+  // 暫存
   Future<void> _saveTypes() async {
     await StorageHelper.saveDataTypes(_typeOptions);
   }
 
-  // 显示新增类型对话框
+
   void _showAddTypeDialog() async {
     String? newType = await DialogService.showAddTypeDialog(
       context,
@@ -61,7 +61,7 @@ class _QuestionFormState extends State<QuestionForm> {
       });
     }
   }
-
+  //儲存問答數據
   void saveData()async{
     final qaProvider = Provider.of<QAprovider>(context, listen: false);
     bool isSaved = await qaProvider.savedata(
@@ -90,7 +90,7 @@ class _QuestionFormState extends State<QuestionForm> {
                 IconButton(
                   icon: const Icon(Icons.add),
                   onPressed: () {
-                    _showAddTypeDialog(); // 确保调用对话框函数
+                    _showAddTypeDialog(); // 對話
                   },
                 ),
                 Expanded(
@@ -104,9 +104,8 @@ class _QuestionFormState extends State<QuestionForm> {
                         child: Text(category),
                       );
                     }).toList(),
-                    onChanged: (value) => setState(() {
+                    onChanged: (value) => setState(() {//組件的值變更時觸發
                       selectedCategory = value;
-
                     }),
                   ),
                 ),
@@ -129,7 +128,6 @@ class _QuestionFormState extends State<QuestionForm> {
               ),
             ),
             const SizedBox(height: 10.0),
-            // 图片选择逻辑
             GestureDetector(
               onTap: () {
                 qaProvider.pickImage(); // 調用選擇圖片的邏輯

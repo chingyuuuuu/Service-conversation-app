@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jkmapp/services/order/order_service.dart';
 import 'package:provider/provider.dart';
-import 'package:jkmapp/providers/cart_provider.dart';
+import 'package:jkmapp/providers/client/cart_provider.dart';
 import'package:jkmapp/utils/SnackBar.dart';
-import 'package:jkmapp/providers/remark_provider.dart';
+import 'package:jkmapp/providers/restaurant/remark_provider.dart';
 
 
 Widget buildCartBottomSheet(BuildContext context,String tableNumber) {

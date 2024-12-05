@@ -26,7 +26,7 @@ class MenuPageState extends State<MenuPage> {
     });
   }
 
-  //problem
+
   Future<void> _navigateToCreateMerchandise() async {
     final result = await Navigator.pushNamed(
         context, Routers.createMerchandise);
@@ -131,8 +131,6 @@ class MenuPageState extends State<MenuPage> {
           ),
         ],
       ),
-
-      // 添加浮动按钮
       floatingActionButton: FloatingActionButton(
         onPressed: _navigateToCreateMerchandise,
         backgroundColor: Colors.white,

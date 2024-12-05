@@ -33,9 +33,7 @@ class  Login extends StatelessWidget {
     }
   }
 
-  void _register(BuildContext context) {
-    Navigator.pushNamed(context, '/Register',);
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +92,7 @@ class  Login extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     ElevatedButton(
-                      onPressed: () => _register(context),
+                      onPressed: ()  {Navigator.pushNamed(context,Routers.register);},
                       child: Text('註冊'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,

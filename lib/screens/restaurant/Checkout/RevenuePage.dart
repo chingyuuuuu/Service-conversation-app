@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jkmapp/providers/order_provider.dart';
+import 'package:jkmapp/providers/restaurant/order_provider.dart';
 import 'package:provider/provider.dart';
 
 class RevenuePage extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:jkmapp/providers/QA_provider.dart';
+import 'package:jkmapp/providers/QA/QA_provider.dart';
 import 'package:jkmapp/widgets/image_display.dart'; // Import ImageDisplay widget
 import 'package:jkmapp/utils/localStorage.dart';
 
@@ -8,9 +8,9 @@ import 'package:jkmapp/utils/localStorage.dart';
   final String qaId;
 
   const Datadetail({
-     Key? key,
-     required this.qaId,
-  }) : super(key: key);
+     Key? key,//可選的參數
+     required this.qaId,//必須提供的參數
+  }) : super(key: key);//將key傳遞給父類
 
   @override
   DatadetailState createState() => DatadetailState();
@@ -152,7 +152,7 @@ class DatadetailState extends State<Datadetail> {
   }
 
   @override
-  void dispose() {
+  void dispose() {//釋放資源，防止memory洩漏
     _questionController.dispose();
     _answerController.dispose();
     super.dispose();

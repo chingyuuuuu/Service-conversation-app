@@ -11,7 +11,7 @@ class _UnansweredQuestionsPageState extends State<UnansweredQuestionsPage> {
    @override
   void initState(){
       super.initState();
-      loadUnansweredQuestions(); //初始化加載具
+      loadUnansweredQuestions(); //初始化加載
    }
    //加載問題的表
    Future<void>loadUnansweredQuestions()async{
@@ -36,7 +36,7 @@ class _UnansweredQuestionsPageState extends State<UnansweredQuestionsPage> {
         body: unansweredQuestions.isEmpty
            ? Center(
              child:Text("目前沒有未解答的問題"),
-          )
+           )
           :ListView.builder(
              itemCount: unansweredQuestions.length,
              itemBuilder: (context,index){
